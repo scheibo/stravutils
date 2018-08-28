@@ -52,7 +52,7 @@ func GetClimbs(files ...string) ([]Climb, error) {
 		return climbs, err
 	}
 
-	err = json.Unmarshal(file, &climbs)
+	err = json.Unmarshal(f, &climbs)
 	if err != nil {
 		return climbs, err
 	}
@@ -60,16 +60,11 @@ func GetClimbs(files ...string) ([]Climb, error) {
 	return climbs, nil
 }
 
-func GetSegmentById(segmentID int64, climbs []Climbs, tokens ...string) (*Segment, error) {
+func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment, error) {
 	for _, c := range climbs {
 		if c.Segment.ID == segmentID {
 			return &c.Segment, nil
 		}
-	}
-
-	token, err := getToken(tokens...)
-	if err != nil {
-		return nil, err
 	}
 
 	service, err := getSegmentsService(tokens...)
@@ -90,7 +85,7 @@ func GetSegmentById(segmentID int64, climbs []Climbs, tokens ...string) (*Segmen
 	}, nil
 }
 
-func GetEfforts(segmentID int64) ([]*strava.SegmentEffortSummary, error) {
+func GetEfforts(segmentID int64, tokens ...string) ([]*strava.SegmentEffortSummary, error) {
 	var efforts []*strava.SegmentEffortSummary
 
 	service, err := getSegmentsService(tokens...)
@@ -98,18 +93,20 @@ func GetEfforts(segmentID int64) ([]*strava.SegmentEffortSummary, error) {
 		return nil, err
 	}
 
-
-	for page := 1; page <= MAX_PAGES; page++ {
-		es, err := service.ListEfforts(segmentId).
+	for page := 1; ; page++ {
+		es, err := service.ListEfforts(segmentID).
 			PerPage(MAX_PER_PAGE).
 			Page(page).
 			Do()
+
 		if err != nil {
 			return nil, err
 		}
-		if len(efforts) == 0 {
+
+		if len(es) == 0 {
 			break
 		}
+
 		efforts = append(efforts, es...)
 	}
 
@@ -121,16 +118,13 @@ func resource(filename string) string {
 	return filepath.Join(filepath.Dir(src), filename)
 }
 
-func getSegmentService(tokens ...string) (*strava.SegmentService, error) {
-	token = os.Getenv("STRAVA_ACCESS_TOKEN")
-	if len(tokens) > 0 && token[0] != "" {
+func getSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
+	token := os.Getenv("STRAVA_ACCESS_TOKEN")
+	if len(tokens) > 0 && tokens[0] != "" {
 		token = tokens[0]
 	}
 	if token == "" {
 		return nil, fmt.Errorf("must provide a Strava access token")
-	}
-	if err != nil {
-		return nil, err
 	}
 
 	client := strava.NewClient(token)

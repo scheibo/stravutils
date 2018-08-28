@@ -12,11 +12,10 @@ import (
 	"github.com/strava/go.strava"
 )
 
-
 type Effort struct {
-	climb   Climb
-	effort  *strava.SegmentEffortSummary
-	score   float64
+	climb  Climb
+	effort *strava.SegmentEffortSummary
+	score  float64
 }
 
 func main() {
@@ -41,8 +40,8 @@ func main() {
 		}
 
 		for _, e := range es {
-			score := perf.CalcM(float64(e.ElapsedTime), climb.Segment.Distance, climb.Segment.AverageGrade(), climb.Segment.MedianElevation())
-			effort := &Effort{climb : climb, effort: e, score: score}
+			score := perf.CalcM(float64(e.ElapsedTime), climb.Segment.Distance, climb.Segment.AverageGrade()/100, climb.Segment.MedianElevation())
+			effort := &Effort{climb: climb, effort: e, score: score}
 			efforts = append(efforts, effort)
 		}
 	}
