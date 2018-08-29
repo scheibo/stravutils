@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Old La Honda",
+    "aliases": [
+      "OLH"
+    ],
+    "segment": {
+      "name": "Old La Honda (Bridge to Mailboxes)",
+      "id": 8109834,
+      "distance": 4808.9,
+      "elevation_low": 107.6,
+      "elevation_high": 498
+    }
+  },
+  {
+    "name": "Kings Mountain",
+    "aliases": [
+      "Kings"
+    ],
+    "segment": {
+      "name": "Kings Mountain (Tripp to Skyline)",
+      "id": 611413,
+      "distance": 7024.13,
+      "elevation_low": 185.2,
+      "elevation_high": 670.2
+    }
+  },
+  {
+    "name": "Montebello",
+    "segment": {
+      "name": "Montebello",
+      "id": 627158,
+      "distance": 8297.61,
+      "elevation_low": 188.6,
+      "elevation_high": 780.2
+    }
+  },
+  {
+    "name": "Highway 9",
+    "aliases": [
+      "Hwy 9"
+    ],
+    "segment": {
+      "name": "Saratoga Spring to Stop Sign (Skyline)",
+      "id": 11870082,
+      "distance": 7650.1,
+      "elevation_low": 260.6,
+      "elevation_high": 807.9
+    }
+  },
+  {
+    "name": "Tunitas Creek",
+    "aliases": [
+      "Tunitas"
+    ],
+    "segment": {
+      "name": "Tunitas Creek - Lobitos Creek Cutoff to Skyline",
+      "id": 11834517,
+      "distance": 11475.9,
+      "elevation_low": 62.8,
+      "elevation_high": 636.2
+    }
+  }
+]

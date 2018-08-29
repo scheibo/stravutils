@@ -42,7 +42,7 @@ func (s *Segment) AverageGrade() float64 {
 func GetClimbs(files ...string) ([]Climb, error) {
 	var climbs []Climb
 
-	file := resource("climbs.json")
+	file := resource("data/climbs.json")
 	if len(files) > 0 && files[0] != "" {
 		file = files[0]
 	}

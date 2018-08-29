@@ -1,0 +1,662 @@
+[  
+  {
+    "name": "Passo Stelvio",
+    "segment": {
+      "name": "Passo Stelvio",
+      "id": 951992,
+      "distance": 23983.3,
+      "elevation_low": 930.8,
+      "elevation_high": 2758.4
+    }
+  },
+  {
+    "name": "Mortirolo",
+    "segment": {
+      "name": "Mortirolo",
+      "id": 614726,
+      "distance": 11423.1,
+      "elevation_low": 576,
+      "elevation_high": 1833.9
+    }
+  },
+  {
+    "name": "Passo Gavia",
+    "segment": {
+      "name": "Bormio to Gavia",
+      "id": 4198001,
+      "distance": 24575.4,
+      "elevation_low": 1214.3,
+      "elevation_high": 2618.4
+    }
+  },
+  {
+    "name": "Passo Campolongo",
+    "segment": {
+      "name": "La Villa - Passo Campolongo",
+      "id": 4590517,
+      "distance": 9382.9,
+      "elevation_low": 1427.1,
+      "elevation_high": 1849.5
+    }
+  },
+  {
+    "name": "Passo Pordoi",
+    "segment": {
+      "name": "Pordoi da Arabba (r)",
+      "id": 6971085,
+      "distance": 9008.2,
+      "elevation_low": 1609.7,
+      "elevation_high": 2256.9
+    }
+  },
+  {
+    "name": "Passo Sella",
+    "segment": {
+      "name": "Passo Sella",
+      "id": 5220560,
+      "distance": 5564,
+      "elevation_low": 1813,
+      "elevation_high": 2224.9
+    }
+  },
+  {
+    "name": "Passo Giau",
+    "segment": {
+      "name": "Passo Giau",
+      "id": 618935,
+      "distance": 9473.4,
+      "elevation_low": 1336.4,
+      "elevation_high": 2234.2
+    }
+  },
+  {
+    "name": "Passo Valparola",
+    "segment": {
+      "name": "Passo Valparola (La Villa)",
+      "id": 1440645,
+      "distance": 13804.3,
+      "elevation_low": 1427.7,
+      "elevation_high": 2190.5
+    }
+  },
+  {
+    "name": "Passo Falzarego",
+    "segment": {
+      "name": "Passo Falzarego (da/from Pocol)",
+      "id": 1493815,
+      "distance": 10251.7,
+      "elevation_low": 1523,
+      "elevation_high": 2085.2
+    }
+  },
+  {
+    "name": "Passo Giau (N)",
+    "segment": {
+      "name": "Passo di Giau (North)",
+      "id": 656178,
+      "distance": 8933.09,
+      "elevation_low": 1508.2,
+      "elevation_high": 2231.4
+    }
+  },
+  {
+    "name": "Passo Campolongo (Arabba)",
+    "segment": {
+      "name": "Passo Campolongo (from Arabba)",
+      "id": 635979,
+      "distance": 3931.47,
+      "elevation_low": 1584.8,
+      "elevation_high": 1857
+    }
+  },
+  {
+    "name": "Passo Sella 2",
+    "segment": {
+      "name": "Passo Sella",
+      "id": 616162,
+      "distance": 5342.25,
+      "elevation_low": 1877.7,
+      "elevation_high": 2243.2
+    }
+  },
+  {
+    "name": "Passo Pordoi 2",
+    "segment": {
+      "name": "Bivio Sella / Passo Pordoi",
+      "id": 7527286,
+      "distance": 6460.7,
+      "elevation_low": 1802.6,
+      "elevation_high": 2254.9
+    }
+  },
+  {
+    "name": "Montee D'Engins",
+    "segment": {
+      "name": "Montée d'engins (officiel) ",
+      "id": 4804262,
+      "distance": 11853.1,
+      "elevation_low": 322.8,
+      "elevation_high": 957.6
+    }
+  },
+  {
+    "name": "Col de Tourniol",
+    "segment": {
+      "name": "Chrono col de Tourniol (GPS point ok)",
+      "id": 5254742,
+      "distance": 11615.6,
+      "elevation_low": 438.3,
+      "elevation_high": 1145.8
+    }
+  },
+  {
+    "name": "Col de Porte (S)",
+    "segment": {
+      "name": "Col de Porte sud (vrai) ",
+      "id": 4557535,
+      "distance": 17509.5,
+      "elevation_low": 435,
+      "elevation_high": 1319.6
+    }
+  },
+  {
+    "name": "Col de Clémencière",
+    "segment": {
+      "name": "Col de Clémencière ",
+      "id": 8061351,
+      "distance": 5439.5,
+      "elevation_low": 216.7,
+      "elevation_high": 621.7
+    }
+  },
+  {
+    "name": "Col de Porte (C)",
+    "segment": {
+      "name": "Col de Porte par Clemencieres/Palaquit COMPLET",
+      "id": 8261791,
+      "distance": 16937.8,
+      "elevation_low": 218.5,
+      "elevation_high": 1338.3
+    }
+  },
+  {
+    "name": "Chamrousse (Golf)",
+    "segment": {
+      "name": "rond point du golf / rond point de chamrousse",
+      "id": 7150583,
+      "distance": 17931.1,
+      "elevation_low": 320.4,
+      "elevation_high": 1622.6
+    }
+  },
+  {
+    "name": "St. Nizier",
+    "segment": {
+      "name": "St Nizier",
+      "id": 780273,
+      "distance": 14701.7,
+      "elevation_low": 127.2,
+      "elevation_high": 1040.2
+    }
+  },
+  {
+    "name": "Lacets de Montvernier",
+    "segment": {
+      "name": "Les Lacets de Montvernier",
+      "id": 683404,
+      "distance": 3792.38,
+      "elevation_low": 492.2,
+      "elevation_high": 777.8
+    }
+  },
+  {
+    "name": "Col de la Croix de Fer (E)",
+    "segment": {
+      "name": "col de la croix de fer côté est",
+      "id": 4257023,
+      "distance": 28621.2,
+      "elevation_low": 597.3,
+      "elevation_high": 2063
+    }
+  },
+  {
+    "name": "Col du Coq",
+    "segment": {
+      "name": "Col du Coq",
+      "id": 628908,
+      "distance": 12617.2,
+      "elevation_low": 343.3,
+      "elevation_high": 1440.7
+    }
+  },
+  {
+    "name": "Montaud par Veurey",
+    "segment": {
+      "name": "Montaud par Veurey",
+      "id": 4136112,
+      "distance": 5761.9,
+      "elevation_low": 83,
+      "elevation_high": 560.6
+    }
+  },
+  {
+    "name": "Col de Parmenie",
+    "segment": {
+      "name": "Col de Parmenie (Vrai)",
+      "id": 693691,
+      "distance": 4402.21,
+      "elevation_low": 271.4,
+      "elevation_high": 552
+    }
+  },
+  {
+    "name": "Col de la Placette",
+    "segment": {
+      "name": "Col de la Placette",
+      "id": 641494,
+      "distance": 5250.86,
+      "elevation_low": 250.1,
+      "elevation_high": 586.1
+    }
+  },
+  {
+    "name": "Quatre Seigneurs",
+    "segment": {
+      "name": "4 seigneurs",
+      "id": 773949,
+      "distance": 8188.71,
+      "elevation_low": 249.2,
+      "elevation_high": 810.4
+    }
+  },
+  {
+    "name": "Col de Vence",
+    "segment": {
+      "name": "Col de Vence (depuis La Tronche)",
+      "id": 796527,
+      "distance": 6780.82,
+      "elevation_low": 216,
+      "elevation_high": 760.2
+    }
+  },
+  {
+    "name": "Quatre Seigneurs (Tavernolles)",
+    "segment": {
+      "name": "Quatre Seigneurs ( Depuis Rond Pt Tavernolles )",
+      "id": 1205952,
+      "distance": 5788.1,
+      "elevation_low": 369.2,
+      "elevation_high": 807
+    }
+  },
+  {
+    "name": "Murianette - La Perrerée",
+    "segment": {
+      "name": "Murianette - La Perrerée",
+      "id": 2630371,
+      "distance": 5320.27,
+      "elevation_low": 199.8,
+      "elevation_high": 529.4
+    }
+  },
+  {
+    "name": "Féclaz",
+    "segment": {
+      "name": "Féclaz (panneau) depuis St-Alban-Leysse",
+      "id": 9722309,
+      "distance": 16185.2,
+      "elevation_low": 311.4,
+      "elevation_high": 1296.1
+    }
+  },
+  {
+    "name": "Col de la Croix de Fer (W)",
+    "segment": {
+      "name": "Col De La Croix De Fer (To the Summit)",
+      "id": 662232,
+      "distance": 24305,
+      "elevation_low": 812.8,
+      "elevation_high": 2066.4
+    }
+  },
+  {
+    "name": "Alpe d'Huez",
+    "segment": {
+      "name": "Alpe d'Huez (Official Crono Course)",
+      "id": 683473,
+      "distance": 13914.3,
+      "elevation_low": 733.2,
+      "elevation_high": 1832.2
+    }
+  },
+  {
+    "name": "Col du Portillon",
+    "segment": {
+      "name": "Col Du Portillon ",
+      "id": 3173,
+      "distance": 7845.85,
+      "elevation_low": 688,
+      "elevation_high": 1297
+    }
+  },
+  {
+    "name": "Superbagnères",
+    "segment": {
+      "name": "Superbagnères (full length from Luchon)",
+      "id": 1162584,
+      "distance": 17148.5,
+      "elevation_low": 593.7,
+      "elevation_high": 1716.6
+    }
+  },
+  {
+    "name": "Col du Tourmalet",
+    "segment": {
+      "name": "Col du Tourmalet depuis Ste Marie de Campan",
+      "id": 4951896,
+      "distance": 17270.8,
+      "elevation_low": 835.4,
+      "elevation_high": 2084.2
+    }
+  },
+  {
+    "name": "Col d'Aspin",
+    "segment": {
+      "name": "Col d'Aspin (BKool)",
+      "id": 8425235,
+      "distance": 13052.6,
+      "elevation_low": 892.8,
+      "elevation_high": 1489.7
+    }
+  },
+  {
+    "name": "Hourquette d'Ancizan",
+    "segment": {
+      "name": "Payolle - Hourquette d'Ancizan",
+      "id": 5128998,
+      "distance": 9717.5,
+      "elevation_low": 1085.2,
+      "elevation_high": 1536.2
+    }
+  },
+  {
+    "name": "Port de Bales",
+    "segment": {
+      "name": "Port de Bales -- Main Course",
+      "id": 5526966,
+      "distance": 10597.6,
+      "elevation_low": 728.4,
+      "elevation_high": 1555.8
+    }
+  },
+  {
+    "name": "Peyresourde",
+    "segment": {
+      "name": "Peyresourde (from D51",
+      "id": 1530448,
+      "distance": 9696.09,
+      "elevation_low": 838.4,
+      "elevation_high": 1554.6
+    }
+  },
+  {
+    "name": "Luz Ardiden",
+    "segment": {
+      "name": "Luz Ardiden (till junction)",
+      "id": 7670494,
+      "distance": 11653.2,
+      "elevation_low": 736.5,
+      "elevation_high": 1626.6
+    }
+  },
+  {
+    "name": "Hautacam",
+    "segment": {
+      "name": "Hautacam 2",
+      "id": 669129,
+      "distance": 12849.3,
+      "elevation_low": 475.2,
+      "elevation_high": 1499.8
+    }
+  },
+  {
+    "name": "Col de Mente",
+    "segment": {
+      "name": "Col de Menté (le vrai)",
+      "id": 15424801,
+      "distance": 9904.5,
+      "elevation_low": 503,
+      "elevation_high": 1358
+    }
+  },
+  {
+    "name": "Col de Portet d'Aspet",
+    "segment": {
+      "name": "Col de Portet d'Aspet (west)",
+      "id": 613956,
+      "distance": 4487.89,
+      "elevation_low": 615.4,
+      "elevation_high": 1048
+    }
+  },
+  {
+    "name": "Col des Ares",
+    "segment": {
+      "name": "Col des Ares Time Trial Course",
+      "id": 653246,
+      "distance": 6629.95,
+      "elevation_low": 513.8,
+      "elevation_high": 808
+    }
+  },
+  {
+    "name": "Mont Ventoux",
+    "segment": {
+      "name": "Mt. Ventoux via Bedoin",
+      "id": 7711822,
+      "distance": 20036.1,
+      "elevation_low": 346.2,
+      "elevation_high": 1885.3
+    }
+  },
+  {
+    "name": "Le Grand Colombier",
+    "segment": {
+      "name": "Grand Colombier",
+      "id": 644707,
+      "distance": 16352.8,
+      "elevation_low": 316,
+      "elevation_high": 1495
+    }
+  },
+  {
+    "name": "Col de l'Iseran",
+    "segment": {
+      "name": "Col de l'Iseran",
+      "id": 628895,
+      "distance": 32268.8,
+      "elevation_low": 1405.1,
+      "elevation_high": 2779.8
+    }
+  },
+  {
+    "name": "Col d'Izoard",
+    "segment": {
+      "name": "Col d'Izoard",
+      "id": 616086,
+      "distance": 18882.9,
+      "elevation_low": 1257.5,
+      "elevation_high": 2370.8
+    }
+  },
+  {
+    "name": "Col du Telegraphe",
+    "segment": {
+      "name": "Col du Télégraphe",
+      "id": 616079,
+      "distance": 12116.3,
+      "elevation_low": 733.1,
+      "elevation_high": 1564.7
+    }
+  },
+  {
+    "name": "Col du Galbier",
+    "segment": {
+      "name": "Col du Galibier",
+      "id": 5211636,
+      "distance": 17608.3,
+      "elevation_low": 1430.6,
+      "elevation_high": 2630.2
+    }
+  },
+  {
+    "name": "Col du Cucheron",
+    "segment": {
+      "name": "Col du Cucheron Nord",
+      "id": 5208811,
+      "distance": 8065.4,
+      "elevation_low": 631.8,
+      "elevation_high": 1114
+    }
+  },
+  {
+    "name": "Rampe de Laffrey",
+    "segment": {
+      "name": "Rampe de Laffrey, jusqu'au panneau",
+      "id": 7278873,
+      "distance": 6243,
+      "elevation_low": 310.5,
+      "elevation_high": 916.3
+    }
+  },
+  {
+    "name": "Col de Romeyere",
+    "segment": {
+      "name": "Col de Romeyere (depuis Herbeys)",
+      "id": 835653,
+      "distance": 7759.66,
+      "elevation_low": 627.4,
+      "elevation_high": 1042
+    }
+  },
+  {
+    "name": "Col d'Herbouilly",
+    "segment": {
+      "name": "Col d'Herbouilly",
+      "id": 5012965,
+      "distance": 6286.7,
+      "elevation_low": 831.4,
+      "elevation_high": 1281.4
+    }
+  },
+  {
+    "name": "Col de Palaquit",
+    "segment": {
+      "name": "Col de Palaquit",
+      "id": 4610491,
+      "distance": 7570.2,
+      "elevation_low": 563.8,
+      "elevation_high": 1141.6
+    }
+  },
+  {
+    "name": "Col du Cucheron (N)",
+    "segment": {
+      "name": "Col du Cucheron (X la diat-sommet)",
+      "id": 824581,
+      "distance": 4429.96,
+      "elevation_low": 805,
+      "elevation_high": 1137.2
+    }
+  },
+  {
+    "name": "Col du Granier (N)",
+    "segment": {
+      "name": "Col du Granier par St PIerre d'entremont",
+      "id": 4500531,
+      "distance": 9168.4,
+      "elevation_low": 647.4,
+      "elevation_high": 1128.2
+    }
+  },
+  {
+    "name": "Col de la Madeleine",
+    "segment": {
+      "name": "Col de la Madaleine",
+      "id": 645415,
+      "distance": 24709.7,
+      "elevation_low": 493,
+      "elevation_high": 1971.2
+    }
+  },
+  {
+    "name": "Col du Glandon",
+    "segment": {
+      "name": "Col du Glandon",
+      "id": 9983525,
+      "distance": 19522.3,
+      "elevation_low": 510.6,
+      "elevation_high": 1930.5
+    }
+  },
+  {
+    "name": "St. Nizier (Final)",
+    "segment": {
+      "name": "St Nizier, final depuis la tour sans venin",
+      "id": 780274,
+      "distance": 7341.58,
+      "elevation_low": 528.8,
+      "elevation_high": 1008.6
+    }
+  },
+  {
+    "name": "Montaud",
+    "segment": {
+      "name": "Montée de Montaud",
+      "id": 6903988,
+      "distance": 6272.4,
+      "elevation_low": 192.6,
+      "elevation_high": 696
+    }
+  },
+  {
+    "name": "Col de Chatain",
+    "segment": {
+      "name": "Col de Chatain ( Depuis Tullins )",
+      "id": 1375907,
+      "distance": 6965.24,
+      "elevation_low": 229.8,
+      "elevation_high": 679.2
+    }
+  },
+  {
+    "name": "Col des Deux",
+    "segment": {
+      "name": "Col des Deux par Saint Guillaume",
+      "id": 5791336,
+      "distance": 10586.2,
+      "elevation_low": 702.2,
+      "elevation_high": 1213.8
+    }
+  },
+  {
+    "name": "Col de l'Arzelier",
+    "segment": {
+      "name": "Col de l'Arzelier",
+      "id": 653145,
+      "distance": 11811.2,
+      "elevation_low": 309.4,
+      "elevation_high": 1095
+    }
+  },
+  {
+    "name": "Col de la Charmette",
+    "segment": {
+      "name": "Route de Proveyzieux - Col de la Charmette",
+      "id": 8069686,
+      "distance": 11714.7,
+      "elevation_low": 253.3,
+      "elevation_high": 1281
+    }
+  }
+]
