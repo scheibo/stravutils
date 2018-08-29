@@ -96,6 +96,7 @@ func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]*strava.Segm
 	for page := 1; maxPages < 1 || page <= maxPages; page++ {
 		es, err := service.ListEfforts(segmentID).
 			PerPage(MAX_PER_PAGE).
+			Page(page).
 			Do()
 
 		if err != nil {
