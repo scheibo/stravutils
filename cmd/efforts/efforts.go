@@ -19,10 +19,12 @@ type Effort struct {
 }
 
 func main() {
+	var best bool
 	var token, climbsFile string
 	var climbs []Climb
 	var efforts []*Effort
 
+	flag.BoolVar(&best, "best", false, "Best effort per climb only")
 	flag.StringVar(&token, "token", "", "Access Token")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
 
@@ -33,8 +35,13 @@ func main() {
 		exit(err)
 	}
 
+	maxPages := -1;
+	if best {
+		maxPages = 1
+	}
+
 	for _, climb := range climbs {
-		es, err := GetEfforts(climb.Segment.ID)
+		es, err := GetEfforts(climb.Segment.ID, maxPages, token)
 		if err != nil {
 			exit(err)
 		}
@@ -43,12 +50,17 @@ func main() {
 			score := perf.CalcM(float64(e.ElapsedTime), climb.Segment.Distance, climb.Segment.AverageGrade()/100, climb.Segment.MedianElevation())
 			effort := &Effort{climb: climb, effort: e, score: score}
 			efforts = append(efforts, effort)
+
+			// Only care about the first effort if --best
+			if best {
+				break
+			}
 		}
 	}
 
 	efforts = sortEfforts(efforts)
 	for i, effort := range efforts {
-		fmt.Printf("%d) %s: %s = %.2f (%s)\n", i+1, effort.climb.Name,
+		fmt.Printf("%d) %s: %s = %.2f / %.2fW (%s)\n", i+1, effort.climb.Name,
 			(time.Duration(effort.effort.ElapsedTime) * time.Second),
 			effort.score, effort.effort.StartDateLocal.Format("Mon Jan _2 3:04PM 2006"))
 	}

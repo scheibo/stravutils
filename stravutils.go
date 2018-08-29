@@ -85,7 +85,7 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 	}, nil
 }
 
-func GetEfforts(segmentID int64, tokens ...string) ([]*strava.SegmentEffortSummary, error) {
+func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]*strava.SegmentEffortSummary, error) {
 	var efforts []*strava.SegmentEffortSummary
 
 	service, err := getSegmentsService(tokens...)
@@ -93,10 +93,9 @@ func GetEfforts(segmentID int64, tokens ...string) ([]*strava.SegmentEffortSumma
 		return nil, err
 	}
 
-	for page := 1; ; page++ {
+	for page := 1; maxPages < 1 || page <= maxPages; page++ {
 		es, err := service.ListEfforts(segmentID).
 			PerPage(MAX_PER_PAGE).
-			Page(page).
 			Do()
 
 		if err != nil {
