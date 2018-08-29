@@ -6,18 +6,22 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+
 	"os"
+	"path/filepath"
+	"runtime"
 	"sort"
 	"time"
 
+	"github.com/scheibo/calc"
+	"github.com/scheibo/perf"
+	. "github.com/scheibo/stravutils"
 	"github.com/strava/go.strava"
 )
 
-const MAX_PER_PAGE = 200
-
 type SegmentGoal struct {
 	Name      string `json:"name"`
-	SegmentId int64  `json:"segmentId"`
+	SegmentID int64  `json:"segmentId"`
 	Goal      int    `json:"goal"`
 	Date      int    `json:"date"`
 }
@@ -34,88 +38,103 @@ type GoalProgress struct {
 }
 
 func main() {
-	var accessToken string
-	var goalsFile string
+	var outputJson bool
+	var token, goalsFile, climbsFile string
+	var cda, mt, mr, mb float64
 
-	// Provide an access token, with write permissions.
-	// You'll need to complete the oauth flow to get one.
-	flag.StringVar(&accessToken, "token", "", "Access Token")
+	var climbs []Climb
+
+	flag.BoolVar(&outputJson, "json", false, "Output JSON")
+	flag.StringVar(&token, "token", "", "Access Token")
 	flag.StringVar(&goalsFile, "goals", "", "Goals")
+	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
+
+	flag.Float64Var(&cda, "cda", 0.325, "coefficient of drag area")
+	flag.Float64Var(&mr, "mr", 67.0, "total mass of the rider in kg")
+	flag.Float64Var(&mb, "mb", 8.0, "total mass of the bicycle in kg")
 
 	flag.Parse()
 
-	if accessToken == "" {
-		fmt.Println("\nPlease provide an access_token, one can be found at https://www.strava.com/settings/api")
+	verify("cda", cda)
+	verify("mr", mr)
+	verify("mb", mb)
+	mt = mr + mb
 
-		flag.PrintDefaults()
-		os.Exit(1)
+	climbs, err := GetClimbs(climbsFile)
+	if err != nil {
+		exit(err)
 	}
 
-	if goalsFile == "" {
-		fmt.Println("\nPlease provide a JSON file name pointing towards goals.")
-
-		flag.PrintDefaults()
-		os.Exit(1)
+	file := resource("goals.json")
+	if goalsFile != "" {
+		file = goalsFile
 	}
 
-	file, err := ioutil.ReadFile(goalsFile)
-	maybeExit(err)
+	f, err := ioutil.ReadFile(file)
+	if err != nil {
+		exit(err)
+	}
+
 	var goals []SegmentGoal
-	err = json.Unmarshal(file, &goals)
-	maybeExit(err)
+	err = json.Unmarshal(f, &goals)
+	if err != nil {
+		exit(err)
+	}
 
-	client := strava.NewClient(accessToken)
-	currentAthleteId, err := getCurrentAthleteId(client)
-	maybeExit(err)
+	progress, err := getProgressOnGoals(goals, token)
+	if err != nil {
+		exit(err)
+	}
 
-	progress, err := getProgressOnGoals(client, goals, currentAthleteId)
-	maybeExit(err)
+	if outputJson {
+		enc := json.NewEncoder(os.Stdout)
+		enc.Encode(progress)
+	} else {
 
-	for _, goal := range progress {
-		fmt.Printf("%s: %v -> %v (%.2f%%)",
-			goal.Name,
-			goal.BestEffortDuration,
-			goal.GoalDuration,
-			float64(goal.Goal)*100.0/float64(goal.BestEffort))
-		if goal.NumAttempts > 0 {
-			fmt.Printf(" => %v (%.2f%%)",
-				goal.BestAttemptDuration,
-				float64(goal.Goal)*100.0/float64(goal.BestAttempt))
+		for _, goal := range progress {
+			segment, err := GetSegmentByID(goal.SegmentID, climbs, token)
+			if err != nil {
+				exit(err)
+			}
+
+			fmt.Printf("%s: %v (%.2f/%.2f) -> %v (%.2f/%.2f) (%.2f%%)",
+				goal.Name,
+				goal.BestEffortDuration,
+				calcPerf(goal.BestEffort, segment),
+				calcPower(goal.BestEffort, cda, mt, segment),
+				goal.GoalDuration,
+				calcPerf(goal.Goal, segment),
+				calcPower(goal.Goal, cda, mt, segment),
+				float64(goal.Goal)*100.0/float64(goal.BestEffort))
+			if goal.NumAttempts > 0 {
+				fmt.Printf(" => %v (%.2f/%.2f) (%.2f%%)",
+					goal.BestAttemptDuration,
+					calcPerf(goal.BestAttempt, segment),
+					calcPower(goal.BestAttempt, cda, mt, segment),
+					float64(goal.Goal)*100.0/float64(goal.BestAttempt))
+			}
+			fmt.Printf(" [%v/%v]\n", goal.NumAttempts, goal.NumEfforts)
 		}
-		fmt.Printf(" [%v/%v]\n", goal.NumAttempts, goal.NumEfforts)
-	}
-
-	enc := json.NewEncoder(os.Stdout)
-	enc.Encode(progress)
-}
-
-func maybeExit(err error) {
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
 	}
 }
 
-func getCurrentAthleteId(client *strava.Client) (int64, error) {
-	service := strava.NewCurrentAthleteService(client)
-	athlete, err := service.Get().Do()
-	if err != nil {
-		return -1, err
-	}
-	return athlete.Id, nil
+func calcPerf(t int, segment *Segment) float64 {
+	return perf.CalcM(float64(t), segment.Distance, segment.AverageGrade() / 100, segment.MedianElevation())
 }
 
-func getProgressOnGoals(client *strava.Client, goals []SegmentGoal, currentAthleteId int64) ([]GoalProgress, error) {
-	service := strava.NewSegmentsService(client)
+func calcPower(t int, cda, mt float64, segment *Segment) float64 {
+	vg := segment.Distance / float64(t)
+	gr := segment.AverageGrade() / 100
+	return calc.Psimp(calc.Rho(segment.MedianElevation(), calc.G), cda, calc.Crr, vg, vg, gr, mt, calc.G, calc.Ec, calc.Fw)
+}
 
+func getProgressOnGoals(goals []SegmentGoal, token string) ([]GoalProgress, error) {
 	var progress GoalProgressList
 
 	for _, goal := range goals {
-		// TODO get all, even if more than MAX_PER_PAGE
-		efforts, err := service.ListEfforts(goal.SegmentId).
-			PerPage(MAX_PER_PAGE).
-			AthleteId(currentAthleteId).
-			Do()
+		// Since Strava returns the efforts sorted by time, presumably one page
+		// is enough to find the best efforts before and after.
+		efforts, err := GetEfforts(goal.SegmentID, 1, token)
 		if err != nil {
 			return nil, err
 		}
@@ -179,6 +198,23 @@ func getBestAttemptAfter(goal SegmentGoal, efforts []*strava.SegmentEffortSummar
 	}
 
 	return best, num
+}
+
+func resource(filename string) string {
+	_, src, _, _ := runtime.Caller(0)
+	return filepath.Join(filepath.Dir(src), filename)
+}
+
+func verify(s string, x float64) {
+	if x < 0 {
+		exit(fmt.Errorf("%s must be non negative but was %f", s, x))
+	}
+}
+
+func exit(err error) {
+	fmt.Fprintf(os.Stderr, "%s\n\n", err)
+	flag.PrintDefaults()
+	os.Exit(1)
 }
 
 func sortProgress(pl GoalProgressList) GoalProgressList {
