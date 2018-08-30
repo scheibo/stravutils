@@ -87,8 +87,11 @@ func main() {
 	}
 
 	if outputJson {
-		enc := json.NewEncoder(os.Stdout)
-		enc.Encode(progress)
+		j, err := json.MarshalIndent(progress, "", "  ")
+		if err != nil {
+			exit(err)
+		}
+		fmt.Println(string(j))
 	} else {
 
 		for _, goal := range progress {
@@ -119,7 +122,7 @@ func main() {
 }
 
 func calcPerf(t int, segment *Segment) float64 {
-	return perf.CalcM(float64(t), segment.Distance, segment.AverageGrade() / 100, segment.MedianElevation())
+	return perf.CalcM(float64(t), segment.Distance, segment.AverageGrade()/100, segment.MedianElevation())
 }
 
 func calcPower(t int, cda, mt float64, segment *Segment) float64 {

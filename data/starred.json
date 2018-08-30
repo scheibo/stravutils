@@ -1,0 +1,1564 @@
+[
+  {
+    "name": "Metcalf",
+    "segment": {
+      "name": "Metcalf Rd",
+      "id": 800,
+      "distance": 2814.39,
+      "elevation_low": 90,
+      "elevation_high": 384.2
+    }
+  },
+  {
+    "name": "Morgan Territory",
+    "segment": {
+      "name": "Morgan Territory Road From North",
+      "id": 1475,
+      "distance": 7587.7,
+      "elevation_low": 291.8,
+      "elevation_high": 644.2
+    }
+  },
+  {
+    "name": "Col de la Madone (via Menton)",
+    "segment": {
+      "name": "Col de la Madone (via Menton)",
+      "id": 2363,
+      "distance": 13100.8,
+      "elevation_low": 41.5,
+      "elevation_high": 916.3
+    }
+  },
+  {
+    "name": "Mt. Washington",
+    "segment": {
+      "name": "Mt. Washington",
+      "id": 3237,
+      "distance": 11881.3,
+      "elevation_low": 487.5,
+      "elevation_high": 1915.6
+    }
+  },
+  {
+    "name": "Highway 9 (E)",
+    "segment": {
+      "name": "Highway 9 - HWY236 to Skyline",
+      "id": 3799,
+      "distance": 9693.6,
+      "elevation_low": 397.9,
+      "elevation_high": 806.2
+    }
+  },
+  {
+    "name": "Patterson Pass",
+    "aliases": [
+      "Patterson"
+    ],
+    "segment": {
+      "name": "Patterson Pass (East)",
+      "id": 3983,
+      "distance": 6289.65,
+      "elevation_low": 137.6,
+      "elevation_high": 477.9
+    }
+  },
+  {
+    "name": "Bonny Doon",
+    "segment": {
+      "name": "Bonny Doon",
+      "id": 115953,
+      "distance": 5218.76,
+      "elevation_low": 12.2,
+      "elevation_high": 382.7
+    }
+  },
+  {
+    "name": "Quimby",
+    "aliases": [
+      "Quimby Road",
+      "Quimby Rd"
+    ],
+    "segment": {
+      "name": "Quimby Rd",
+      "id": 120709,
+      "distance": 5088.96,
+      "elevation_low": 152.6,
+      "elevation_high": 668.1
+    }
+  },
+  {
+    "name": "Tunitas Creek - Lobitos Creek to Skyline",
+    "segment": {
+      "name": "Tunitas Creek - Lobitos Creek to Skyline",
+      "id": 226705,
+      "distance": 9509.25,
+      "elevation_low": 86.4,
+      "elevation_high": 579.6
+    }
+  },
+  {
+    "name": "Hawk Hill",
+    "segment": {
+      "name": "Hawk Hill",
+      "id": 229781,
+      "distance": 2684.82,
+      "elevation_low": 92.4,
+      "elevation_high": 245.3
+    }
+  },
+  {
+    "name": "OLD VERSION - Mt Diablo (S): Athenian School to summit lot (wrong way @ top)",
+    "segment": {
+      "name": "OLD VERSION - Mt Diablo (S): Athenian School to summit lot (wrong way @ top)",
+      "id": 254731,
+      "distance": 17435.8,
+      "elevation_low": 168.8,
+      "elevation_high": 1169.6
+    }
+  },
+  {
+    "name": "Crestview from Edgewood Rd",
+    "segment": {
+      "name": "Crestview from Edgewood Rd",
+      "id": 263045,
+      "distance": 2216.48,
+      "elevation_low": 78.5,
+      "elevation_high": 271.7
+    }
+  },
+  {
+    "name": "Black Road",
+    "segment": {
+      "name": "Black Road",
+      "id": 268865,
+      "distance": 7301.89,
+      "elevation_low": 208.4,
+      "elevation_high": 745
+    }
+  },
+  {
+    "name": "Skyline - Skylonda to Skeggs point parking lot",
+    "segment": {
+      "name": "Skyline - Skylonda to Skeggs point parking lot",
+      "id": 271367,
+      "distance": 6176.46,
+      "elevation_low": 453.4,
+      "elevation_high": 704.3
+    }
+  },
+  {
+    "name": "Palomar Mt South Grade (Taco shop to Summit Stop Sign)",
+    "segment": {
+      "name": "Palomar Mt South Grade (Taco shop to Summit Stop Sign)",
+      "id": 273807,
+      "distance": 18709.3,
+      "elevation_low": 303.3,
+      "elevation_high": 1594.4
+    }
+  },
+  {
+    "name": "Highway 84 (E)",
+    "segment": {
+      "name": "Hwy 84 climb (Portola Rd to Skyline)",
+      "id": 283479,
+      "distance": 5183.18,
+      "elevation_low": 133.3,
+      "elevation_high": 450.5
+    }
+  },
+  {
+    "name": "Hamilton Backside",
+    "segment": {
+      "name": "Mt Hamilton Backside",
+      "id": 302113,
+      "distance": 6907.82,
+      "elevation_low": 694,
+      "elevation_high": 1273.1
+    }
+  },
+  {
+    "name": "Alba",
+    "segment": {
+      "name": "Alba Road",
+      "id": 326187,
+      "distance": 6124.5,
+      "elevation_low": 113,
+      "elevation_high": 752.4
+    }
+  },
+  {
+    "name": "OLD VERSION - Mt Hamilton - Official (to Gate)",
+    "segment": {
+      "name": "OLD VERSION - Mt Hamilton - Official (to Gate)",
+      "id": 340903,
+      "distance": 29561.1,
+      "elevation_low": 123.2,
+      "elevation_high": 1248.9
+    }
+  },
+  {
+    "name": "Westridge Drive",
+    "segment": {
+      "name": "Westridge Drive",
+      "id": 359323,
+      "distance": 1093.84,
+      "elevation_low": 101.4,
+      "elevation_high": 218.6
+    }
+  },
+  {
+    "name": "San Bruno",
+    "segment": {
+      "name": "San Bruno Hill Climb",
+      "id": 378701,
+      "distance": 5925.45,
+      "elevation_low": 37.5,
+      "elevation_high": 390.8
+    }
+  },
+  {
+    "name": "OLD VERSION - Redwood Gulch",
+    "segment": {
+      "name": "OLD VERSION - Redwood Gulch",
+      "id": 380237,
+      "distance": 2197.06,
+      "elevation_low": 221,
+      "elevation_high": 435.2
+    }
+  },
+  {
+    "name": "Bohlman",
+    "segment": {
+      "name": "Bohlman Rd",
+      "id": 384773,
+      "distance": 6685.44,
+      "elevation_low": 160.6,
+      "elevation_high": 749.8
+    }
+  },
+  {
+    "name": "Diablo South Gate to Junction",
+    "segment": {
+      "name": "Diablo South Gate to Junction",
+      "id": 568876,
+      "distance": 9118.54,
+      "elevation_low": 148,
+      "elevation_high": 574
+    }
+  },
+  {
+    "name": "Henry Coe (E Dunne)",
+    "segment": {
+      "name": "Henry Coe Hill Climb",
+      "id": 580717,
+      "distance": 10879.5,
+      "elevation_low": 190.5,
+      "elevation_high": 794.7
+    }
+  },
+  {
+    "name": "Mt. Diablo S. Gate to Summit",
+    "segment": {
+      "name": "Mt. Diablo S. Gate to Summit",
+      "id": 609257,
+      "distance": 16383.1,
+      "elevation_low": 223.2,
+      "elevation_high": 1158.5
+    }
+  },
+  {
+    "name": "Wente RR Lap",
+    "segment": {
+      "name": "Wente RR Lap",
+      "id": 609783,
+      "distance": 23378.4,
+      "elevation_low": 166.2,
+      "elevation_high": 378.1
+    }
+  },
+  {
+    "name": "Welch Creek Rd.",
+    "segment": {
+      "name": "Welch Creek Rd.",
+      "id": 610066,
+      "distance": 6047.21,
+      "elevation_low": 113.9,
+      "elevation_high": 673.5
+    }
+  },
+  {
+    "name": "Kings Mountain",
+    "aliases": [
+      "Kings"
+    ],
+    "segment": {
+      "name": "Kings Mountain (Tripp to Skyline)",
+      "id": 611413,
+      "distance": 7024.13,
+      "elevation_low": 185.2,
+      "elevation_high": 670.2
+    }
+  },
+  {
+    "name": "Hicks / Mt. Umunhum",
+    "aliases": [
+      "Mount Umunhum",
+      "Mt Umunhum"
+    ],
+    "segment": {
+      "name": "Umunhum peak (N. Hicks)",
+      "id": 611999,
+      "distance": 8281.49,
+      "elevation_low": 197.6,
+      "elevation_high": 1008.4
+    }
+  },
+  {
+    "name": "DVRSR Stage 2 Onion Valley",
+    "segment": {
+      "name": "DVRSR Stage 2 Onion Valley",
+      "id": 613827,
+      "distance": 19759,
+      "elevation_low": 1232.9,
+      "elevation_high": 2765.8
+    }
+  },
+  {
+    "name": "Redwood Gulch - Highway 9",
+    "segment": {
+      "name": "RWG \u0026 Highway 9",
+      "id": 614409,
+      "distance": 7082.9,
+      "elevation_low": 247.7,
+      "elevation_high": 816.4
+    }
+  },
+  {
+    "name": "Haskins",
+    "segment": {
+      "name": "Haskins",
+      "id": 614445,
+      "distance": 2441.39,
+      "elevation_low": 147.7,
+      "elevation_high": 320.3
+    }
+  },
+  {
+    "name": "Tioga Pass (395 to gate)",
+    "segment": {
+      "name": "Tioga Pass (395 to gate)",
+      "id": 616136,
+      "distance": 19321.5,
+      "elevation_low": 2086.5,
+      "elevation_high": 3032.4
+    }
+  },
+  {
+    "name": "Mt Hamilton Backside Descent",
+    "segment": {
+      "name": "Mt Hamilton Backside Descent",
+      "id": 616944,
+      "distance": 6996.04,
+      "elevation_low": 675.3,
+      "elevation_high": 1247.9
+    }
+  },
+  {
+    "name": "Calaveras to Felter to top",
+    "segment": {
+      "name": "Calaveras to Felter to top",
+      "id": 617591,
+      "distance": 6854.88,
+      "elevation_low": 52.8,
+      "elevation_high": 487.9
+    }
+  },
+  {
+    "name": "Portola - Sand Hill to Alpine",
+    "segment": {
+      "name": "Portola - Sand Hill to Alpine",
+      "id": 617794,
+      "distance": 5455.31,
+      "elevation_low": 106.8,
+      "elevation_high": 169.8
+    }
+  },
+  {
+    "name": "Diablo Junction to Summit",
+    "segment": {
+      "name": "Diablo Junction to Summit",
+      "id": 619221,
+      "distance": 7064.33,
+      "elevation_low": 661.1,
+      "elevation_high": 1169.2
+    }
+  },
+  {
+    "name": "Los Trancos, Ramona, Vista Verde (Alpine Rd to summit)",
+    "segment": {
+      "name": "Los Trancos, Ramona, Vista Verde (Alpine Rd to summit)",
+      "id": 620427,
+      "distance": 4478.08,
+      "elevation_low": 136.3,
+      "elevation_high": 421.8
+    }
+  },
+  {
+    "name": "Patterson Pass RR --- Full Lap",
+    "segment": {
+      "name": "Patterson Pass RR --- Full Lap",
+      "id": 620954,
+      "distance": 35755.6,
+      "elevation_low": 71,
+      "elevation_high": 479
+    }
+  },
+  {
+    "name": "University Road Race Lap",
+    "segment": {
+      "name": "University Road Race Lap",
+      "id": 622741,
+      "distance": 4316.69,
+      "elevation_low": 116.6,
+      "elevation_high": 221.4
+    }
+  },
+  {
+    "name": "West OLH",
+    "segment": {
+      "name": "West OLH (84 to Skyline)",
+      "id": 622755,
+      "distance": 3883.16,
+      "elevation_low": 340,
+      "elevation_high": 509.6
+    }
+  },
+  {
+    "name": "Mix Canyon from Pleasants Valley Road",
+    "segment": {
+      "name": "Mix Canyon from Pleasants Valley Road",
+      "id": 624291,
+      "distance": 7552.28,
+      "elevation_low": 110.2,
+      "elevation_high": 796.9
+    }
+  },
+  {
+    "name": "Challenge RR lap, ex neutral start",
+    "segment": {
+      "name": "Challenge RR lap, ex neutral start",
+      "id": 624572,
+      "distance": 43442.2,
+      "elevation_low": 465.4,
+      "elevation_high": 891.3
+    }
+  },
+  {
+    "name": "Mineral King Road",
+    "segment": {
+      "name": "Mineral King Road",
+      "id": 624817,
+      "distance": 33795.3,
+      "elevation_low": 409.8,
+      "elevation_high": 2206.2
+    }
+  },
+  {
+    "name": "West Alpine descent",
+    "segment": {
+      "name": "West Alpine descent",
+      "id": 625087,
+      "distance": 7749.56,
+      "elevation_low": 193.9,
+      "elevation_high": 719
+    }
+  },
+  {
+    "name": "Fremont Peak race (just past start line)",
+    "segment": {
+      "name": "Fremont Peak race (just past start line)",
+      "id": 625798,
+      "distance": 15621.5,
+      "elevation_low": 57.8,
+      "elevation_high": 805.2
+    }
+  },
+  {
+    "name": "Stevens Canyon - Eden to End",
+    "segment": {
+      "name": "Stevens Canyon - Eden to End",
+      "id": 626908,
+      "distance": 5446.83,
+      "elevation_low": 177.2,
+      "elevation_high": 311.4
+    }
+  },
+  {
+    "name": "Montebello",
+    "segment": {
+      "name": "Montebello",
+      "id": 627158,
+      "distance": 8297.61,
+      "elevation_low": 188.6,
+      "elevation_high": 780.2
+    }
+  },
+  {
+    "name": "Gates Canyon climb (to the Gate)",
+    "segment": {
+      "name": "Gates Canyon climb (to the Gate)",
+      "id": 636464,
+      "distance": 5853.06,
+      "elevation_low": 85.3,
+      "elevation_high": 424.3
+    }
+  },
+  {
+    "name": "Bohlman - On Orbit",
+    "segment": {
+      "name": "Bohlman - On Orbit - Bohlman",
+      "id": 637762,
+      "distance": 6700.7,
+      "elevation_low": 178.8,
+      "elevation_high": 776.3
+    }
+  },
+  {
+    "name": "Sattley TT",
+    "segment": {
+      "name": "Sattley TT",
+      "id": 639856,
+      "distance": 39993.6,
+      "elevation_low": 1489.4,
+      "elevation_high": 1507.6
+    }
+  },
+  {
+    "name": "Sea Otter Lap",
+    "segment": {
+      "name": "Sea Otter Lap",
+      "id": 642201,
+      "distance": 12483.1,
+      "elevation_low": 75.4,
+      "elevation_high": 155.1
+    }
+  },
+  {
+    "name": "Hwy 9 Descent-Skyline to 236",
+    "segment": {
+      "name": "Hwy 9 Descent-Skyline to 236",
+      "id": 643551,
+      "distance": 9880.17,
+      "elevation_low": 385,
+      "elevation_high": 804.2
+    }
+  },
+  {
+    "name": "China Grade",
+    "segment": {
+      "name": "China Grade",
+      "id": 646567,
+      "distance": 5549.42,
+      "elevation_low": 263.4,
+      "elevation_high": 551.4
+    }
+  },
+  {
+    "name": "Mt. Charlie",
+    "aliases": [
+      "Mountain Charlie",
+      "Mount Charlie"
+    ],
+    "segment": {
+      "name": "Mt Charlie Climb",
+      "id": 646647,
+      "distance": 6480.65,
+      "elevation_low": 259,
+      "elevation_high": 589.4
+    }
+  },
+  {
+    "name": "Felton Empire",
+    "segment": {
+      "name": "Felton Empire Climb",
+      "id": 648888,
+      "distance": 5842.64,
+      "elevation_low": 82.8,
+      "elevation_high": 544.2
+    }
+  },
+  {
+    "name": "BtC Full Course",
+    "segment": {
+      "name": "BtC Full Course",
+      "id": 651803,
+      "distance": 16081,
+      "elevation_low": 78.7,
+      "elevation_high": 159.3
+    }
+  },
+  {
+    "name": "Gibraltar Climb",
+    "segment": {
+      "name": "Gibraltar Climb",
+      "id": 658277,
+      "distance": 9887.37,
+      "elevation_low": 268.4,
+      "elevation_high": 1058.7
+    }
+  },
+  {
+    "name": "Highway 84 (W)",
+    "segment": {
+      "name": "84 Pescadero to Skyline",
+      "id": 658330,
+      "distance": 10959.4,
+      "elevation_low": 117.4,
+      "elevation_high": 451.2
+    }
+  },
+  {
+    "name": " Kings Mtn Rd descent (be careful)",
+    "segment": {
+      "name": " Kings Mtn Rd descent (be careful)",
+      "id": 661013,
+      "distance": 6564.14,
+      "elevation_low": 169.8,
+      "elevation_high": 635.7
+    }
+  },
+  {
+    "name": "Mt. Diablo TT",
+    "segment": {
+      "name": "Mt. Diablo TT",
+      "id": 662492,
+      "distance": 10035.8,
+      "elevation_low": 114.2,
+      "elevation_high": 622.8
+    }
+  },
+  {
+    "name": "Sattley TT Course",
+    "segment": {
+      "name": "Sattley TT Course",
+      "id": 662537,
+      "distance": 39860,
+      "elevation_low": 1489.1,
+      "elevation_high": 1506.1
+    }
+  },
+  {
+    "name": "Pescadero Coastal Classic Road Race Lap",
+    "segment": {
+      "name": "Pescadero Coastal Classic Road Race Lap",
+      "id": 667397,
+      "distance": 44517.8,
+      "elevation_low": -2.5,
+      "elevation_high": 315.1
+    }
+  },
+  {
+    "name": "Calaveras/Felter",
+    "aliases": [
+      "Calaveras"
+    ],
+    "segment": {
+      "name": "Calaveras to Top Sierra - Full Climb",
+      "id": 671251,
+      "distance": 13756.3,
+      "elevation_low": 4.2,
+      "elevation_high": 565.5
+    }
+  },
+  {
+    "name": "Home stretch / Are we done yet?",
+    "segment": {
+      "name": "Home stretch / Are we done yet?",
+      "id": 673321,
+      "distance": 730.64,
+      "elevation_low": 3.1,
+      "elevation_high": 7.9
+    }
+  },
+  {
+    "name": "Jefferson:  Farm Hill to Fire Station",
+    "segment": {
+      "name": "Jefferson:  Farm Hill to Fire Station",
+      "id": 680885,
+      "distance": 2758.52,
+      "elevation_low": 34.8,
+      "elevation_high": 184.2
+    }
+  },
+  {
+    "name": "Alpe d'Huez",
+    "segment": {
+      "name": "Alpe d'Huez (Official Crono Course)",
+      "id": 683473,
+      "distance": 13914.3,
+      "elevation_low": 733.2,
+      "elevation_high": 1832.2
+    }
+  },
+  {
+    "name": "Jamison Creek Rd.",
+    "segment": {
+      "name": "Jamison Creek Rd.",
+      "id": 699429,
+      "distance": 4691.64,
+      "elevation_low": 239.7,
+      "elevation_high": 695.3
+    }
+  },
+  {
+    "name": "Bonny Doon + Pine Flat to Empire",
+    "segment": {
+      "name": "Bonny Doon + Pine Flat to Empire",
+      "id": 732511,
+      "distance": 9941.06,
+      "elevation_low": 85.2,
+      "elevation_high": 658.7
+    }
+  },
+  {
+    "name": "Rock Creek Road (Paradise to Mosquito Flat)",
+    "segment": {
+      "name": "Rock Creek Road (Paradise to Mosquito Flat)",
+      "id": 735493,
+      "distance": 30799.3,
+      "elevation_low": 1344.7,
+      "elevation_high": 2878
+    }
+  },
+  {
+    "name": "Montevina",
+    "segment": {
+      "name": "Montevina",
+      "id": 744314,
+      "distance": 5537.71,
+      "elevation_low": 213.8,
+      "elevation_high": 695.4
+    }
+  },
+  {
+    "name": "Mt. Diablo (North)",
+    "aliases": [
+      "Mount Diablo (North)",
+      "Diablo (North)"
+    ],
+    "segment": {
+      "name": "Diablo North Gate entrance sign to summit parking lot (LKHC)",
+      "id": 745209,
+      "distance": 17496.5,
+      "elevation_low": 106.5,
+      "elevation_high": 1169
+    }
+  },
+  {
+    "name": "Devil's PostPile (complete climb)",
+    "segment": {
+      "name": "Devil's PostPile (complete climb)",
+      "id": 747664,
+      "distance": 10731.3,
+      "elevation_low": 2348.5,
+      "elevation_high": 2784.4
+    }
+  },
+  {
+    "name": "WCC Time Trial",
+    "segment": {
+      "name": "WCC Time Trial",
+      "id": 749756,
+      "distance": 13428.9,
+      "elevation_low": 330.6,
+      "elevation_high": 344.8
+    }
+  },
+  {
+    "name": "Kennedy Rd Climb",
+    "segment": {
+      "name": "Kennedy Rd Climb",
+      "id": 770358,
+      "distance": 3082.82,
+      "elevation_low": 114,
+      "elevation_high": 234.4
+    }
+  },
+  {
+    "name": "St. Nizier",
+    "segment": {
+      "name": "St Nizier",
+      "id": 780273,
+      "distance": 14701.7,
+      "elevation_low": 127.2,
+      "elevation_high": 1040.2
+    }
+  },
+  {
+    "name": "Skyline via 92",
+    "segment": {
+      "name": "Skyline Climb--92 to MPROSD Lot",
+      "id": 787299,
+      "distance": 6810.76,
+      "elevation_low": 260,
+      "elevation_high": 609.8
+    }
+  },
+  {
+    "name": "Sierra Road",
+    "aliases": [
+      "Sierra",
+      "Sierra Rd"
+    ],
+    "segment": {
+      "name": "Sierra Road - Start at Fulbar",
+      "id": 789267,
+      "distance": 5745.35,
+      "elevation_low": 66.9,
+      "elevation_high": 612
+    }
+  },
+  {
+    "name": "Page Mill",
+    "aliases": [
+      "PM"
+    ],
+    "segment": {
+      "name": "Page Mill Road (Low-Key Hillclimbs)",
+      "id": 794318,
+      "distance": 13371,
+      "elevation_low": 86,
+      "elevation_high": 691.4
+    }
+  },
+  {
+    "name": "Bohlman-Norton-Kittridge-Quickert-On Orbit-Bohlman (Low-Key Hillclimbs)",
+    "segment": {
+      "name": "Bohlman-Norton-Kittridge-Quickert-On Orbit-Bohlman (Low-Key Hillclimbs)",
+      "id": 804721,
+      "distance": 6942.95,
+      "elevation_low": 181.1,
+      "elevation_high": 767.9
+    }
+  },
+  {
+    "name": "Palomares",
+    "segment": {
+      "name": "Palomares Road from Niles Canyon (Low-Key Hillclimbs)",
+      "id": 809073,
+      "distance": 7273.59,
+      "elevation_low": 45.3,
+      "elevation_high": 367.8
+    }
+  },
+  {
+    "name": "Fountain to Fountain upstream",
+    "segment": {
+      "name": "Fountain to Fountain upstream",
+      "id": 817972,
+      "distance": 1271.01,
+      "elevation_low": 3.4,
+      "elevation_high": 8.3
+    }
+  },
+  {
+    "name": "Hwy 9 Descent - Skyline to Redwood Gulch",
+    "segment": {
+      "name": "Hwy 9 Descent - Skyline to Redwood Gulch",
+      "id": 857838,
+      "distance": 4849.22,
+      "elevation_low": 462.2,
+      "elevation_high": 797.4
+    }
+  },
+  {
+    "name": "PGE trail parking to top",
+    "segment": {
+      "name": "PGE trail parking to top",
+      "id": 887372,
+      "distance": 6135.29,
+      "elevation_low": 123.3,
+      "elevation_high": 494.7
+    }
+  },
+  {
+    "name": "Highway 92 (E)",
+    "segment": {
+      "name": "HWY 92 climb from Crystal Springs",
+      "id": 921320,
+      "distance": 2728.01,
+      "elevation_low": 96.3,
+      "elevation_high": 260.7
+    }
+  },
+  {
+    "name": "Kennedy Trail Gate to Priest Rock Intersection",
+    "segment": {
+      "name": "Kennedy Trail Gate to Priest Rock Intersection",
+      "id": 928630,
+      "distance": 6182.81,
+      "elevation_low": 241.8,
+      "elevation_high": 798.8
+    }
+  },
+  {
+    "name": "OLD VERSION - Old La Honda (Bridge to Mailboxes)",
+    "segment": {
+      "name": "OLD VERSION - Old La Honda (Bridge to Mailboxes)",
+      "id": 1288403,
+      "distance": 4854.79,
+      "elevation_low": 107.6,
+      "elevation_high": 502.2
+    }
+  },
+  {
+    "name": "The Relay Leg 21",
+    "segment": {
+      "name": "The Relay Leg 21",
+      "id": 1344154,
+      "distance": 10187.5,
+      "elevation_low": 127,
+      "elevation_high": 211.7
+    }
+  },
+  {
+    "name": "The Relay Leg 33",
+    "segment": {
+      "name": "The Relay Leg 33",
+      "id": 1344177,
+      "distance": 9954.2,
+      "elevation_low": 117.8,
+      "elevation_high": 180.8
+    }
+  },
+  {
+    "name": "Hilo to Mauna Kea",
+    "segment": {
+      "name": "Hilo to Mauna Kea",
+      "id": 1504789,
+      "distance": 68605.4,
+      "elevation_low": 31.9,
+      "elevation_high": 4217.4
+    }
+  },
+  {
+    "name": "Bear Creek (Descent Only)",
+    "segment": {
+      "name": "Bear Creek (Descent Only)",
+      "id": 1622934,
+      "distance": 7481.64,
+      "elevation_low": 213.1,
+      "elevation_high": 673.4
+    }
+  },
+  {
+    "name": "Saint Nizier par le Golf de Seyssins",
+    "segment": {
+      "name": "Saint Nizier par le Golf de Seyssins",
+      "id": 1651624,
+      "distance": 14676.6,
+      "elevation_low": 239.2,
+      "elevation_high": 1144.4
+    }
+  },
+  {
+    "name": "The Actual Officially, Official Donner Summit Climb, Officially",
+    "segment": {
+      "name": "The Actual Officially, Official Donner Summit Climb, Officially",
+      "id": 1662642,
+      "distance": 5120.27,
+      "elevation_low": 1817,
+      "elevation_high": 2169
+    }
+  },
+  {
+    "name": "Black Mt. Parking Lot to Sign on Top",
+    "segment": {
+      "name": "Black Mt. Parking Lot to Sign on Top",
+      "id": 2053989,
+      "distance": 7483.98,
+      "elevation_low": 136.8,
+      "elevation_high": 847.4
+    }
+  },
+  {
+    "name": "PCSD",
+    "segment": {
+      "name": "PCSD",
+      "id": 2198806,
+      "distance": 16114.7,
+      "elevation_low": 82.8,
+      "elevation_high": 95.6
+    }
+  },
+  {
+    "name": "Bear Creek past summit",
+    "segment": {
+      "name": "Bear Creek past summit",
+      "id": 2283186,
+      "distance": 5678.76,
+      "elevation_low": 222,
+      "elevation_high": 642.8
+    }
+  },
+  {
+    "name": "Soda Springs",
+    "segment": {
+      "name": "LKHC Soda Springs Rd.",
+      "id": 2719563,
+      "distance": 8436.85,
+      "elevation_low": 215.4,
+      "elevation_high": 933.7
+    }
+  },
+  {
+    "name": "Zayante Climb",
+    "segment": {
+      "name": "Zayante Climb",
+      "id": 2726206,
+      "distance": 8230.26,
+      "elevation_low": 76.6,
+      "elevation_high": 472.6
+    }
+  },
+  {
+    "name": "Zayante climb to Mt McPherson",
+    "segment": {
+      "name": "Zayante climb to Mt McPherson",
+      "id": 2822045,
+      "distance": 27256.7,
+      "elevation_low": 104.1,
+      "elevation_high": 954.1
+    }
+  },
+  {
+    "name": "Page Mill Descent (Tricky Bits)",
+    "segment": {
+      "name": "Page Mill Descent (Tricky Bits)",
+      "id": 3255531,
+      "distance": 9957.35,
+      "elevation_low": 226,
+      "elevation_high": 693.2
+    }
+  },
+  {
+    "name": "Baylands Loop clockwise from Shoreline",
+    "segment": {
+      "name": "Baylands Loop clockwise from Shoreline",
+      "id": 3439398,
+      "distance": 7847.78,
+      "elevation_low": 0.5,
+      "elevation_high": 8.6
+    }
+  },
+  {
+    "name": "Jefferson Ave via Highland",
+    "segment": {
+      "name": "Jefferson Ave via Highland",
+      "id": 3573106,
+      "distance": 3269.68,
+      "elevation_low": 25.4,
+      "elevation_high": 197.3
+    }
+  },
+  {
+    "name": "Alt. Bear Creek to Skylonda DH",
+    "segment": {
+      "name": "Alt. Bear Creek to Skylonda DH",
+      "id": 3601842,
+      "distance": 3595.99,
+      "elevation_low": 453.4,
+      "elevation_high": 662.4
+    }
+  },
+  {
+    "name": "Montebello descent",
+    "segment": {
+      "name": "Montebello descent",
+      "id": 3743658,
+      "distance": 8206.02,
+      "elevation_low": 187.2,
+      "elevation_high": 780
+    }
+  },
+  {
+    "name": "Haskins W Descent to Camp Loma Mar",
+    "segment": {
+      "name": "Haskins W Descent to Camp Loma Mar",
+      "id": 4142071,
+      "distance": 3219.3,
+      "elevation_low": 66,
+      "elevation_high": 291.6
+    }
+  },
+  {
+    "name": "Scanuppia (full climb)",
+    "segment": {
+      "name": "Scanuppia (full climb)",
+      "id": 4193664,
+      "distance": 7132.7,
+      "elevation_low": 200.3,
+      "elevation_high": 1486.1
+    }
+  },
+  {
+    "name": "Red Kite Crossfire Hurricane TT",
+    "segment": {
+      "name": "Red Kite Crossfire Hurricane TT",
+      "id": 4803544,
+      "distance": 13111.4,
+      "elevation_low": 91.6,
+      "elevation_high": 487.2
+    }
+  },
+  {
+    "name": "Mt Diablo Descent - Summit to S Gate",
+    "segment": {
+      "name": "Mt Diablo Descent - Summit to S Gate",
+      "id": 4977672,
+      "distance": 16249.3,
+      "elevation_low": 226.6,
+      "elevation_high": 1164.1
+    }
+  },
+  {
+    "name": "Climbing Part of Page Mill to Altamont",
+    "segment": {
+      "name": "Climbing Part of Page Mill to Altamont",
+      "id": 5148844,
+      "distance": 1663.3,
+      "elevation_low": 108,
+      "elevation_high": 230.1
+    }
+  },
+  {
+    "name": "Moody - Tepa Way to Canyon Rd ",
+    "segment": {
+      "name": "Moody - Tepa Way to Canyon Rd ",
+      "id": 5260159,
+      "distance": 3213.6,
+      "elevation_low": 103.2,
+      "elevation_high": 189.1
+    }
+  },
+  {
+    "name": "Pine Creek Canyon Climb",
+    "segment": {
+      "name": "Pine Creek Canyon Climb",
+      "id": 5284935,
+      "distance": 12493.2,
+      "elevation_low": 1398,
+      "elevation_high": 2202
+    }
+  },
+  {
+    "name": "Magdalena \u003e Camino Hermosa \u003e Ravensbury Loop",
+    "segment": {
+      "name": "Magdalena \u003e Camino Hermosa \u003e Ravensbury Loop",
+      "id": 5370050,
+      "distance": 2995,
+      "elevation_low": 70,
+      "elevation_high": 164.6
+    }
+  },
+  {
+    "name": "Alviso Mini Crit 10 Lap",
+    "segment": {
+      "name": "Alviso Mini Crit 10 Lap",
+      "id": 5857638,
+      "distance": 25894.4,
+      "elevation_low": -12.6,
+      "elevation_high": -4.4
+    }
+  },
+  {
+    "name": "Summit Spring Rd",
+    "segment": {
+      "name": "Summit Spring Rd",
+      "id": 5872720,
+      "distance": 1009.5,
+      "elevation_low": 142.2,
+      "elevation_high": 281.5
+    }
+  },
+  {
+    "name": "Alpine/Vista Verde (Full)",
+    "segment": {
+      "name": "Alpine/Vista Verde (Full)",
+      "id": 6041318,
+      "distance": 5939,
+      "elevation_low": 197.5,
+      "elevation_high": 532.1
+    }
+  },
+  {
+    "name": "Mt. Hamilton",
+    "aliases": [
+      "Mount Hamilton",
+      "Hamilton"
+    ],
+    "segment": {
+      "name": "Mt. Hamilton (official to gate)",
+      "id": 6144714,
+      "distance": 29446.3,
+      "elevation_low": 133.8,
+      "elevation_high": 1275.4
+    }
+  },
+  {
+    "name": "Mount Diablo Descent to the first rise",
+    "segment": {
+      "name": "Mount Diablo Descent to the first rise",
+      "id": 6345751,
+      "distance": 15750.1,
+      "elevation_low": 137.6,
+      "elevation_high": 1115.2
+    }
+  },
+  {
+    "name": "Moody - New \"Official\"",
+    "segment": {
+      "name": "Moody - New \"Official\"",
+      "id": 6445920,
+      "distance": 799.2,
+      "elevation_low": 161.6,
+      "elevation_high": 253
+    }
+  },
+  {
+    "name": "Hwy 9 - Pierce to Top",
+    "segment": {
+      "name": "Hwy 9 - Pierce to Top",
+      "id": 6544581,
+      "distance": 8739.7,
+      "elevation_low": 219.4,
+      "elevation_high": 800.9
+    }
+  },
+  {
+    "name": "280 to Portola Road",
+    "segment": {
+      "name": "280 to Portola Road",
+      "id": 6726977,
+      "distance": 4438.1,
+      "elevation_low": 70.6,
+      "elevation_high": 170.8
+    }
+  },
+  {
+    "name": "Diablo :: North Gate to Junction",
+    "segment": {
+      "name": "Diablo :: North Gate to Junction",
+      "id": 6860329,
+      "distance": 10429.7,
+      "elevation_low": 95.8,
+      "elevation_high": 652.4
+    }
+  },
+  {
+    "name": "Dr. Carr's Prescribed Daily 10K",
+    "segment": {
+      "name": "Dr. Carr's Prescribed Daily 10K",
+      "id": 7200795,
+      "distance": 9954.1,
+      "elevation_low": 0.1,
+      "elevation_high": 22.2
+    }
+  },
+  {
+    "name": "secret unflaggable 84 descent",
+    "segment": {
+      "name": "secret unflaggable 84 descent",
+      "id": 7298237,
+      "distance": 4985.9,
+      "elevation_low": 113.8,
+      "elevation_high": 395.8
+    }
+  },
+  {
+    "name": "Red Kite  - The Bump Circuit Race",
+    "segment": {
+      "name": "Red Kite  - The Bump Circuit Race",
+      "id": 7315860,
+      "distance": 11906.2,
+      "elevation_low": 191.4,
+      "elevation_high": 312.2
+    }
+  },
+  {
+    "name": "Alviso Short 1/2 Crit",
+    "segment": {
+      "name": "Alviso Short 1/2 Crit",
+      "id": 7403550,
+      "distance": 12974.1,
+      "elevation_low": 20.4,
+      "elevation_high": 24.4
+    }
+  },
+  {
+    "name": "Huddart - Gate to Gate",
+    "segment": {
+      "name": "Huddart - Gate to Gate",
+      "id": 7563239,
+      "distance": 1482,
+      "elevation_low": 163.2,
+      "elevation_high": 280.4
+    }
+  },
+  {
+    "name": "RWG Loop: Stevens Cyn, RWG, Down 9, Pierce, Eden",
+    "segment": {
+      "name": "RWG Loop: Stevens Cyn, RWG, Down 9, Pierce, Eden",
+      "id": 7923107,
+      "distance": 14047,
+      "elevation_low": 190.8,
+      "elevation_high": 467.6
+    }
+  },
+  {
+    "name": "Magdalena: Frampton to Top",
+    "segment": {
+      "name": "Magdalena: Frampton to Top",
+      "id": 8050714,
+      "distance": 1539.4,
+      "elevation_low": 158.2,
+      "elevation_high": 241.6
+    }
+  },
+  {
+    "name": "Old La Honda",
+    "aliases": [
+      "OLH"
+    ],
+    "segment": {
+      "name": "Old La Honda (Bridge to Mailboxes)",
+      "id": 8109834,
+      "distance": 4808.9,
+      "elevation_low": 107.6,
+      "elevation_high": 498
+    }
+  },
+  {
+    "name": "Jamison Creek",
+    "aliases": [
+      "Jamison"
+    ],
+    "segment": {
+      "name": "Jamison Creek",
+      "id": 8574858,
+      "distance": 4652.2,
+      "elevation_low": 241.6,
+      "elevation_high": 695.3
+    }
+  },
+  {
+    "name": "H2W",
+    "segment": {
+      "name": "H2W",
+      "id": 8960509,
+      "distance": 3734.6,
+      "elevation_low": -15.2,
+      "elevation_high": -1
+    }
+  },
+  {
+    "name": "W2H",
+    "segment": {
+      "name": "W2H",
+      "id": 8960512,
+      "distance": 3701.9,
+      "elevation_low": -17.8,
+      "elevation_high": -5.8
+    }
+  },
+  {
+    "name": "Quicksilver - Randol to Prospect",
+    "segment": {
+      "name": "Quicksilver - Randol to Prospect",
+      "id": 9198027,
+      "distance": 2460.8,
+      "elevation_low": 252.4,
+      "elevation_high": 320.6
+    }
+  },
+  {
+    "name": "Three Bears Loop, clockwise",
+    "segment": {
+      "name": "Three Bears Loop, clockwise",
+      "id": 9395705,
+      "distance": 30167.8,
+      "elevation_low": 53,
+      "elevation_high": 287.6
+    }
+  },
+  {
+    "name": "CCCX SEASIDE BAY VIEW CIRCUIT COURSE",
+    "segment": {
+      "name": "CCCX SEASIDE BAY VIEW CIRCUIT COURSE",
+      "id": 9966880,
+      "distance": 3912.2,
+      "elevation_low": 127.3,
+      "elevation_high": 148.6
+    }
+  },
+  {
+    "name": "Kings Mountain via Huddart",
+    "segment": {
+      "name": "Kings Mountain via Huddart",
+      "id": 10022082,
+      "distance": 5996,
+      "elevation_low": 697.1,
+      "elevation_high": 1148.9
+    }
+  },
+  {
+    "name": "Pagemill via Moody",
+    "segment": {
+      "name": "Moody and Page Mill to Skyline",
+      "id": 10029832,
+      "distance": 13965.7,
+      "elevation_low": 102.7,
+      "elevation_high": 690.3
+    }
+  },
+  {
+    "name": "Mill Creek",
+    "segment": {
+      "name": "Mill Creek - LKHC 2015",
+      "id": 10749571,
+      "distance": 6789.1,
+      "elevation_low": 51.4,
+      "elevation_high": 451.6
+    }
+  },
+  {
+    "name": "Double Alviso CW Loops",
+    "segment": {
+      "name": "Double Alviso CW Loops",
+      "id": 10915267,
+      "distance": 18890.7,
+      "elevation_low": 0.3,
+      "elevation_high": 4.4
+    }
+  },
+  {
+    "name": "Red Gulch (correct GPS)",
+    "segment": {
+      "name": "Red Gulch (correct GPS)",
+      "id": 11710652,
+      "distance": 2012.9,
+      "elevation_low": 241.4,
+      "elevation_high": 453
+    }
+  },
+  {
+    "name": "Full Alpine—Pescadero Creek Rd to Skyline Ridge View",
+    "segment": {
+      "name": "Full Alpine—Pescadero Creek Rd to Skyline Ridge View",
+      "id": 11897754,
+      "distance": 11160.3,
+      "elevation_low": 137.9,
+      "elevation_high": 737.7
+    }
+  },
+  {
+    "name": "WCC 40km ITT",
+    "segment": {
+      "name": "WCC 40km ITT",
+      "id": 12347379,
+      "distance": 40009.9,
+      "elevation_low": 330.4,
+      "elevation_high": 358.6
+    }
+  },
+  {
+    "name": "Page Mill - Alexis to Gate 4 Plateau",
+    "segment": {
+      "name": "Page Mill - Alexis to Gate 4 Plateau",
+      "id": 12553303,
+      "distance": 5756,
+      "elevation_low": 123.8,
+      "elevation_high": 528.4
+    }
+  },
+  {
+    "name": "Eden -- Stevens Canyon to Lot",
+    "segment": {
+      "name": "Eden -- Stevens Canyon to Lot",
+      "id": 12587863,
+      "distance": 1164.2,
+      "elevation_low": 132.8,
+      "elevation_high": 207.4
+    }
+  },
+  {
+    "name": "Ravensbury - Camino Hermoso Circuit",
+    "segment": {
+      "name": "Ravensbury - Camino Hermoso Circuit",
+      "id": 12799822,
+      "distance": 1908.7,
+      "elevation_low": 108,
+      "elevation_high": 172.6
+    }
+  },
+  {
+    "name": "OSC-Charlie-Summit (LKHC)",
+    "segment": {
+      "name": "OSC-Charlie-Summit (LKHC)",
+      "id": 13498244,
+      "distance": 7633.1,
+      "elevation_low": 226.9,
+      "elevation_high": 650.4
+    }
+  },
+  {
+    "name": "Quad Montebello",
+    "segment": {
+      "name": "Quad Montebello",
+      "id": 13989922,
+      "distance": 58280.2,
+      "elevation_low": 146.4,
+      "elevation_high": 785.6
+    }
+  },
+  {
+    "name": "LA CRE-STAR",
+    "segment": {
+      "name": "LA CRE-STAR",
+      "id": 14412694,
+      "distance": 8074.2,
+      "elevation_low": 44.6,
+      "elevation_high": 133.6
+    }
+  },
+  {
+    "name": "Col de Mente",
+    "segment": {
+      "name": "Col de Menté (le vrai)",
+      "id": 15424801,
+      "distance": 9904.5,
+      "elevation_low": 503,
+      "elevation_high": 1358
+    }
+  },
+  {
+    "name": "Hicks W kink to Mt Umunhum Cube (full climb)",
+    "segment": {
+      "name": "Hicks W kink to Mt Umunhum Cube (full climb)",
+      "id": 16062372,
+      "distance": 10501.8,
+      "elevation_low": 178.4,
+      "elevation_high": 1005.2
+    }
+  },
+  {
+    "name": "Alviso TT",
+    "segment": {
+      "name": "Alviso TT",
+      "id": 17091030,
+      "distance": 9103.8,
+      "elevation_low": -10.2,
+      "elevation_high": -5.6
+    }
+  }
+]

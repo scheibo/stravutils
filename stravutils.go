@@ -67,7 +67,7 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 		}
 	}
 
-	service, err := getSegmentsService(tokens...)
+	service, err := GetSegmentsService(tokens...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +88,7 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]*strava.SegmentEffortSummary, error) {
 	var efforts []*strava.SegmentEffortSummary
 
-	service, err := getSegmentsService(tokens...)
+	service, err := GetSegmentsService(tokens...)
 	if err != nil {
 		return nil, err
 	}
@@ -113,12 +113,7 @@ func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]*strava.Segm
 	return efforts, nil
 }
 
-func resource(filename string) string {
-	_, src, _, _ := runtime.Caller(0)
-	return filepath.Join(filepath.Dir(src), filename)
-}
-
-func getSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
+func GetSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
 	token := os.Getenv("STRAVA_ACCESS_TOKEN")
 	if len(tokens) > 0 && tokens[0] != "" {
 		token = tokens[0]
@@ -129,4 +124,9 @@ func getSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
 
 	client := strava.NewClient(token)
 	return strava.NewSegmentsService(client), nil
+}
+
+func resource(filename string) string {
+	_, src, _, _ := runtime.Caller(0)
+	return filepath.Join(filepath.Dir(src), filename)
 }
