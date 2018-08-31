@@ -5,8 +5,11 @@
       "name": "Passo Stelvio",
       "id": 951992,
       "distance": 23983.3,
+      "average_grade": 0.07620302460462072,
       "elevation_low": 930.8,
-      "elevation_high": 2758.4
+      "elevation_high": 2758.4,
+      "total_elevation_gain": 1827.6000000000001,
+      "median_elevation": 1844.6
     }
   },
   {
@@ -15,8 +18,11 @@
       "name": "Mortirolo",
       "id": 614726,
       "distance": 11423.1,
+      "average_grade": 0.11011896945662736,
       "elevation_low": 576,
-      "elevation_high": 1833.9
+      "elevation_high": 1833.9,
+      "total_elevation_gain": 1257.9,
+      "median_elevation": 1204.95
     }
   },
   {
@@ -25,8 +31,11 @@
       "name": "Bormio to Gavia",
       "id": 4198001,
       "distance": 24575.4,
+      "average_grade": 0.057134370142500224,
       "elevation_low": 1214.3,
-      "elevation_high": 2618.4
+      "elevation_high": 2618.4,
+      "total_elevation_gain": 1404.1000000000001,
+      "median_elevation": 1916.35
     }
   },
   {
@@ -35,8 +44,11 @@
       "name": "La Villa - Passo Campolongo",
       "id": 4590517,
       "distance": 9382.9,
+      "average_grade": 0.04501806477741424,
       "elevation_low": 1427.1,
-      "elevation_high": 1849.5
+      "elevation_high": 1849.5,
+      "total_elevation_gain": 422.4000000000001,
+      "median_elevation": 1638.3
     }
   },
   {
@@ -45,8 +57,11 @@
       "name": "Pordoi da Arabba (r)",
       "id": 6971085,
       "distance": 9008.2,
+      "average_grade": 0.07184565173952621,
       "elevation_low": 1609.7,
-      "elevation_high": 2256.9
+      "elevation_high": 2256.9,
+      "total_elevation_gain": 647.2,
+      "median_elevation": 1933.3000000000002
     }
   },
   {
@@ -55,8 +70,11 @@
       "name": "Passo Sella",
       "id": 5220560,
       "distance": 5564,
+      "average_grade": 0.0740294751976995,
       "elevation_low": 1813,
-      "elevation_high": 2224.9
+      "elevation_high": 2224.9,
+      "total_elevation_gain": 411.9000000000001,
+      "median_elevation": 2018.95
     }
   },
   {
@@ -65,8 +83,11 @@
       "name": "Passo Giau",
       "id": 618935,
       "distance": 9473.4,
+      "average_grade": 0.09477062089640464,
       "elevation_low": 1336.4,
-      "elevation_high": 2234.2
+      "elevation_high": 2234.2,
+      "total_elevation_gain": 897.7999999999997,
+      "median_elevation": 1785.3
     }
   },
   {
@@ -75,8 +96,11 @@
       "name": "Passo Valparola (La Villa)",
       "id": 1440645,
       "distance": 13804.3,
+      "average_grade": 0.055258144201444474,
       "elevation_low": 1427.7,
-      "elevation_high": 2190.5
+      "elevation_high": 2190.5,
+      "total_elevation_gain": 762.8,
+      "median_elevation": 1809.1
     }
   },
   {
@@ -85,8 +109,11 @@
       "name": "Passo Falzarego (da/from Pocol)",
       "id": 1493815,
       "distance": 10251.7,
+      "average_grade": 0.05483968512539381,
       "elevation_low": 1523,
-      "elevation_high": 2085.2
+      "elevation_high": 2085.2,
+      "total_elevation_gain": 562.1999999999998,
+      "median_elevation": 1804.1
     }
   },
   {
@@ -95,8 +122,11 @@
       "name": "Passo di Giau (North)",
       "id": 656178,
       "distance": 8933.09,
+      "average_grade": 0.08095742906429915,
       "elevation_low": 1508.2,
-      "elevation_high": 2231.4
+      "elevation_high": 2231.4,
+      "total_elevation_gain": 723.2,
+      "median_elevation": 1869.8000000000002
     }
   },
   {
@@ -105,8 +135,11 @@
       "name": "Passo Campolongo (from Arabba)",
       "id": 635979,
       "distance": 3931.47,
+      "average_grade": 0.06923618900818271,
       "elevation_low": 1584.8,
-      "elevation_high": 1857
+      "elevation_high": 1857,
+      "total_elevation_gain": 272.20000000000005,
+      "median_elevation": 1720.9
     }
   },
   {
@@ -115,8 +148,11 @@
       "name": "Passo Sella",
       "id": 616162,
       "distance": 5342.25,
+      "average_grade": 0.0684168655529037,
       "elevation_low": 1877.7,
-      "elevation_high": 2243.2
+      "elevation_high": 2243.2,
+      "total_elevation_gain": 365.4999999999998,
+      "median_elevation": 2060.45
     }
   },
   {
@@ -125,8 +161,11 @@
       "name": "Bivio Sella / Passo Pordoi",
       "id": 7527286,
       "distance": 6460.7,
+      "average_grade": 0.07000789388146798,
       "elevation_low": 1802.6,
-      "elevation_high": 2254.9
+      "elevation_high": 2254.9,
+      "total_elevation_gain": 452.3000000000002,
+      "median_elevation": 2028.75
     }
   },
   {
@@ -135,8 +174,11 @@
       "name": "Montée d'engins (officiel) ",
       "id": 4804262,
       "distance": 11853.1,
+      "average_grade": 0.053555609924829786,
       "elevation_low": 322.8,
-      "elevation_high": 957.6
+      "elevation_high": 957.6,
+      "total_elevation_gain": 634.8,
+      "median_elevation": 640.2
     }
   },
   {
@@ -145,8 +187,11 @@
       "name": "Chrono col de Tourniol (GPS point ok)",
       "id": 5254742,
       "distance": 11615.6,
+      "average_grade": 0.06090946657942766,
       "elevation_low": 438.3,
-      "elevation_high": 1145.8
+      "elevation_high": 1145.8,
+      "total_elevation_gain": 707.5,
+      "median_elevation": 792.05
     }
   },
   {
@@ -155,8 +200,11 @@
       "name": "Col de Porte sud (vrai) ",
       "id": 4557535,
       "distance": 17509.5,
+      "average_grade": 0.05052114566378251,
       "elevation_low": 435,
-      "elevation_high": 1319.6
+      "elevation_high": 1319.6,
+      "total_elevation_gain": 884.5999999999999,
+      "median_elevation": 877.3
     }
   },
   {
@@ -165,8 +213,11 @@
       "name": "Col de Clémencière ",
       "id": 8061351,
       "distance": 5439.5,
+      "average_grade": 0.07445537273646476,
       "elevation_low": 216.7,
-      "elevation_high": 621.7
+      "elevation_high": 621.7,
+      "total_elevation_gain": 405.00000000000006,
+      "median_elevation": 419.20000000000005
     }
   },
   {
@@ -175,8 +226,11 @@
       "name": "Col de Porte par Clemencieres/Palaquit COMPLET",
       "id": 8261791,
       "distance": 16937.8,
+      "average_grade": 0.06611248214053773,
       "elevation_low": 218.5,
-      "elevation_high": 1338.3
+      "elevation_high": 1338.3,
+      "total_elevation_gain": 1119.8,
+      "median_elevation": 778.4
     }
   },
   {
@@ -185,8 +239,11 @@
       "name": "rond point du golf / rond point de chamrousse",
       "id": 7150583,
       "distance": 17931.1,
+      "average_grade": 0.07262242695651688,
       "elevation_low": 320.4,
-      "elevation_high": 1622.6
+      "elevation_high": 1622.6,
+      "total_elevation_gain": 1302.1999999999998,
+      "median_elevation": 971.5
     }
   },
   {
@@ -195,8 +252,11 @@
       "name": "St Nizier",
       "id": 780273,
       "distance": 14701.7,
+      "average_grade": 0.06210166171259106,
       "elevation_low": 127.2,
-      "elevation_high": 1040.2
+      "elevation_high": 1040.2,
+      "total_elevation_gain": 913,
+      "median_elevation": 583.7
     }
   },
   {
@@ -205,8 +265,11 @@
       "name": "Les Lacets de Montvernier",
       "id": 683404,
       "distance": 3792.38,
+      "average_grade": 0.07530890891735531,
       "elevation_low": 492.2,
-      "elevation_high": 777.8
+      "elevation_high": 777.8,
+      "total_elevation_gain": 285.59999999999997,
+      "median_elevation": 635
     }
   },
   {
@@ -215,8 +278,11 @@
       "name": "col de la croix de fer côté est",
       "id": 4257023,
       "distance": 28621.2,
+      "average_grade": 0.051210291671907535,
       "elevation_low": 597.3,
-      "elevation_high": 2063
+      "elevation_high": 2063,
+      "total_elevation_gain": 1465.7,
+      "median_elevation": 1330.15
     }
   },
   {
@@ -225,8 +291,11 @@
       "name": "Col du Coq",
       "id": 628908,
       "distance": 12617.2,
+      "average_grade": 0.08697650825856768,
       "elevation_low": 343.3,
-      "elevation_high": 1440.7
+      "elevation_high": 1440.7,
+      "total_elevation_gain": 1097.4,
+      "median_elevation": 892
     }
   },
   {
@@ -235,8 +304,11 @@
       "name": "Montaud par Veurey",
       "id": 4136112,
       "distance": 5761.9,
+      "average_grade": 0.08288932470192124,
       "elevation_low": 83,
-      "elevation_high": 560.6
+      "elevation_high": 560.6,
+      "total_elevation_gain": 477.6,
+      "median_elevation": 321.8
     }
   },
   {
@@ -245,8 +317,11 @@
       "name": "Col de Parmenie (Vrai)",
       "id": 693691,
       "distance": 4402.21,
+      "average_grade": 0.0637407120514469,
       "elevation_low": 271.4,
-      "elevation_high": 552
+      "elevation_high": 552,
+      "total_elevation_gain": 280.6,
+      "median_elevation": 411.7
     }
   },
   {
@@ -255,8 +330,11 @@
       "name": "Col de la Placette",
       "id": 641494,
       "distance": 5250.86,
+      "average_grade": 0.06398951790754277,
       "elevation_low": 250.1,
-      "elevation_high": 586.1
+      "elevation_high": 586.1,
+      "total_elevation_gain": 336,
+      "median_elevation": 418.1
     }
   },
   {
@@ -265,8 +343,11 @@
       "name": "4 seigneurs",
       "id": 773949,
       "distance": 8188.71,
+      "average_grade": 0.06853338315803101,
       "elevation_low": 249.2,
-      "elevation_high": 810.4
+      "elevation_high": 810.4,
+      "total_elevation_gain": 561.2,
+      "median_elevation": 529.8
     }
   },
   {
@@ -275,8 +356,11 @@
       "name": "Col de Vence (depuis La Tronche)",
       "id": 796527,
       "distance": 6780.82,
+      "average_grade": 0.0802557802743621,
       "elevation_low": 216,
-      "elevation_high": 760.2
+      "elevation_high": 760.2,
+      "total_elevation_gain": 544.2,
+      "median_elevation": 488.1
     }
   },
   {
@@ -285,8 +369,11 @@
       "name": "Quatre Seigneurs ( Depuis Rond Pt Tavernolles )",
       "id": 1205952,
       "distance": 5788.1,
+      "average_grade": 0.07563794682192775,
       "elevation_low": 369.2,
-      "elevation_high": 807
+      "elevation_high": 807,
+      "total_elevation_gain": 437.8,
+      "median_elevation": 588.1
     }
   },
   {
@@ -295,8 +382,11 @@
       "name": "Murianette - La Perrerée",
       "id": 2630371,
       "distance": 5320.27,
+      "average_grade": 0.06195174305063464,
       "elevation_low": 199.8,
-      "elevation_high": 529.4
+      "elevation_high": 529.4,
+      "total_elevation_gain": 329.59999999999997,
+      "median_elevation": 364.6
     }
   },
   {
@@ -305,8 +395,11 @@
       "name": "Féclaz (panneau) depuis St-Alban-Leysse",
       "id": 9722309,
       "distance": 16185.2,
+      "average_grade": 0.060839532412327306,
       "elevation_low": 311.4,
-      "elevation_high": 1296.1
+      "elevation_high": 1296.1,
+      "total_elevation_gain": 984.6999999999999,
+      "median_elevation": 803.75
     }
   },
   {
@@ -315,8 +408,11 @@
       "name": "Col De La Croix De Fer (To the Summit)",
       "id": 662232,
       "distance": 24305,
+      "average_grade": 0.051577864636905994,
       "elevation_low": 812.8,
-      "elevation_high": 2066.4
+      "elevation_high": 2066.4,
+      "total_elevation_gain": 1253.6000000000001,
+      "median_elevation": 1439.6
     }
   },
   {
@@ -325,8 +421,11 @@
       "name": "Alpe d'Huez (Official Crono Course)",
       "id": 683473,
       "distance": 13914.3,
+      "average_grade": 0.0789834918033965,
       "elevation_low": 733.2,
-      "elevation_high": 1832.2
+      "elevation_high": 1832.2,
+      "total_elevation_gain": 1099,
+      "median_elevation": 1282.7
     }
   },
   {
@@ -335,8 +434,11 @@
       "name": "Col Du Portillon ",
       "id": 3173,
       "distance": 7845.85,
+      "average_grade": 0.07762065295665861,
       "elevation_low": 688,
-      "elevation_high": 1297
+      "elevation_high": 1297,
+      "total_elevation_gain": 609,
+      "median_elevation": 992.5
     }
   },
   {
@@ -345,8 +447,11 @@
       "name": "Superbagnères (full length from Luchon)",
       "id": 1162584,
       "distance": 17148.5,
+      "average_grade": 0.06548094585532262,
       "elevation_low": 593.7,
-      "elevation_high": 1716.6
+      "elevation_high": 1716.6,
+      "total_elevation_gain": 1122.8999999999999,
+      "median_elevation": 1155.15
     }
   },
   {
@@ -355,8 +460,11 @@
       "name": "Col du Tourmalet depuis Ste Marie de Campan",
       "id": 4951896,
       "distance": 17270.8,
+      "average_grade": 0.07230701530907657,
       "elevation_low": 835.4,
-      "elevation_high": 2084.2
+      "elevation_high": 2084.2,
+      "total_elevation_gain": 1248.7999999999997,
+      "median_elevation": 1459.8
     }
   },
   {
@@ -365,8 +473,11 @@
       "name": "Col d'Aspin (BKool)",
       "id": 8425235,
       "distance": 13052.6,
+      "average_grade": 0.04573035257343365,
       "elevation_low": 892.8,
-      "elevation_high": 1489.7
+      "elevation_high": 1489.7,
+      "total_elevation_gain": 596.9000000000001,
+      "median_elevation": 1191.25
     }
   },
   {
@@ -375,8 +486,11 @@
       "name": "Payolle - Hourquette d'Ancizan",
       "id": 5128998,
       "distance": 9717.5,
+      "average_grade": 0.0464111139696424,
       "elevation_low": 1085.2,
-      "elevation_high": 1536.2
+      "elevation_high": 1536.2,
+      "total_elevation_gain": 451,
+      "median_elevation": 1310.7
     }
   },
   {
@@ -385,8 +499,11 @@
       "name": "Port de Bales -- Main Course",
       "id": 5526966,
       "distance": 10597.6,
+      "average_grade": 0.07807428096927606,
       "elevation_low": 728.4,
-      "elevation_high": 1555.8
+      "elevation_high": 1555.8,
+      "total_elevation_gain": 827.4,
+      "median_elevation": 1142.1
     }
   },
   {
@@ -395,8 +512,11 @@
       "name": "Peyresourde (from D51",
       "id": 1530448,
       "distance": 9696.09,
+      "average_grade": 0.07386482592467684,
       "elevation_low": 838.4,
-      "elevation_high": 1554.6
+      "elevation_high": 1554.6,
+      "total_elevation_gain": 716.1999999999999,
+      "median_elevation": 1196.5
     }
   },
   {
@@ -405,8 +525,11 @@
       "name": "Luz Ardiden (till junction)",
       "id": 7670494,
       "distance": 11653.2,
+      "average_grade": 0.07638245288847698,
       "elevation_low": 736.5,
-      "elevation_high": 1626.6
+      "elevation_high": 1626.6,
+      "total_elevation_gain": 890.0999999999999,
+      "median_elevation": 1181.55
     }
   },
   {
@@ -415,8 +538,11 @@
       "name": "Hautacam 2",
       "id": 669129,
       "distance": 12849.3,
+      "average_grade": 0.07973975236005074,
       "elevation_low": 475.2,
-      "elevation_high": 1499.8
+      "elevation_high": 1499.8,
+      "total_elevation_gain": 1024.6,
+      "median_elevation": 987.5
     }
   },
   {
@@ -425,8 +551,11 @@
       "name": "Col de Menté (le vrai)",
       "id": 15424801,
       "distance": 9904.5,
+      "average_grade": 0.08632439800090867,
       "elevation_low": 503,
-      "elevation_high": 1358
+      "elevation_high": 1358,
+      "total_elevation_gain": 855,
+      "median_elevation": 930.5
     }
   },
   {
@@ -435,8 +564,11 @@
       "name": "Col de Portet d'Aspet (west)",
       "id": 613956,
       "distance": 4487.89,
+      "average_grade": 0.09639273689863165,
       "elevation_low": 615.4,
-      "elevation_high": 1048
+      "elevation_high": 1048,
+      "total_elevation_gain": 432.6,
+      "median_elevation": 831.7
     }
   },
   {
@@ -445,8 +577,11 @@
       "name": "Col des Ares Time Trial Course",
       "id": 653246,
       "distance": 6629.95,
+      "average_grade": 0.04437439196374031,
       "elevation_low": 513.8,
-      "elevation_high": 808
+      "elevation_high": 808,
+      "total_elevation_gain": 294.20000000000005,
+      "median_elevation": 660.9
     }
   },
   {
@@ -455,8 +590,11 @@
       "name": "Mt. Ventoux via Bedoin",
       "id": 7711822,
       "distance": 20036.1,
+      "average_grade": 0.07681634649457729,
       "elevation_low": 346.2,
-      "elevation_high": 1885.3
+      "elevation_high": 1885.3,
+      "total_elevation_gain": 1539.1,
+      "median_elevation": 1115.75
     }
   },
   {
@@ -465,8 +603,11 @@
       "name": "Grand Colombier",
       "id": 644707,
       "distance": 16352.8,
+      "average_grade": 0.07209774472873147,
       "elevation_low": 316,
-      "elevation_high": 1495
+      "elevation_high": 1495,
+      "total_elevation_gain": 1179,
+      "median_elevation": 905.5
     }
   },
   {
@@ -475,8 +616,11 @@
       "name": "Col de l'Iseran",
       "id": 628895,
       "distance": 32268.8,
+      "average_grade": 0.042601522213407385,
       "elevation_low": 1405.1,
-      "elevation_high": 2779.8
+      "elevation_high": 2779.8,
+      "total_elevation_gain": 1374.7000000000003,
+      "median_elevation": 2092.45
     }
   },
   {
@@ -485,8 +629,11 @@
       "name": "Col d'Izoard",
       "id": 616086,
       "distance": 18882.9,
+      "average_grade": 0.05895810495209952,
       "elevation_low": 1257.5,
-      "elevation_high": 2370.8
+      "elevation_high": 2370.8,
+      "total_elevation_gain": 1113.3000000000002,
+      "median_elevation": 1814.15
     }
   },
   {
@@ -495,8 +642,11 @@
       "name": "Col du Télégraphe",
       "id": 616079,
       "distance": 12116.3,
+      "average_grade": 0.06863481425847826,
       "elevation_low": 733.1,
-      "elevation_high": 1564.7
+      "elevation_high": 1564.7,
+      "total_elevation_gain": 831.6,
+      "median_elevation": 1148.9
     }
   },
   {
@@ -505,8 +655,11 @@
       "name": "Col du Galibier",
       "id": 5211636,
       "distance": 17608.3,
+      "average_grade": 0.06812696285274558,
       "elevation_low": 1430.6,
-      "elevation_high": 2630.2
+      "elevation_high": 2630.2,
+      "total_elevation_gain": 1199.6,
+      "median_elevation": 2030.3999999999999
     }
   },
   {
@@ -515,8 +668,11 @@
       "name": "Col du Cucheron Nord",
       "id": 5208811,
       "distance": 8065.4,
+      "average_grade": 0.05978624742728198,
       "elevation_low": 631.8,
-      "elevation_high": 1114
+      "elevation_high": 1114,
+      "total_elevation_gain": 482.20000000000005,
+      "median_elevation": 872.9
     }
   },
   {
@@ -525,8 +681,11 @@
       "name": "Rampe de Laffrey, jusqu'au panneau",
       "id": 7278873,
       "distance": 6243,
+      "average_grade": 0.09703668108281274,
       "elevation_low": 310.5,
-      "elevation_high": 916.3
+      "elevation_high": 916.3,
+      "total_elevation_gain": 605.8,
+      "median_elevation": 613.4
     }
   },
   {
@@ -535,8 +694,11 @@
       "name": "Col de Romeyere (depuis Herbeys)",
       "id": 835653,
       "distance": 7759.66,
+      "average_grade": 0.0534301760644152,
       "elevation_low": 627.4,
-      "elevation_high": 1042
+      "elevation_high": 1042,
+      "total_elevation_gain": 414.6,
+      "median_elevation": 834.7
     }
   },
   {
@@ -545,8 +707,11 @@
       "name": "Col d'Herbouilly",
       "id": 5012965,
       "distance": 6286.7,
+      "average_grade": 0.07157968409499421,
       "elevation_low": 831.4,
-      "elevation_high": 1281.4
+      "elevation_high": 1281.4,
+      "total_elevation_gain": 450.0000000000001,
+      "median_elevation": 1056.4
     }
   },
   {
@@ -555,8 +720,11 @@
       "name": "Col de Palaquit",
       "id": 4610491,
       "distance": 7570.2,
+      "average_grade": 0.07632559245462471,
       "elevation_low": 563.8,
-      "elevation_high": 1141.6
+      "elevation_high": 1141.6,
+      "total_elevation_gain": 577.8,
+      "median_elevation": 852.6999999999999
     }
   },
   {
@@ -565,8 +733,11 @@
       "name": "Col du Cucheron (X la diat-sommet)",
       "id": 824581,
       "distance": 4429.96,
+      "average_grade": 0.07498939042338984,
       "elevation_low": 805,
-      "elevation_high": 1137.2
+      "elevation_high": 1137.2,
+      "total_elevation_gain": 332.20000000000005,
+      "median_elevation": 971.1
     }
   },
   {
@@ -575,8 +746,11 @@
       "name": "Col du Granier par St PIerre d'entremont",
       "id": 4500531,
       "distance": 9168.4,
+      "average_grade": 0.052440992975873665,
       "elevation_low": 647.4,
-      "elevation_high": 1128.2
+      "elevation_high": 1128.2,
+      "total_elevation_gain": 480.80000000000007,
+      "median_elevation": 887.8
     }
   },
   {
@@ -585,8 +759,11 @@
       "name": "Col de la Madaleine",
       "id": 645415,
       "distance": 24709.7,
+      "average_grade": 0.05982266073647191,
       "elevation_low": 493,
-      "elevation_high": 1971.2
+      "elevation_high": 1971.2,
+      "total_elevation_gain": 1478.2,
+      "median_elevation": 1232.1
     }
   },
   {
@@ -595,8 +772,11 @@
       "name": "Col du Glandon",
       "id": 9983525,
       "distance": 19522.3,
+      "average_grade": 0.07273220880736389,
       "elevation_low": 510.6,
-      "elevation_high": 1930.5
+      "elevation_high": 1930.5,
+      "total_elevation_gain": 1419.9,
+      "median_elevation": 1220.55
     }
   },
   {
@@ -605,8 +785,11 @@
       "name": "St Nizier, final depuis la tour sans venin",
       "id": 780274,
       "distance": 7341.58,
+      "average_grade": 0.06535377943167547,
       "elevation_low": 528.8,
-      "elevation_high": 1008.6
+      "elevation_high": 1008.6,
+      "total_elevation_gain": 479.80000000000007,
+      "median_elevation": 768.7
     }
   },
   {
@@ -615,8 +798,11 @@
       "name": "Montée de Montaud",
       "id": 6903988,
       "distance": 6272.4,
+      "average_grade": 0.08025636120145399,
       "elevation_low": 192.6,
-      "elevation_high": 696
+      "elevation_high": 696,
+      "total_elevation_gain": 503.4,
+      "median_elevation": 444.3
     }
   },
   {
@@ -625,8 +811,11 @@
       "name": "Col de Chatain ( Depuis Tullins )",
       "id": 1375907,
       "distance": 6965.24,
+      "average_grade": 0.06452038982145626,
       "elevation_low": 229.8,
-      "elevation_high": 679.2
+      "elevation_high": 679.2,
+      "total_elevation_gain": 449.40000000000003,
+      "median_elevation": 454.5
     }
   },
   {
@@ -635,8 +824,11 @@
       "name": "Col des Deux par Saint Guillaume",
       "id": 5791336,
       "distance": 10586.2,
+      "average_grade": 0.048327067314050356,
       "elevation_low": 702.2,
-      "elevation_high": 1213.8
+      "elevation_high": 1213.8,
+      "total_elevation_gain": 511.5999999999999,
+      "median_elevation": 958
     }
   },
   {
@@ -645,8 +837,11 @@
       "name": "Col de l'Arzelier",
       "id": 653145,
       "distance": 11811.2,
+      "average_grade": 0.06651314007044161,
       "elevation_low": 309.4,
-      "elevation_high": 1095
+      "elevation_high": 1095,
+      "total_elevation_gain": 785.6,
+      "median_elevation": 702.2
     }
   },
   {
@@ -655,8 +850,11 @@
       "name": "Route de Proveyzieux - Col de la Charmette",
       "id": 8069686,
       "distance": 11714.7,
+      "average_grade": 0.08772738525100941,
       "elevation_low": 253.3,
-      "elevation_high": 1281
+      "elevation_high": 1281,
+      "total_elevation_gain": 1027.7,
+      "median_elevation": 767.15
     }
   }
 ]

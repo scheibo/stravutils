@@ -8,8 +8,11 @@
       "name": "Old La Honda (Bridge to Mailboxes)",
       "id": 8109834,
       "distance": 4808.9,
+      "average_grade": 0.08118280687891202,
       "elevation_low": 107.6,
-      "elevation_high": 498
+      "elevation_high": 498,
+      "total_elevation_gain": 390.4,
+      "median_elevation": 302.8
     }
   },
   {
@@ -21,8 +24,11 @@
       "name": "Kings Mountain (Tripp to Skyline)",
       "id": 611413,
       "distance": 7024.13,
+      "average_grade": 0.06904769701016354,
       "elevation_low": 185.2,
-      "elevation_high": 670.2
+      "elevation_high": 670.2,
+      "total_elevation_gain": 485.00000000000006,
+      "median_elevation": 427.70000000000005
     }
   },
   {
@@ -31,8 +37,11 @@
       "name": "Montebello",
       "id": 627158,
       "distance": 8297.61,
+      "average_grade": 0.07129763871765483,
       "elevation_low": 188.6,
-      "elevation_high": 780.2
+      "elevation_high": 780.2,
+      "total_elevation_gain": 591.6,
+      "median_elevation": 484.40000000000003
     }
   },
   {
@@ -44,8 +53,11 @@
       "name": "Saratoga Spring to Stop Sign (Skyline)",
       "id": 11870082,
       "distance": 7650.1,
+      "average_grade": 0.0715415484764905,
       "elevation_low": 260.6,
-      "elevation_high": 807.9
+      "elevation_high": 807.9,
+      "total_elevation_gain": 547.3,
+      "median_elevation": 534.25
     }
   },
   {
@@ -57,8 +69,11 @@
       "name": "Tunitas Creek - Lobitos Creek Cutoff to Skyline",
       "id": 11834517,
       "distance": 11475.9,
+      "average_grade": 0.04996558004165252,
       "elevation_low": 62.8,
-      "elevation_high": 636.2
+      "elevation_high": 636.2,
+      "total_elevation_gain": 573.4000000000001,
+      "median_elevation": 349.5
     }
   },
   {
@@ -70,8 +85,11 @@
       "name": "Stinson to Pantoll (Climb up Panoramic Hwy)",
       "id": 626859,
       "distance": 5611.8,
+      "average_grade": 0.07323853309098685,
       "elevation_low": 30.2,
-      "elevation_high": 441.2
+      "elevation_high": 441.2,
+      "total_elevation_gain": 411,
+      "median_elevation": 235.7
     }
   },
   {
@@ -83,8 +101,11 @@
       "name": "BoFax Climb",
       "id": 1707949,
       "distance": 6335.2,
+      "average_grade": 0.07147367091804521,
       "elevation_low": 13.8,
-      "elevation_high": 466.6
+      "elevation_high": 466.6,
+      "total_elevation_gain": 452.8,
+      "median_elevation": 240.20000000000002
     }
   },
   {
@@ -98,8 +119,11 @@
       "name": "Athenian School to Mt. Diablo Summit",
       "id": 6479369,
       "distance": 17731.2,
+      "average_grade": 0.05588454250135354,
       "elevation_low": 178.2,
-      "elevation_high": 1169.1
+      "elevation_high": 1169.1,
+      "total_elevation_gain": 990.8999999999999,
+      "median_elevation": 673.65
     }
   },
   {
@@ -111,8 +135,11 @@
       "name": "West Alpine - full length",
       "id": 627058,
       "distance": 11883.5,
+      "average_grade": 0.04841166323052972,
       "elevation_low": 160.1,
-      "elevation_high": 735.4
+      "elevation_high": 735.4,
+      "total_elevation_gain": 575.3,
+      "median_elevation": 447.75
     }
   },
   {
@@ -121,8 +148,11 @@
       "name": "Palomares Road from Niles Canyon (Low-Key Hillclimbs)",
       "id": 809073,
       "distance": 7273.59,
+      "average_grade": 0.04433849034658264,
       "elevation_low": 45.3,
-      "elevation_high": 367.8
+      "elevation_high": 367.8,
+      "total_elevation_gain": 322.5,
+      "median_elevation": 206.55
     }
   },
   {
@@ -134,8 +164,11 @@
       "name": "Page Mill Road (Low-Key Hillclimbs)",
       "id": 794318,
       "distance": 13371,
+      "average_grade": 0.04527709221449405,
       "elevation_low": 86,
-      "elevation_high": 691.4
+      "elevation_high": 691.4,
+      "total_elevation_gain": 605.4,
+      "median_elevation": 388.7
     }
   },
   {
@@ -148,8 +181,11 @@
       "name": "Diablo North Gate entrance sign to summit parking lot (LKHC)",
       "id": 745209,
       "distance": 17496.5,
+      "average_grade": 0.06072643100048581,
       "elevation_low": 106.5,
-      "elevation_high": 1169
+      "elevation_high": 1169,
+      "total_elevation_gain": 1062.5,
+      "median_elevation": 637.75
     }
   },
   {
@@ -161,8 +197,11 @@
       "name": "Patterson Pass (East)",
       "id": 3983,
       "distance": 6289.65,
+      "average_grade": 0.05410475940632626,
       "elevation_low": 137.6,
-      "elevation_high": 477.9
+      "elevation_high": 477.9,
+      "total_elevation_gain": 340.29999999999995,
+      "median_elevation": 307.75
     }
   },
   {
@@ -175,8 +214,11 @@
       "name": "Mt. Hamilton (official to gate)",
       "id": 6144714,
       "distance": 29446.3,
+      "average_grade": 0.038768877583940944,
       "elevation_low": 133.8,
-      "elevation_high": 1275.4
+      "elevation_high": 1275.4,
+      "total_elevation_gain": 1141.6000000000001,
+      "median_elevation": 704.6
     }
   },
   {
@@ -189,8 +231,11 @@
       "name": "Sierra Road - Start at Fulbar",
       "id": 789267,
       "distance": 5745.35,
+      "average_grade": 0.09487672639612904,
       "elevation_low": 66.9,
-      "elevation_high": 612
+      "elevation_high": 612,
+      "total_elevation_gain": 545.1,
+      "median_elevation": 339.45
     }
   },
   {
@@ -203,8 +248,11 @@
       "name": "Mt Charlie Climb",
       "id": 646647,
       "distance": 6480.65,
+      "average_grade": 0.05098254033160254,
       "elevation_low": 259,
-      "elevation_high": 589.4
+      "elevation_high": 589.4,
+      "total_elevation_gain": 330.4,
+      "median_elevation": 424.2
     }
   },
   {
@@ -213,8 +261,11 @@
       "name": "Morgan Territory Road From North",
       "id": 1475,
       "distance": 7587.7,
+      "average_grade": 0.046443586330508595,
       "elevation_low": 291.8,
-      "elevation_high": 644.2
+      "elevation_high": 644.2,
+      "total_elevation_gain": 352.40000000000003,
+      "median_elevation": 468
     }
   },
   {
@@ -223,8 +274,11 @@
       "name": "San Bruno Hill Climb",
       "id": 378701,
       "distance": 5925.45,
+      "average_grade": 0.05962416356563637,
       "elevation_low": 37.5,
-      "elevation_high": 390.8
+      "elevation_high": 390.8,
+      "total_elevation_gain": 353.3,
+      "median_elevation": 214.15
     }
   },
   {
@@ -236,8 +290,11 @@
       "name": "Henry Coe Hill Climb",
       "id": 580717,
       "distance": 10879.5,
+      "average_grade": 0.05553564042465187,
       "elevation_low": 190.5,
-      "elevation_high": 794.7
+      "elevation_high": 794.7,
+      "total_elevation_gain": 604.2,
+      "median_elevation": 492.6
     }
   },
   {
@@ -246,8 +303,11 @@
       "name": "Bonny Doon Rd (to Smith Grade)",
       "id": 619799,
       "distance": 4715.57,
+      "average_grade": 0.07350118861558624,
       "elevation_low": 19.2,
-      "elevation_high": 365.8
+      "elevation_high": 365.8,
+      "total_elevation_gain": 346.6,
+      "median_elevation": 192.5
     }
   },
   {
@@ -260,8 +320,11 @@
       "name": "Quimby Rd",
       "id": 120709,
       "distance": 5088.96,
+      "average_grade": 0.10129771112368735,
       "elevation_low": 152.6,
-      "elevation_high": 668.1
+      "elevation_high": 668.1,
+      "total_elevation_gain": 515.5,
+      "median_elevation": 410.35
     }
   },
   {
@@ -270,8 +333,11 @@
       "name": "Montevina",
       "id": 744314,
       "distance": 5537.71,
+      "average_grade": 0.0869673565426864,
       "elevation_low": 213.8,
-      "elevation_high": 695.4
+      "elevation_high": 695.4,
+      "total_elevation_gain": 481.59999999999997,
+      "median_elevation": 454.6
     }
   },
   {
@@ -283,8 +349,11 @@
       "name": "Calaveras to Top Sierra - Full Climb",
       "id": 671251,
       "distance": 13756.3,
+      "average_grade": 0.04080312293276535,
       "elevation_low": 4.2,
-      "elevation_high": 565.5
+      "elevation_high": 565.5,
+      "total_elevation_gain": 561.3,
+      "median_elevation": 284.85
     }
   },
   {
@@ -293,8 +362,11 @@
       "name": "Felton Empire Climb",
       "id": 648888,
       "distance": 5842.64,
+      "average_grade": 0.07897115002806951,
       "elevation_low": 82.8,
-      "elevation_high": 544.2
+      "elevation_high": 544.2,
+      "total_elevation_gain": 461.40000000000003,
+      "median_elevation": 313.5
     }
   },
   {
@@ -306,8 +378,11 @@
       "name": "Jamison Creek",
       "id": 8574858,
       "distance": 4652.2,
+      "average_grade": 0.09752375220325867,
       "elevation_low": 241.6,
-      "elevation_high": 695.3
+      "elevation_high": 695.3,
+      "total_elevation_gain": 453.69999999999993,
+      "median_elevation": 468.45
     }
   },
   {
@@ -316,8 +391,11 @@
       "name": "LKHC Soda Springs Rd.",
       "id": 2719563,
       "distance": 8436.85,
+      "average_grade": 0.08513841066274735,
       "elevation_low": 215.4,
-      "elevation_high": 933.7
+      "elevation_high": 933.7,
+      "total_elevation_gain": 718.3000000000001,
+      "median_elevation": 574.5500000000001
     }
   },
   {
@@ -330,8 +408,11 @@
       "name": "Black Road",
       "id": 268865,
       "distance": 7301.89,
+      "average_grade": 0.07348782301568497,
       "elevation_low": 208.4,
-      "elevation_high": 745
+      "elevation_high": 745,
+      "total_elevation_gain": 536.6,
+      "median_elevation": 476.7
     }
   },
   {
@@ -344,8 +425,11 @@
       "name": "Umunhum peak (N. Hicks)",
       "id": 611999,
       "distance": 8281.49,
+      "average_grade": 0.09790508712804097,
       "elevation_low": 197.6,
-      "elevation_high": 1008.4
+      "elevation_high": 1008.4,
+      "total_elevation_gain": 810.8,
+      "median_elevation": 603
     }
   },
   {
@@ -354,8 +438,11 @@
       "name": "Bohlman Rd",
       "id": 384773,
       "distance": 6685.44,
+      "average_grade": 0.0881318207926479,
       "elevation_low": 160.6,
-      "elevation_high": 749.8
+      "elevation_high": 749.8,
+      "total_elevation_gain": 589.1999999999999,
+      "median_elevation": 455.2
     }
   },
   {
@@ -364,8 +451,11 @@
       "name": "Alba Road",
       "id": 326187,
       "distance": 6124.5,
+      "average_grade": 0.10440035921299698,
       "elevation_low": 113,
-      "elevation_high": 752.4
+      "elevation_high": 752.4,
+      "total_elevation_gain": 639.4,
+      "median_elevation": 432.7
     }
   },
   {
@@ -374,8 +464,11 @@
       "name": "RWG \u0026 Highway 9",
       "id": 614409,
       "distance": 7082.9,
+      "average_grade": 0.08029197080291972,
       "elevation_low": 247.7,
-      "elevation_high": 816.4
+      "elevation_high": 816.4,
+      "total_elevation_gain": 568.7,
+      "median_elevation": 532.05
     }
   },
   {
@@ -384,8 +477,11 @@
       "name": "Redwood Gulch Climb (no DH at end) ",
       "id": 806794,
       "distance": 1922.12,
+      "average_grade": 0.10842195076269953,
       "elevation_low": 219.4,
-      "elevation_high": 427.8
+      "elevation_high": 427.8,
+      "total_elevation_gain": 208.4,
+      "median_elevation": 323.6
     }
   },
   {
@@ -394,8 +490,11 @@
       "name": "Highway 9 - HWY236 to Skyline",
       "id": 3799,
       "distance": 9693.6,
+      "average_grade": 0.042120574399603865,
       "elevation_low": 397.9,
-      "elevation_high": 806.2
+      "elevation_high": 806.2,
+      "total_elevation_gain": 408.30000000000007,
+      "median_elevation": 602.05
     }
   },
   {
@@ -404,8 +503,11 @@
       "name": "Moody and Page Mill to Skyline",
       "id": 10029832,
       "distance": 13965.7,
+      "average_grade": 0.04207451112368158,
       "elevation_low": 102.7,
-      "elevation_high": 690.3
+      "elevation_high": 690.3,
+      "total_elevation_gain": 587.5999999999999,
+      "median_elevation": 396.5
     }
   },
   {
@@ -414,8 +516,11 @@
       "name": "HWY 92 climb from Crystal Springs",
       "id": 921320,
       "distance": 2728.01,
+      "average_grade": 0.060263708710745184,
       "elevation_low": 96.3,
-      "elevation_high": 260.7
+      "elevation_high": 260.7,
+      "total_elevation_gain": 164.39999999999998,
+      "median_elevation": 178.5
     }
   },
   {
@@ -424,8 +529,11 @@
       "name": "Skyline Climb--92 to MPROSD Lot",
       "id": 787299,
       "distance": 6810.76,
+      "average_grade": 0.05135990697073454,
       "elevation_low": 260,
-      "elevation_high": 609.8
+      "elevation_high": 609.8,
+      "total_elevation_gain": 349.79999999999995,
+      "median_elevation": 434.9
     }
   },
   {
@@ -434,8 +542,11 @@
       "name": "84 Pescadero to Skyline",
       "id": 658330,
       "distance": 10959.4,
+      "average_grade": 0.030457871781301892,
       "elevation_low": 117.4,
-      "elevation_high": 451.2
+      "elevation_high": 451.2,
+      "total_elevation_gain": 333.79999999999995,
+      "median_elevation": 284.3
     }
   },
   {
@@ -444,8 +555,11 @@
       "name": "Hwy 84 climb (Portola Rd to Skyline)",
       "id": 283479,
       "distance": 5183.18,
+      "average_grade": 0.06119795183651734,
       "elevation_low": 133.3,
-      "elevation_high": 450.5
+      "elevation_high": 450.5,
+      "total_elevation_gain": 317.2,
+      "median_elevation": 291.9
     }
   },
   {
@@ -454,8 +568,11 @@
       "name": "Henry Coe Hill Climb",
       "id": 580717,
       "distance": 10879.5,
+      "average_grade": 0.05553564042465187,
       "elevation_low": 190.5,
-      "elevation_high": 794.7
+      "elevation_high": 794.7,
+      "total_elevation_gain": 604.2,
+      "median_elevation": 492.6
     }
   },
   {
@@ -464,8 +581,11 @@
       "name": "Mill Creek - LKHC 2015",
       "id": 10749571,
       "distance": 6789.1,
+      "average_grade": 0.05894743043996996,
       "elevation_low": 51.4,
-      "elevation_high": 451.6
+      "elevation_high": 451.6,
+      "total_elevation_gain": 400.20000000000005,
+      "median_elevation": 251.5
     }
   },
   {
@@ -474,8 +594,11 @@
       "name": "Mt Hamilton Backside",
       "id": 302113,
       "distance": 6907.82,
+      "average_grade": 0.08383252603571024,
       "elevation_low": 694,
-      "elevation_high": 1273.1
+      "elevation_high": 1273.1,
+      "total_elevation_gain": 579.0999999999999,
+      "median_elevation": 983.55
     }
   },
   {
@@ -484,8 +607,11 @@
       "name": "West OLH (84 to Skyline)",
       "id": 622755,
       "distance": 3883.16,
+      "average_grade": 0.043675769218883595,
       "elevation_low": 340,
-      "elevation_high": 509.6
+      "elevation_high": 509.6,
+      "total_elevation_gain": 169.60000000000002,
+      "median_elevation": 424.8
     }
   },
   {
@@ -494,8 +620,11 @@
       "name": "Black Road",
       "id": 268865,
       "distance": 7301.89,
+      "average_grade": 0.07348782301568497,
       "elevation_low": 208.4,
-      "elevation_high": 745
+      "elevation_high": 745,
+      "total_elevation_gain": 536.6,
+      "median_elevation": 476.7
     }
   },
   {
@@ -504,8 +633,11 @@
       "name": "Metcalf Rd",
       "id": 800,
       "distance": 2814.39,
+      "average_grade": 0.10453419746374881,
       "elevation_low": 90,
-      "elevation_high": 384.2
+      "elevation_high": 384.2,
+      "total_elevation_gain": 294.2,
+      "median_elevation": 237.1
     }
   },
   {
@@ -514,8 +646,11 @@
       "name": "Bohlman - On Orbit - Bohlman",
       "id": 637762,
       "distance": 6700.7,
+      "average_grade": 0.08916978823108034,
       "elevation_low": 178.8,
-      "elevation_high": 776.3
+      "elevation_high": 776.3,
+      "total_elevation_gain": 597.5,
+      "median_elevation": 477.54999999999995
     }
   }
 ]

@@ -12,6 +12,7 @@ import (
 )
 
 const MAX_PER_PAGE = 200
+const CLIMB_THRESHOLD = 0.03
 
 type Climb struct {
 	Name    string   `json:"name"`
@@ -20,23 +21,14 @@ type Climb struct {
 }
 
 type Segment struct {
-	Name          string  `json:"name"`
-	ID            int64   `json:"id"`
-	Distance      float64 `json:"distance"`
-	ElevationLow  float64 `json:"elevation_low"`
-	ElevationHigh float64 `json:"elevation_high"`
-}
-
-func (s *Segment) TotalElevationGain() float64 {
-	return s.ElevationHigh - s.ElevationLow
-}
-
-func (s *Segment) MedianElevation() float64 {
-	return (s.ElevationLow + s.ElevationHigh) / 2.0
-}
-
-func (s *Segment) AverageGrade() float64 {
-	return s.TotalElevationGain() / s.Distance * 100.0
+	Name               string  `json:"name"`
+	ID                 int64   `json:"id"`
+	Distance           float64 `json:"distance"`
+	AverageGrade       float64 `json:"average_grade"`
+	ElevationLow       float64 `json:"elevation_low"`
+	ElevationHigh      float64 `json:"elevation_high"`
+	TotalElevationGain float64 `json:"total_elevation_gain"`
+	MedianElevation    float64 `json:"median_elevation"`
 }
 
 func GetClimbs(files ...string) ([]Climb, error) {
@@ -76,12 +68,22 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 		return nil, err
 	}
 
+	gain := s.ElevationHigh - s.ElevationLow
+	gr := gain / s.Distance
+	if s.AverageGrade < CLIMB_THRESHOLD {
+		gain = s.TotalElevationGain
+		gr = s.AverageGrade
+	}
+
 	return &Segment{
-		ID:            segmentID,
-		Name:          s.Name,
-		Distance:      s.Distance,
-		ElevationHigh: s.ElevationHigh,
-		ElevationLow:  s.ElevationLow,
+		ID:                 segmentID,
+		Name:               s.Name,
+		Distance:           s.Distance,
+		AverageGrade:       gr,
+		ElevationLow:       s.ElevationLow,
+		ElevationHigh:      s.ElevationHigh,
+		TotalElevationGain: gain,
+		MedianElevation:    (s.ElevationHigh + s.ElevationLow) / 2,
 	}, nil
 }
 

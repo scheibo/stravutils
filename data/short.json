@@ -8,8 +8,11 @@
       "name": "Old La Honda (Bridge to Mailboxes)",
       "id": 8109834,
       "distance": 4808.9,
+      "average_grade": 0.08118280687891202,
       "elevation_low": 107.6,
-      "elevation_high": 498
+      "elevation_high": 498,
+      "total_elevation_gain": 390.4,
+      "median_elevation": 302.8
     }
   },
   {
@@ -21,8 +24,11 @@
       "name": "Kings Mountain (Tripp to Skyline)",
       "id": 611413,
       "distance": 7024.13,
+      "average_grade": 0.06904769701016354,
       "elevation_low": 185.2,
-      "elevation_high": 670.2
+      "elevation_high": 670.2,
+      "total_elevation_gain": 485.00000000000006,
+      "median_elevation": 427.70000000000005
     }
   },
   {
@@ -31,8 +37,11 @@
       "name": "Montebello",
       "id": 627158,
       "distance": 8297.61,
+      "average_grade": 0.07129763871765483,
       "elevation_low": 188.6,
-      "elevation_high": 780.2
+      "elevation_high": 780.2,
+      "total_elevation_gain": 591.6,
+      "median_elevation": 484.40000000000003
     }
   },
   {
@@ -44,8 +53,11 @@
       "name": "Saratoga Spring to Stop Sign (Skyline)",
       "id": 11870082,
       "distance": 7650.1,
+      "average_grade": 0.0715415484764905,
       "elevation_low": 260.6,
-      "elevation_high": 807.9
+      "elevation_high": 807.9,
+      "total_elevation_gain": 547.3,
+      "median_elevation": 534.25
     }
   },
   {
@@ -57,8 +69,11 @@
       "name": "Tunitas Creek - Lobitos Creek Cutoff to Skyline",
       "id": 11834517,
       "distance": 11475.9,
+      "average_grade": 0.04996558004165252,
       "elevation_low": 62.8,
-      "elevation_high": 636.2
+      "elevation_high": 636.2,
+      "total_elevation_gain": 573.4000000000001,
+      "median_elevation": 349.5
     }
   }
 ]
