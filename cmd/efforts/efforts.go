@@ -60,9 +60,9 @@ func main() {
 		}
 
 		for _, e := range es {
-			gr := climb.Segment.AverageGrade() / 100
-			score := perf.CalcM(float64(e.ElapsedTime), climb.Segment.Distance, gr, climb.Segment.MedianElevation())
-			power := power(float64(e.ElapsedTime), climb.Segment.Distance, gr, climb.Segment.MedianElevation(), mt, cda)
+			gr := climb.Segment.AverageGrade
+			score := perf.CalcM(float64(e.ElapsedTime), climb.Segment.Distance, gr, climb.Segment.MedianElevation)
+			power := power(float64(e.ElapsedTime), climb.Segment.Distance, gr, climb.Segment.MedianElevation, mt, cda)
 
 			effort := &Effort{climb: climb, effort: e, score: score, power: power}
 			efforts = append(efforts, effort)
