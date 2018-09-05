@@ -36,7 +36,7 @@ func GetClimbs(files ...string) ([]Climb, error) {
 
 	file := Resource("climbs")
 	if len(files) > 0 && files[0] != "" {
-		file = files[0]
+		file = Resource(files[0])
 	}
 
 	f, err := ioutil.ReadFile(file)
