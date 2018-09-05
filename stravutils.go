@@ -34,7 +34,7 @@ type Segment struct {
 func GetClimbs(files ...string) ([]Climb, error) {
 	var climbs []Climb
 
-	file := resource("data/climbs.json")
+	file := Resource("climbs")
 	if len(files) > 0 && files[0] != "" {
 		file = files[0]
 	}
@@ -128,7 +128,12 @@ func GetSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
 	return strava.NewSegmentsService(client), nil
 }
 
-func resource(filename string) string {
+func Resource(name string) string {
 	_, src, _, _ := runtime.Caller(0)
-	return filepath.Join(filepath.Dir(src), filename)
+	p := filepath.Join(filepath.Dir(src), "data", filename+".json")
+	if _, err := os.Stat(p); os.IsNotExist(err) {
+		return name
+	} else {
+		return p
+	}
 }
