@@ -130,7 +130,7 @@ func GetSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
 
 func Resource(name string) string {
 	_, src, _, _ := runtime.Caller(0)
-	p := filepath.Join(filepath.Dir(src), "data", filename+".json")
+	p := filepath.Join(filepath.Dir(src), "data", name+".json")
 	if _, err := os.Stat(p); os.IsNotExist(err) {
 		return name
 	} else {
