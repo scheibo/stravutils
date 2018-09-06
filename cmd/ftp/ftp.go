@@ -23,7 +23,7 @@ func main() {
 	flag.Float64Var(&p, "p", 0, "power maintained")
 	flag.StringVar(&x, "x", "M", "sex of the athlete")
 
-	flag.DurationVar(&dur, "t", -1, "duration in minutes and seconds ('12m34s')")
+	flag.DurationVar(&dur, "t", 0, "duration in minutes and seconds ('12m34s')")
 
 	flag.Parse()
 
@@ -31,7 +31,7 @@ func main() {
 		exit(fmt.Errorf("p must be positive but was %f", p))
 	}
 
-	if t != -1 {
+	if dur > 0 {
 		verify("t", float64(dur))
 		t = float64(dur / time.Second)
 		if x == "M" {
@@ -53,7 +53,13 @@ func main() {
 		fmt.Printf("%.1f*(FTPc: %.2f) + %.1f*(FTPf: %.2f) + %.1f*(FTPtt: %.2f) => %.2f\n",
 			MIX[0], ftpc, MIX[1], ftpf, MIX[2], ftptt, ftp)
 	} else {
-		exit(fmt.Errorf("t must be specified"))
+		exit(fmt.Errorf("t must be specified and be > 0"))
+	}
+}
+
+func verify(s string, x float64) {
+	if x < 0 {
+		exit(fmt.Errorf("%s must be non negative but was %f", s, x))
 	}
 }
 
@@ -63,8 +69,4 @@ func exit(err error) {
 	os.Exit(1)
 }
 
-func verify(s string, x float64) {
-	if x < 0 {
-		exit(fmt.Errorf("%s must be non negative but was %f", s, x))
-	}
-}
+

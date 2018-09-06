@@ -8,8 +8,6 @@ import (
 	"io/ioutil"
 
 	"os"
-	"path/filepath"
-	"runtime"
 	"sort"
 	"time"
 
@@ -65,7 +63,7 @@ func main() {
 		exit(err)
 	}
 
-	file := resource("goals.json")
+	file := Resource("goals")
 	if goalsFile != "" {
 		file = goalsFile
 	}
@@ -201,11 +199,6 @@ func getBestAttemptAfter(goal SegmentGoal, efforts []*strava.SegmentEffortSummar
 	}
 
 	return best, num
-}
-
-func resource(filename string) string {
-	_, src, _, _ := runtime.Caller(0)
-	return filepath.Join(filepath.Dir(src), filename)
 }
 
 func verify(s string, x float64) {
