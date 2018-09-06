@@ -10,10 +10,11 @@ import (
 )
 
 const MR = 67.0
-var DURATIONS = [...]int{ 5, 10, 30, 60, 180, 300, 600, 1200, 1800, 3600 }
+
+var DURATIONS = [...]int{5, 10, 30, 60, 180, 300, 600, 1200, 1800, 3600}
 
 func CaM(t float64) float64 {
-	return 1372.73/(1 + t/20.44) + 427.21/(1 + t/24994.53)
+	return 1372.73/(1+t/20.44) + 427.21/(1+t/24994.53)
 }
 
 func CpM(t float64) float64 {
@@ -42,12 +43,11 @@ func main() {
 	verify("t1", float64(dur1))
 	t1 = float64(dur1 / time.Second)
 
-
-	if (p2 > 0 && dur2 > 0){
+	if p2 > 0 && dur2 > 0 {
 		exit(fmt.Errorf("p2 and t2 can't both be specified"))
 	}
 
-	scale := (p1 / mr ) / (power(t1, cp) / MR)
+	scale := (p1 / mr) / (power(t1, cp) / MR)
 	if p2 <= 0 && dur2 <= 0 {
 		for _, t := range DURATIONS {
 			p := power(float64(t), cp) * scale
@@ -67,7 +67,7 @@ func main() {
 }
 
 func output(p, t, mr float64) {
-		fmt.Printf("%s: %.2f W (%.2f W/kg)\n", time.Duration(t) * time.Second, p, p / mr)
+	fmt.Printf("%s: %.2f W (%.2f W/kg)\n", time.Duration(t)*time.Second, p, p/mr)
 }
 
 func power(t float64, cp bool) float64 {
