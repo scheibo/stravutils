@@ -64,8 +64,8 @@ func main() {
 					Name:    ns.Name,
 					Segment: *ns,
 				}
+				result = append(result, c)
 			}
-			result = append(result, c)
 		}
 	}
 

@@ -1,6 +1,634 @@
 [
   {
-    "name": "Metcalf Rd",
+    "name": "Old La Honda",
+    "aliases": [
+      "OLH"
+    ],
+    "segment": {
+      "name": "Old La Honda (Bridge to Mailboxes)",
+      "id": 8109834,
+      "distance": 4808.9,
+      "average_grade": 0.08118280687891202,
+      "elevation_low": 107.6,
+      "elevation_high": 498,
+      "total_elevation_gain": 390.4,
+      "median_elevation": 302.8
+    }
+  },
+  {
+    "name": "Kings Mountain",
+    "aliases": [
+      "Kings"
+    ],
+    "segment": {
+      "name": "Kings Mountain (Tripp to Skyline)",
+      "id": 611413,
+      "distance": 7024.13,
+      "average_grade": 0.06904769701016354,
+      "elevation_low": 185.2,
+      "elevation_high": 670.2,
+      "total_elevation_gain": 485.00000000000006,
+      "median_elevation": 427.70000000000005
+    }
+  },
+  {
+    "name": "Montebello",
+    "segment": {
+      "name": "Montebello",
+      "id": 627158,
+      "distance": 8297.61,
+      "average_grade": 0.07129763871765483,
+      "elevation_low": 188.6,
+      "elevation_high": 780.2,
+      "total_elevation_gain": 591.6,
+      "median_elevation": 484.40000000000003
+    }
+  },
+  {
+    "name": "Highway 9",
+    "aliases": [
+      "Hwy 9"
+    ],
+    "segment": {
+      "name": "Saratoga Spring to Stop Sign (Skyline)",
+      "id": 11870082,
+      "distance": 7650.1,
+      "average_grade": 0.0715415484764905,
+      "elevation_low": 260.6,
+      "elevation_high": 807.9,
+      "total_elevation_gain": 547.3,
+      "median_elevation": 534.25
+    }
+  },
+  {
+    "name": "Tunitas Creek",
+    "aliases": [
+      "Tunitas"
+    ],
+    "segment": {
+      "name": "Tunitas Creek - Lobitos Creek Cutoff to Skyline",
+      "id": 11834517,
+      "distance": 11475.9,
+      "average_grade": 0.04996558004165252,
+      "elevation_low": 62.8,
+      "elevation_high": 636.2,
+      "total_elevation_gain": 573.4000000000001,
+      "median_elevation": 349.5
+    }
+  },
+  {
+    "name": "Col du Pantoll",
+    "aliases": [
+      "CdP"
+    ],
+    "segment": {
+      "name": "Stinson to Pantoll (Climb up Panoramic Hwy)",
+      "id": 626859,
+      "distance": 5611.8,
+      "average_grade": 0.07323853309098685,
+      "elevation_low": 30.2,
+      "elevation_high": 441.2,
+      "total_elevation_gain": 411,
+      "median_elevation": 235.7
+    }
+  },
+  {
+    "name": "Bolinas/Fairfax",
+    "aliases": [
+      "BoFax"
+    ],
+    "segment": {
+      "name": "BoFax Climb",
+      "id": 1707949,
+      "distance": 6335.2,
+      "average_grade": 0.07147367091804521,
+      "elevation_low": 13.8,
+      "elevation_high": 466.6,
+      "total_elevation_gain": 452.8,
+      "median_elevation": 240.20000000000002
+    }
+  },
+  {
+    "name": "Mt. Diablo (South)",
+    "aliases": [
+      "Mount Diablo (South)",
+      "Diablo (South)",
+      "Diablo"
+    ],
+    "segment": {
+      "name": "Athenian School to Mt. Diablo Summit",
+      "id": 6479369,
+      "distance": 17731.2,
+      "average_grade": 0.05588454250135354,
+      "elevation_low": 178.2,
+      "elevation_high": 1169.1,
+      "total_elevation_gain": 990.8999999999999,
+      "median_elevation": 673.65
+    }
+  },
+  {
+    "name": "West Alpine",
+    "aliases": [
+      "W Alpine"
+    ],
+    "segment": {
+      "name": "West Alpine - full length",
+      "id": 627058,
+      "distance": 11883.5,
+      "average_grade": 0.04841166323052972,
+      "elevation_low": 160.1,
+      "elevation_high": 735.4,
+      "total_elevation_gain": 575.3,
+      "median_elevation": 447.75
+    }
+  },
+  {
+    "name": "Palomares",
+    "segment": {
+      "name": "Palomares Road from Niles Canyon (Low-Key Hillclimbs)",
+      "id": 809073,
+      "distance": 7273.59,
+      "average_grade": 0.04433849034658264,
+      "elevation_low": 45.3,
+      "elevation_high": 367.8,
+      "total_elevation_gain": 322.5,
+      "median_elevation": 206.55
+    }
+  },
+  {
+    "name": "Page Mill",
+    "aliases": [
+      "PM"
+    ],
+    "segment": {
+      "name": "Page Mill Road (Low-Key Hillclimbs)",
+      "id": 794318,
+      "distance": 13371,
+      "average_grade": 0.04527709221449405,
+      "elevation_low": 86,
+      "elevation_high": 691.4,
+      "total_elevation_gain": 605.4,
+      "median_elevation": 388.7
+    }
+  },
+  {
+    "name": "Mt. Diablo (North)",
+    "aliases": [
+      "Mount Diablo (North)",
+      "Diablo (North)"
+    ],
+    "segment": {
+      "name": "Diablo North Gate entrance sign to summit parking lot (LKHC)",
+      "id": 745209,
+      "distance": 17496.5,
+      "average_grade": 0.06072643100048581,
+      "elevation_low": 106.5,
+      "elevation_high": 1169,
+      "total_elevation_gain": 1062.5,
+      "median_elevation": 637.75
+    }
+  },
+  {
+    "name": "Patterson Pass",
+    "aliases": [
+      "Patterson"
+    ],
+    "segment": {
+      "name": "Patterson Pass (East)",
+      "id": 3983,
+      "distance": 6289.65,
+      "average_grade": 0.05410475940632626,
+      "elevation_low": 137.6,
+      "elevation_high": 477.9,
+      "total_elevation_gain": 340.29999999999995,
+      "median_elevation": 307.75
+    }
+  },
+  {
+    "name": "Mt. Hamilton",
+    "aliases": [
+      "Mount Hamilton",
+      "Hamilton"
+    ],
+    "segment": {
+      "name": "Mt. Hamilton (official to gate)",
+      "id": 6144714,
+      "distance": 29446.3,
+      "average_grade": 0.038768877583940944,
+      "elevation_low": 133.8,
+      "elevation_high": 1275.4,
+      "total_elevation_gain": 1141.6000000000001,
+      "median_elevation": 704.6
+    }
+  },
+  {
+    "name": "Sierra Road",
+    "aliases": [
+      "Sierra",
+      "Sierra Rd"
+    ],
+    "segment": {
+      "name": "Sierra Road - Start at Fulbar",
+      "id": 789267,
+      "distance": 5745.35,
+      "average_grade": 0.09487672639612904,
+      "elevation_low": 66.9,
+      "elevation_high": 612,
+      "total_elevation_gain": 545.1,
+      "median_elevation": 339.45
+    }
+  },
+  {
+    "name": "Mt. Charlie",
+    "aliases": [
+      "Mountain Charlie",
+      "Mount Charlie"
+    ],
+    "segment": {
+      "name": "Mt Charlie Climb",
+      "id": 646647,
+      "distance": 6480.65,
+      "average_grade": 0.05098254033160254,
+      "elevation_low": 259,
+      "elevation_high": 589.4,
+      "total_elevation_gain": 330.4,
+      "median_elevation": 424.2
+    }
+  },
+  {
+    "name": "Morgan Territory",
+    "segment": {
+      "name": "Morgan Territory Road From North",
+      "id": 1475,
+      "distance": 7587.7,
+      "average_grade": 0.046443586330508595,
+      "elevation_low": 291.8,
+      "elevation_high": 644.2,
+      "total_elevation_gain": 352.40000000000003,
+      "median_elevation": 468
+    }
+  },
+  {
+    "name": "San Bruno",
+    "segment": {
+      "name": "San Bruno Hill Climb",
+      "id": 378701,
+      "distance": 5925.45,
+      "average_grade": 0.05962416356563637,
+      "elevation_low": 37.5,
+      "elevation_high": 390.8,
+      "total_elevation_gain": 353.3,
+      "median_elevation": 214.15
+    }
+  },
+  {
+    "name": "Henry Coe",
+    "aliases": [
+      "Coe"
+    ],
+    "segment": {
+      "name": "Henry Coe Hill Climb",
+      "id": 580717,
+      "distance": 10879.5,
+      "average_grade": 0.05553564042465187,
+      "elevation_low": 190.5,
+      "elevation_high": 794.7,
+      "total_elevation_gain": 604.2,
+      "median_elevation": 492.6
+    }
+  },
+  {
+    "name": "Bonny Doon",
+    "segment": {
+      "name": "Bonny Doon Rd (to Smith Grade)",
+      "id": 619799,
+      "distance": 4715.57,
+      "average_grade": 0.07350118861558624,
+      "elevation_low": 19.2,
+      "elevation_high": 365.8,
+      "total_elevation_gain": 346.6,
+      "median_elevation": 192.5
+    }
+  },
+  {
+    "name": "Quimby",
+    "aliases": [
+      "Quimby Road",
+      "Quimby Rd"
+    ],
+    "segment": {
+      "name": "Quimby Rd",
+      "id": 120709,
+      "distance": 5088.96,
+      "average_grade": 0.10129771112368735,
+      "elevation_low": 152.6,
+      "elevation_high": 668.1,
+      "total_elevation_gain": 515.5,
+      "median_elevation": 410.35
+    }
+  },
+  {
+    "name": "Montevina",
+    "segment": {
+      "name": "Montevina",
+      "id": 744314,
+      "distance": 5537.71,
+      "average_grade": 0.0869673565426864,
+      "elevation_low": 213.8,
+      "elevation_high": 695.4,
+      "total_elevation_gain": 481.59999999999997,
+      "median_elevation": 454.6
+    }
+  },
+  {
+    "name": "Calaveras/Felter",
+    "aliases": [
+      "Calaveras"
+    ],
+    "segment": {
+      "name": "Calaveras to Top Sierra - Full Climb",
+      "id": 671251,
+      "distance": 13756.3,
+      "average_grade": 0.04080312293276535,
+      "elevation_low": 4.2,
+      "elevation_high": 565.5,
+      "total_elevation_gain": 561.3,
+      "median_elevation": 284.85
+    }
+  },
+  {
+    "name": "Felton Empire",
+    "segment": {
+      "name": "Felton Empire Climb",
+      "id": 648888,
+      "distance": 5842.64,
+      "average_grade": 0.07897115002806951,
+      "elevation_low": 82.8,
+      "elevation_high": 544.2,
+      "total_elevation_gain": 461.40000000000003,
+      "median_elevation": 313.5
+    }
+  },
+  {
+    "name": "Jamison Creek",
+    "aliases": [
+      "Jamison"
+    ],
+    "segment": {
+      "name": "Jamison Creek",
+      "id": 8574858,
+      "distance": 4652.2,
+      "average_grade": 0.09752375220325867,
+      "elevation_low": 241.6,
+      "elevation_high": 695.3,
+      "total_elevation_gain": 453.69999999999993,
+      "median_elevation": 468.45
+    }
+  },
+  {
+    "name": "Soda Springs",
+    "segment": {
+      "name": "LKHC Soda Springs Rd.",
+      "id": 2719563,
+      "distance": 8436.85,
+      "average_grade": 0.08513841066274735,
+      "elevation_low": 215.4,
+      "elevation_high": 933.7,
+      "total_elevation_gain": 718.3000000000001,
+      "median_elevation": 574.5500000000001
+    }
+  },
+  {
+    "name": "Black Road",
+    "aliases": [
+      "Black Rd",
+      "Black"
+    ],
+    "segment": {
+      "name": "Black Road",
+      "id": 268865,
+      "distance": 7301.89,
+      "average_grade": 0.07348782301568497,
+      "elevation_low": 208.4,
+      "elevation_high": 745,
+      "total_elevation_gain": 536.6,
+      "median_elevation": 476.7
+    }
+  },
+  {
+    "name": "Hicks / Mt. Umunhum",
+    "aliases": [
+      "Mount Umunhum",
+      "Mt Umunhum"
+    ],
+    "segment": {
+      "name": "Umunhum peak (N. Hicks)",
+      "id": 611999,
+      "distance": 8281.49,
+      "average_grade": 0.09790508712804097,
+      "elevation_low": 197.6,
+      "elevation_high": 1008.4,
+      "total_elevation_gain": 810.8,
+      "median_elevation": 603
+    }
+  },
+  {
+    "name": "Bohlman",
+    "segment": {
+      "name": "Bohlman Rd",
+      "id": 384773,
+      "distance": 6685.44,
+      "average_grade": 0.0881318207926479,
+      "elevation_low": 160.6,
+      "elevation_high": 749.8,
+      "total_elevation_gain": 589.1999999999999,
+      "median_elevation": 455.2
+    }
+  },
+  {
+    "name": "Alba",
+    "segment": {
+      "name": "Alba Road",
+      "id": 326187,
+      "distance": 6124.5,
+      "average_grade": 0.10440035921299698,
+      "elevation_low": 113,
+      "elevation_high": 752.4,
+      "total_elevation_gain": 639.4,
+      "median_elevation": 432.7
+    }
+  },
+  {
+    "name": "Redwood Gulch - Highway 9",
+    "segment": {
+      "name": "RWG \u0026 Highway 9",
+      "id": 614409,
+      "distance": 7082.9,
+      "average_grade": 0.08029197080291972,
+      "elevation_low": 247.7,
+      "elevation_high": 816.4,
+      "total_elevation_gain": 568.7,
+      "median_elevation": 532.05
+    }
+  },
+  {
+    "name": "Redwood Gulch",
+    "segment": {
+      "name": "Redwood Gulch Climb (no DH at end) ",
+      "id": 806794,
+      "distance": 1922.12,
+      "average_grade": 0.10842195076269953,
+      "elevation_low": 219.4,
+      "elevation_high": 427.8,
+      "total_elevation_gain": 208.4,
+      "median_elevation": 323.6
+    }
+  },
+  {
+    "name": "Highway 9 (E)",
+    "segment": {
+      "name": "Highway 9 - HWY236 to Skyline",
+      "id": 3799,
+      "distance": 9693.6,
+      "average_grade": 0.042120574399603865,
+      "elevation_low": 397.9,
+      "elevation_high": 806.2,
+      "total_elevation_gain": 408.30000000000007,
+      "median_elevation": 602.05
+    }
+  },
+  {
+    "name": "Pagemill via Moody",
+    "segment": {
+      "name": "Moody and Page Mill to Skyline",
+      "id": 10029832,
+      "distance": 13965.7,
+      "average_grade": 0.04207451112368158,
+      "elevation_low": 102.7,
+      "elevation_high": 690.3,
+      "total_elevation_gain": 587.5999999999999,
+      "median_elevation": 396.5
+    }
+  },
+  {
+    "name": "Highway 92 (E)",
+    "segment": {
+      "name": "HWY 92 climb from Crystal Springs",
+      "id": 921320,
+      "distance": 2728.01,
+      "average_grade": 0.060263708710745184,
+      "elevation_low": 96.3,
+      "elevation_high": 260.7,
+      "total_elevation_gain": 164.39999999999998,
+      "median_elevation": 178.5
+    }
+  },
+  {
+    "name": "Skyline via 92",
+    "segment": {
+      "name": "Skyline Climb--92 to MPROSD Lot",
+      "id": 787299,
+      "distance": 6810.76,
+      "average_grade": 0.05135990697073454,
+      "elevation_low": 260,
+      "elevation_high": 609.8,
+      "total_elevation_gain": 349.79999999999995,
+      "median_elevation": 434.9
+    }
+  },
+  {
+    "name": "Highway 84 (W)",
+    "segment": {
+      "name": "84 Pescadero to Skyline",
+      "id": 658330,
+      "distance": 10959.4,
+      "average_grade": 0.030457871781301892,
+      "elevation_low": 117.4,
+      "elevation_high": 451.2,
+      "total_elevation_gain": 333.79999999999995,
+      "median_elevation": 284.3
+    }
+  },
+  {
+    "name": "Highway 84 (E)",
+    "segment": {
+      "name": "Hwy 84 climb (Portola Rd to Skyline)",
+      "id": 283479,
+      "distance": 5183.18,
+      "average_grade": 0.06119795183651734,
+      "elevation_low": 133.3,
+      "elevation_high": 450.5,
+      "total_elevation_gain": 317.2,
+      "median_elevation": 291.9
+    }
+  },
+  {
+    "name": "Henry Coe (E Dunne)",
+    "segment": {
+      "name": "Henry Coe Hill Climb",
+      "id": 580717,
+      "distance": 10879.5,
+      "average_grade": 0.05553564042465187,
+      "elevation_low": 190.5,
+      "elevation_high": 794.7,
+      "total_elevation_gain": 604.2,
+      "median_elevation": 492.6
+    }
+  },
+  {
+    "name": "Mill Creek",
+    "segment": {
+      "name": "Mill Creek - LKHC 2015",
+      "id": 10749571,
+      "distance": 6789.1,
+      "average_grade": 0.05894743043996996,
+      "elevation_low": 51.4,
+      "elevation_high": 451.6,
+      "total_elevation_gain": 400.20000000000005,
+      "median_elevation": 251.5
+    }
+  },
+  {
+    "name": "Hamilton Backside",
+    "segment": {
+      "name": "Mt Hamilton Backside",
+      "id": 302113,
+      "distance": 6907.82,
+      "average_grade": 0.08383252603571024,
+      "elevation_low": 694,
+      "elevation_high": 1273.1,
+      "total_elevation_gain": 579.0999999999999,
+      "median_elevation": 983.55
+    }
+  },
+  {
+    "name": "West OLH",
+    "segment": {
+      "name": "West OLH (84 to Skyline)",
+      "id": 622755,
+      "distance": 3883.16,
+      "average_grade": 0.043675769218883595,
+      "elevation_low": 340,
+      "elevation_high": 509.6,
+      "total_elevation_gain": 169.60000000000002,
+      "median_elevation": 424.8
+    }
+  },
+  {
+    "name": "Black Road",
+    "segment": {
+      "name": "Black Road",
+      "id": 268865,
+      "distance": 7301.89,
+      "average_grade": 0.07348782301568497,
+      "elevation_low": 208.4,
+      "elevation_high": 745,
+      "total_elevation_gain": 536.6,
+      "median_elevation": 476.7
+    }
+  },
+  {
+    "name": "Metcalf",
     "segment": {
       "name": "Metcalf Rd",
       "id": 800,
@@ -13,16 +641,874 @@
     }
   },
   {
-    "name": "Morgan Territory Road From North",
+    "name": "Bohlman - On Orbit",
     "segment": {
-      "name": "Morgan Territory Road From North",
-      "id": 1475,
-      "distance": 7587.7,
-      "average_grade": 0.046443586330508595,
-      "elevation_low": 291.8,
-      "elevation_high": 644.2,
-      "total_elevation_gain": 352.40000000000003,
-      "median_elevation": 468
+      "name": "Bohlman - On Orbit - Bohlman",
+      "id": 637762,
+      "distance": 6700.7,
+      "average_grade": 0.08916978823108034,
+      "elevation_low": 178.8,
+      "elevation_high": 776.3,
+      "total_elevation_gain": 597.5,
+      "median_elevation": 477.54999999999995
+    }
+  },
+  {
+    "name": "Passo Stelvio",
+    "segment": {
+      "name": "Passo Stelvio",
+      "id": 951992,
+      "distance": 23983.3,
+      "average_grade": 0.07620302460462072,
+      "elevation_low": 930.8,
+      "elevation_high": 2758.4,
+      "total_elevation_gain": 1827.6000000000001,
+      "median_elevation": 1844.6
+    }
+  },
+  {
+    "name": "Mortirolo",
+    "segment": {
+      "name": "Mortirolo",
+      "id": 614726,
+      "distance": 11423.1,
+      "average_grade": 0.11011896945662736,
+      "elevation_low": 576,
+      "elevation_high": 1833.9,
+      "total_elevation_gain": 1257.9,
+      "median_elevation": 1204.95
+    }
+  },
+  {
+    "name": "Passo Gavia",
+    "segment": {
+      "name": "Bormio to Gavia",
+      "id": 4198001,
+      "distance": 24575.4,
+      "average_grade": 0.057134370142500224,
+      "elevation_low": 1214.3,
+      "elevation_high": 2618.4,
+      "total_elevation_gain": 1404.1000000000001,
+      "median_elevation": 1916.35
+    }
+  },
+  {
+    "name": "Passo Campolongo",
+    "segment": {
+      "name": "La Villa - Passo Campolongo",
+      "id": 4590517,
+      "distance": 9382.9,
+      "average_grade": 0.04501806477741424,
+      "elevation_low": 1427.1,
+      "elevation_high": 1849.5,
+      "total_elevation_gain": 422.4000000000001,
+      "median_elevation": 1638.3
+    }
+  },
+  {
+    "name": "Passo Pordoi",
+    "segment": {
+      "name": "Pordoi da Arabba (r)",
+      "id": 6971085,
+      "distance": 9008.2,
+      "average_grade": 0.07184565173952621,
+      "elevation_low": 1609.7,
+      "elevation_high": 2256.9,
+      "total_elevation_gain": 647.2,
+      "median_elevation": 1933.3000000000002
+    }
+  },
+  {
+    "name": "Passo Sella",
+    "segment": {
+      "name": "Passo Sella",
+      "id": 5220560,
+      "distance": 5564,
+      "average_grade": 0.0740294751976995,
+      "elevation_low": 1813,
+      "elevation_high": 2224.9,
+      "total_elevation_gain": 411.9000000000001,
+      "median_elevation": 2018.95
+    }
+  },
+  {
+    "name": "Passo Giau",
+    "segment": {
+      "name": "Passo Giau",
+      "id": 618935,
+      "distance": 9473.4,
+      "average_grade": 0.09477062089640464,
+      "elevation_low": 1336.4,
+      "elevation_high": 2234.2,
+      "total_elevation_gain": 897.7999999999997,
+      "median_elevation": 1785.3
+    }
+  },
+  {
+    "name": "Passo Valparola",
+    "segment": {
+      "name": "Passo Valparola (La Villa)",
+      "id": 1440645,
+      "distance": 13804.3,
+      "average_grade": 0.055258144201444474,
+      "elevation_low": 1427.7,
+      "elevation_high": 2190.5,
+      "total_elevation_gain": 762.8,
+      "median_elevation": 1809.1
+    }
+  },
+  {
+    "name": "Passo Falzarego",
+    "segment": {
+      "name": "Passo Falzarego (da/from Pocol)",
+      "id": 1493815,
+      "distance": 10251.7,
+      "average_grade": 0.05483968512539381,
+      "elevation_low": 1523,
+      "elevation_high": 2085.2,
+      "total_elevation_gain": 562.1999999999998,
+      "median_elevation": 1804.1
+    }
+  },
+  {
+    "name": "Passo Giau (N)",
+    "segment": {
+      "name": "Passo di Giau (North)",
+      "id": 656178,
+      "distance": 8933.09,
+      "average_grade": 0.08095742906429915,
+      "elevation_low": 1508.2,
+      "elevation_high": 2231.4,
+      "total_elevation_gain": 723.2,
+      "median_elevation": 1869.8000000000002
+    }
+  },
+  {
+    "name": "Passo Campolongo (Arabba)",
+    "segment": {
+      "name": "Passo Campolongo (from Arabba)",
+      "id": 635979,
+      "distance": 3931.47,
+      "average_grade": 0.06923618900818271,
+      "elevation_low": 1584.8,
+      "elevation_high": 1857,
+      "total_elevation_gain": 272.20000000000005,
+      "median_elevation": 1720.9
+    }
+  },
+  {
+    "name": "Passo Sella 2",
+    "segment": {
+      "name": "Passo Sella",
+      "id": 616162,
+      "distance": 5342.25,
+      "average_grade": 0.0684168655529037,
+      "elevation_low": 1877.7,
+      "elevation_high": 2243.2,
+      "total_elevation_gain": 365.4999999999998,
+      "median_elevation": 2060.45
+    }
+  },
+  {
+    "name": "Passo Pordoi 2",
+    "segment": {
+      "name": "Bivio Sella / Passo Pordoi",
+      "id": 7527286,
+      "distance": 6460.7,
+      "average_grade": 0.07000789388146798,
+      "elevation_low": 1802.6,
+      "elevation_high": 2254.9,
+      "total_elevation_gain": 452.3000000000002,
+      "median_elevation": 2028.75
+    }
+  },
+  {
+    "name": "Montee D'Engins",
+    "segment": {
+      "name": "Montée d'engins (officiel) ",
+      "id": 4804262,
+      "distance": 11853.1,
+      "average_grade": 0.053555609924829786,
+      "elevation_low": 322.8,
+      "elevation_high": 957.6,
+      "total_elevation_gain": 634.8,
+      "median_elevation": 640.2
+    }
+  },
+  {
+    "name": "Col de Tourniol",
+    "segment": {
+      "name": "Chrono col de Tourniol (GPS point ok)",
+      "id": 5254742,
+      "distance": 11615.6,
+      "average_grade": 0.06090946657942766,
+      "elevation_low": 438.3,
+      "elevation_high": 1145.8,
+      "total_elevation_gain": 707.5,
+      "median_elevation": 792.05
+    }
+  },
+  {
+    "name": "Col de Porte (S)",
+    "segment": {
+      "name": "Col de Porte sud (vrai) ",
+      "id": 4557535,
+      "distance": 17509.5,
+      "average_grade": 0.05052114566378251,
+      "elevation_low": 435,
+      "elevation_high": 1319.6,
+      "total_elevation_gain": 884.5999999999999,
+      "median_elevation": 877.3
+    }
+  },
+  {
+    "name": "Col de Clémencière",
+    "segment": {
+      "name": "Col de Clémencière ",
+      "id": 8061351,
+      "distance": 5439.5,
+      "average_grade": 0.07445537273646476,
+      "elevation_low": 216.7,
+      "elevation_high": 621.7,
+      "total_elevation_gain": 405.00000000000006,
+      "median_elevation": 419.20000000000005
+    }
+  },
+  {
+    "name": "Col de Porte (C)",
+    "segment": {
+      "name": "Col de Porte par Clemencieres/Palaquit COMPLET",
+      "id": 8261791,
+      "distance": 16937.8,
+      "average_grade": 0.06611248214053773,
+      "elevation_low": 218.5,
+      "elevation_high": 1338.3,
+      "total_elevation_gain": 1119.8,
+      "median_elevation": 778.4
+    }
+  },
+  {
+    "name": "Chamrousse (Golf)",
+    "segment": {
+      "name": "rond point du golf / rond point de chamrousse",
+      "id": 7150583,
+      "distance": 17931.1,
+      "average_grade": 0.07262242695651688,
+      "elevation_low": 320.4,
+      "elevation_high": 1622.6,
+      "total_elevation_gain": 1302.1999999999998,
+      "median_elevation": 971.5
+    }
+  },
+  {
+    "name": "St. Nizier",
+    "segment": {
+      "name": "St Nizier",
+      "id": 780273,
+      "distance": 14701.7,
+      "average_grade": 0.06210166171259106,
+      "elevation_low": 127.2,
+      "elevation_high": 1040.2,
+      "total_elevation_gain": 913,
+      "median_elevation": 583.7
+    }
+  },
+  {
+    "name": "Lacets de Montvernier",
+    "segment": {
+      "name": "Les Lacets de Montvernier",
+      "id": 683404,
+      "distance": 3792.38,
+      "average_grade": 0.07530890891735531,
+      "elevation_low": 492.2,
+      "elevation_high": 777.8,
+      "total_elevation_gain": 285.59999999999997,
+      "median_elevation": 635
+    }
+  },
+  {
+    "name": "Col de la Croix de Fer (E)",
+    "segment": {
+      "name": "col de la croix de fer côté est",
+      "id": 4257023,
+      "distance": 28621.2,
+      "average_grade": 0.051210291671907535,
+      "elevation_low": 597.3,
+      "elevation_high": 2063,
+      "total_elevation_gain": 1465.7,
+      "median_elevation": 1330.15
+    }
+  },
+  {
+    "name": "Col du Coq",
+    "segment": {
+      "name": "Col du Coq",
+      "id": 628908,
+      "distance": 12617.2,
+      "average_grade": 0.08697650825856768,
+      "elevation_low": 343.3,
+      "elevation_high": 1440.7,
+      "total_elevation_gain": 1097.4,
+      "median_elevation": 892
+    }
+  },
+  {
+    "name": "Montaud par Veurey",
+    "segment": {
+      "name": "Montaud par Veurey",
+      "id": 4136112,
+      "distance": 5761.9,
+      "average_grade": 0.08288932470192124,
+      "elevation_low": 83,
+      "elevation_high": 560.6,
+      "total_elevation_gain": 477.6,
+      "median_elevation": 321.8
+    }
+  },
+  {
+    "name": "Col de Parmenie",
+    "segment": {
+      "name": "Col de Parmenie (Vrai)",
+      "id": 693691,
+      "distance": 4402.21,
+      "average_grade": 0.0637407120514469,
+      "elevation_low": 271.4,
+      "elevation_high": 552,
+      "total_elevation_gain": 280.6,
+      "median_elevation": 411.7
+    }
+  },
+  {
+    "name": "Col de la Placette",
+    "segment": {
+      "name": "Col de la Placette",
+      "id": 641494,
+      "distance": 5250.86,
+      "average_grade": 0.06398951790754277,
+      "elevation_low": 250.1,
+      "elevation_high": 586.1,
+      "total_elevation_gain": 336,
+      "median_elevation": 418.1
+    }
+  },
+  {
+    "name": "Quatre Seigneurs",
+    "segment": {
+      "name": "4 seigneurs",
+      "id": 773949,
+      "distance": 8188.71,
+      "average_grade": 0.06853338315803101,
+      "elevation_low": 249.2,
+      "elevation_high": 810.4,
+      "total_elevation_gain": 561.2,
+      "median_elevation": 529.8
+    }
+  },
+  {
+    "name": "Col de Vence",
+    "segment": {
+      "name": "Col de Vence (depuis La Tronche)",
+      "id": 796527,
+      "distance": 6780.82,
+      "average_grade": 0.0802557802743621,
+      "elevation_low": 216,
+      "elevation_high": 760.2,
+      "total_elevation_gain": 544.2,
+      "median_elevation": 488.1
+    }
+  },
+  {
+    "name": "Quatre Seigneurs (Tavernolles)",
+    "segment": {
+      "name": "Quatre Seigneurs ( Depuis Rond Pt Tavernolles )",
+      "id": 1205952,
+      "distance": 5788.1,
+      "average_grade": 0.07563794682192775,
+      "elevation_low": 369.2,
+      "elevation_high": 807,
+      "total_elevation_gain": 437.8,
+      "median_elevation": 588.1
+    }
+  },
+  {
+    "name": "Murianette - La Perrerée",
+    "segment": {
+      "name": "Murianette - La Perrerée",
+      "id": 2630371,
+      "distance": 5320.27,
+      "average_grade": 0.06195174305063464,
+      "elevation_low": 199.8,
+      "elevation_high": 529.4,
+      "total_elevation_gain": 329.59999999999997,
+      "median_elevation": 364.6
+    }
+  },
+  {
+    "name": "Féclaz",
+    "segment": {
+      "name": "Féclaz (panneau) depuis St-Alban-Leysse",
+      "id": 9722309,
+      "distance": 16185.2,
+      "average_grade": 0.060839532412327306,
+      "elevation_low": 311.4,
+      "elevation_high": 1296.1,
+      "total_elevation_gain": 984.6999999999999,
+      "median_elevation": 803.75
+    }
+  },
+  {
+    "name": "Col de la Croix de Fer (W)",
+    "segment": {
+      "name": "Col De La Croix De Fer (To the Summit)",
+      "id": 662232,
+      "distance": 24305,
+      "average_grade": 0.051577864636905994,
+      "elevation_low": 812.8,
+      "elevation_high": 2066.4,
+      "total_elevation_gain": 1253.6000000000001,
+      "median_elevation": 1439.6
+    }
+  },
+  {
+    "name": "Alpe d'Huez",
+    "segment": {
+      "name": "Alpe d'Huez (Official Crono Course)",
+      "id": 683473,
+      "distance": 13914.3,
+      "average_grade": 0.0789834918033965,
+      "elevation_low": 733.2,
+      "elevation_high": 1832.2,
+      "total_elevation_gain": 1099,
+      "median_elevation": 1282.7
+    }
+  },
+  {
+    "name": "Col du Portillon",
+    "segment": {
+      "name": "Col Du Portillon ",
+      "id": 3173,
+      "distance": 7845.85,
+      "average_grade": 0.07762065295665861,
+      "elevation_low": 688,
+      "elevation_high": 1297,
+      "total_elevation_gain": 609,
+      "median_elevation": 992.5
+    }
+  },
+  {
+    "name": "Superbagnères",
+    "segment": {
+      "name": "Superbagnères (full length from Luchon)",
+      "id": 1162584,
+      "distance": 17148.5,
+      "average_grade": 0.06548094585532262,
+      "elevation_low": 593.7,
+      "elevation_high": 1716.6,
+      "total_elevation_gain": 1122.8999999999999,
+      "median_elevation": 1155.15
+    }
+  },
+  {
+    "name": "Col du Tourmalet",
+    "segment": {
+      "name": "Col du Tourmalet depuis Ste Marie de Campan",
+      "id": 4951896,
+      "distance": 17270.8,
+      "average_grade": 0.07230701530907657,
+      "elevation_low": 835.4,
+      "elevation_high": 2084.2,
+      "total_elevation_gain": 1248.7999999999997,
+      "median_elevation": 1459.8
+    }
+  },
+  {
+    "name": "Col d'Aspin",
+    "segment": {
+      "name": "Col d'Aspin (BKool)",
+      "id": 8425235,
+      "distance": 13052.6,
+      "average_grade": 0.04573035257343365,
+      "elevation_low": 892.8,
+      "elevation_high": 1489.7,
+      "total_elevation_gain": 596.9000000000001,
+      "median_elevation": 1191.25
+    }
+  },
+  {
+    "name": "Hourquette d'Ancizan",
+    "segment": {
+      "name": "Payolle - Hourquette d'Ancizan",
+      "id": 5128998,
+      "distance": 9717.5,
+      "average_grade": 0.0464111139696424,
+      "elevation_low": 1085.2,
+      "elevation_high": 1536.2,
+      "total_elevation_gain": 451,
+      "median_elevation": 1310.7
+    }
+  },
+  {
+    "name": "Port de Bales",
+    "segment": {
+      "name": "Port de Bales -- Main Course",
+      "id": 5526966,
+      "distance": 10597.6,
+      "average_grade": 0.07807428096927606,
+      "elevation_low": 728.4,
+      "elevation_high": 1555.8,
+      "total_elevation_gain": 827.4,
+      "median_elevation": 1142.1
+    }
+  },
+  {
+    "name": "Peyresourde",
+    "segment": {
+      "name": "Peyresourde (from D51",
+      "id": 1530448,
+      "distance": 9696.09,
+      "average_grade": 0.07386482592467684,
+      "elevation_low": 838.4,
+      "elevation_high": 1554.6,
+      "total_elevation_gain": 716.1999999999999,
+      "median_elevation": 1196.5
+    }
+  },
+  {
+    "name": "Luz Ardiden",
+    "segment": {
+      "name": "Luz Ardiden (till junction)",
+      "id": 7670494,
+      "distance": 11653.2,
+      "average_grade": 0.07638245288847698,
+      "elevation_low": 736.5,
+      "elevation_high": 1626.6,
+      "total_elevation_gain": 890.0999999999999,
+      "median_elevation": 1181.55
+    }
+  },
+  {
+    "name": "Hautacam",
+    "segment": {
+      "name": "Hautacam 2",
+      "id": 669129,
+      "distance": 12849.3,
+      "average_grade": 0.07973975236005074,
+      "elevation_low": 475.2,
+      "elevation_high": 1499.8,
+      "total_elevation_gain": 1024.6,
+      "median_elevation": 987.5
+    }
+  },
+  {
+    "name": "Col de Mente",
+    "segment": {
+      "name": "Col de Menté (le vrai)",
+      "id": 15424801,
+      "distance": 9904.5,
+      "average_grade": 0.08632439800090867,
+      "elevation_low": 503,
+      "elevation_high": 1358,
+      "total_elevation_gain": 855,
+      "median_elevation": 930.5
+    }
+  },
+  {
+    "name": "Col de Portet d'Aspet",
+    "segment": {
+      "name": "Col de Portet d'Aspet (west)",
+      "id": 613956,
+      "distance": 4487.89,
+      "average_grade": 0.09639273689863165,
+      "elevation_low": 615.4,
+      "elevation_high": 1048,
+      "total_elevation_gain": 432.6,
+      "median_elevation": 831.7
+    }
+  },
+  {
+    "name": "Col des Ares",
+    "segment": {
+      "name": "Col des Ares Time Trial Course",
+      "id": 653246,
+      "distance": 6629.95,
+      "average_grade": 0.04437439196374031,
+      "elevation_low": 513.8,
+      "elevation_high": 808,
+      "total_elevation_gain": 294.20000000000005,
+      "median_elevation": 660.9
+    }
+  },
+  {
+    "name": "Mont Ventoux",
+    "segment": {
+      "name": "Mt. Ventoux via Bedoin",
+      "id": 7711822,
+      "distance": 20036.1,
+      "average_grade": 0.07681634649457729,
+      "elevation_low": 346.2,
+      "elevation_high": 1885.3,
+      "total_elevation_gain": 1539.1,
+      "median_elevation": 1115.75
+    }
+  },
+  {
+    "name": "Le Grand Colombier",
+    "segment": {
+      "name": "Grand Colombier",
+      "id": 644707,
+      "distance": 16352.8,
+      "average_grade": 0.07209774472873147,
+      "elevation_low": 316,
+      "elevation_high": 1495,
+      "total_elevation_gain": 1179,
+      "median_elevation": 905.5
+    }
+  },
+  {
+    "name": "Col de l'Iseran",
+    "segment": {
+      "name": "Col de l'Iseran",
+      "id": 628895,
+      "distance": 32268.8,
+      "average_grade": 0.042601522213407385,
+      "elevation_low": 1405.1,
+      "elevation_high": 2779.8,
+      "total_elevation_gain": 1374.7000000000003,
+      "median_elevation": 2092.45
+    }
+  },
+  {
+    "name": "Col d'Izoard",
+    "segment": {
+      "name": "Col d'Izoard",
+      "id": 616086,
+      "distance": 18882.9,
+      "average_grade": 0.05895810495209952,
+      "elevation_low": 1257.5,
+      "elevation_high": 2370.8,
+      "total_elevation_gain": 1113.3000000000002,
+      "median_elevation": 1814.15
+    }
+  },
+  {
+    "name": "Col du Telegraphe",
+    "segment": {
+      "name": "Col du Télégraphe",
+      "id": 616079,
+      "distance": 12116.3,
+      "average_grade": 0.06863481425847826,
+      "elevation_low": 733.1,
+      "elevation_high": 1564.7,
+      "total_elevation_gain": 831.6,
+      "median_elevation": 1148.9
+    }
+  },
+  {
+    "name": "Col du Galbier",
+    "segment": {
+      "name": "Col du Galibier",
+      "id": 5211636,
+      "distance": 17608.3,
+      "average_grade": 0.06812696285274558,
+      "elevation_low": 1430.6,
+      "elevation_high": 2630.2,
+      "total_elevation_gain": 1199.6,
+      "median_elevation": 2030.3999999999999
+    }
+  },
+  {
+    "name": "Col du Cucheron",
+    "segment": {
+      "name": "Col du Cucheron Nord",
+      "id": 5208811,
+      "distance": 8065.4,
+      "average_grade": 0.05978624742728198,
+      "elevation_low": 631.8,
+      "elevation_high": 1114,
+      "total_elevation_gain": 482.20000000000005,
+      "median_elevation": 872.9
+    }
+  },
+  {
+    "name": "Rampe de Laffrey",
+    "segment": {
+      "name": "Rampe de Laffrey, jusqu'au panneau",
+      "id": 7278873,
+      "distance": 6243,
+      "average_grade": 0.09703668108281274,
+      "elevation_low": 310.5,
+      "elevation_high": 916.3,
+      "total_elevation_gain": 605.8,
+      "median_elevation": 613.4
+    }
+  },
+  {
+    "name": "Col de Romeyere",
+    "segment": {
+      "name": "Col de Romeyere (depuis Herbeys)",
+      "id": 835653,
+      "distance": 7759.66,
+      "average_grade": 0.0534301760644152,
+      "elevation_low": 627.4,
+      "elevation_high": 1042,
+      "total_elevation_gain": 414.6,
+      "median_elevation": 834.7
+    }
+  },
+  {
+    "name": "Col d'Herbouilly",
+    "segment": {
+      "name": "Col d'Herbouilly",
+      "id": 5012965,
+      "distance": 6286.7,
+      "average_grade": 0.07157968409499421,
+      "elevation_low": 831.4,
+      "elevation_high": 1281.4,
+      "total_elevation_gain": 450.0000000000001,
+      "median_elevation": 1056.4
+    }
+  },
+  {
+    "name": "Col de Palaquit",
+    "segment": {
+      "name": "Col de Palaquit",
+      "id": 4610491,
+      "distance": 7570.2,
+      "average_grade": 0.07632559245462471,
+      "elevation_low": 563.8,
+      "elevation_high": 1141.6,
+      "total_elevation_gain": 577.8,
+      "median_elevation": 852.6999999999999
+    }
+  },
+  {
+    "name": "Col du Cucheron (N)",
+    "segment": {
+      "name": "Col du Cucheron (X la diat-sommet)",
+      "id": 824581,
+      "distance": 4429.96,
+      "average_grade": 0.07498939042338984,
+      "elevation_low": 805,
+      "elevation_high": 1137.2,
+      "total_elevation_gain": 332.20000000000005,
+      "median_elevation": 971.1
+    }
+  },
+  {
+    "name": "Col du Granier (N)",
+    "segment": {
+      "name": "Col du Granier par St PIerre d'entremont",
+      "id": 4500531,
+      "distance": 9168.4,
+      "average_grade": 0.052440992975873665,
+      "elevation_low": 647.4,
+      "elevation_high": 1128.2,
+      "total_elevation_gain": 480.80000000000007,
+      "median_elevation": 887.8
+    }
+  },
+  {
+    "name": "Col de la Madeleine",
+    "segment": {
+      "name": "Col de la Madaleine",
+      "id": 645415,
+      "distance": 24709.7,
+      "average_grade": 0.05982266073647191,
+      "elevation_low": 493,
+      "elevation_high": 1971.2,
+      "total_elevation_gain": 1478.2,
+      "median_elevation": 1232.1
+    }
+  },
+  {
+    "name": "Col du Glandon",
+    "segment": {
+      "name": "Col du Glandon",
+      "id": 9983525,
+      "distance": 19522.3,
+      "average_grade": 0.07273220880736389,
+      "elevation_low": 510.6,
+      "elevation_high": 1930.5,
+      "total_elevation_gain": 1419.9,
+      "median_elevation": 1220.55
+    }
+  },
+  {
+    "name": "St. Nizier (Final)",
+    "segment": {
+      "name": "St Nizier, final depuis la tour sans venin",
+      "id": 780274,
+      "distance": 7341.58,
+      "average_grade": 0.06535377943167547,
+      "elevation_low": 528.8,
+      "elevation_high": 1008.6,
+      "total_elevation_gain": 479.80000000000007,
+      "median_elevation": 768.7
+    }
+  },
+  {
+    "name": "Montaud",
+    "segment": {
+      "name": "Montée de Montaud",
+      "id": 6903988,
+      "distance": 6272.4,
+      "average_grade": 0.08025636120145399,
+      "elevation_low": 192.6,
+      "elevation_high": 696,
+      "total_elevation_gain": 503.4,
+      "median_elevation": 444.3
+    }
+  },
+  {
+    "name": "Col de Chatain",
+    "segment": {
+      "name": "Col de Chatain ( Depuis Tullins )",
+      "id": 1375907,
+      "distance": 6965.24,
+      "average_grade": 0.06452038982145626,
+      "elevation_low": 229.8,
+      "elevation_high": 679.2,
+      "total_elevation_gain": 449.40000000000003,
+      "median_elevation": 454.5
+    }
+  },
+  {
+    "name": "Col des Deux",
+    "segment": {
+      "name": "Col des Deux par Saint Guillaume",
+      "id": 5791336,
+      "distance": 10586.2,
+      "average_grade": 0.048327067314050356,
+      "elevation_low": 702.2,
+      "elevation_high": 1213.8,
+      "total_elevation_gain": 511.5999999999999,
+      "median_elevation": 958
+    }
+  },
+  {
+    "name": "Col de l'Arzelier",
+    "segment": {
+      "name": "Col de l'Arzelier",
+      "id": 653145,
+      "distance": 11811.2,
+      "average_grade": 0.06651314007044161,
+      "elevation_low": 309.4,
+      "elevation_high": 1095,
+      "total_elevation_gain": 785.6,
+      "median_elevation": 702.2
+    }
+  },
+  {
+    "name": "Col de la Charmette",
+    "segment": {
+      "name": "Route de Proveyzieux - Col de la Charmette",
+      "id": 8069686,
+      "distance": 11714.7,
+      "average_grade": 0.08772738525100941,
+      "elevation_low": 253.3,
+      "elevation_high": 1281,
+      "total_elevation_gain": 1027.7,
+      "median_elevation": 767.15
     }
   },
   {
@@ -52,32 +1538,6 @@
     }
   },
   {
-    "name": "Highway 9 - HWY236 to Skyline",
-    "segment": {
-      "name": "Highway 9 - HWY236 to Skyline",
-      "id": 3799,
-      "distance": 9693.6,
-      "average_grade": 0.042120574399603865,
-      "elevation_low": 397.9,
-      "elevation_high": 806.2,
-      "total_elevation_gain": 408.30000000000007,
-      "median_elevation": 602.05
-    }
-  },
-  {
-    "name": "Patterson Pass (East)",
-    "segment": {
-      "name": "Patterson Pass (East)",
-      "id": 3983,
-      "distance": 6289.65,
-      "average_grade": 0.05410475940632626,
-      "elevation_low": 137.6,
-      "elevation_high": 477.9,
-      "total_elevation_gain": 340.29999999999995,
-      "median_elevation": 307.75
-    }
-  },
-  {
     "name": "Bonny Doon",
     "segment": {
       "name": "Bonny Doon",
@@ -88,19 +1548,6 @@
       "elevation_high": 382.7,
       "total_elevation_gain": 370.5,
       "median_elevation": 197.45
-    }
-  },
-  {
-    "name": "Quimby Rd",
-    "segment": {
-      "name": "Quimby Rd",
-      "id": 120709,
-      "distance": 5088.96,
-      "average_grade": 0.10129771112368735,
-      "elevation_low": 152.6,
-      "elevation_high": 668.1,
-      "total_elevation_gain": 515.5,
-      "median_elevation": 410.35
     }
   },
   {
@@ -156,19 +1603,6 @@
     }
   },
   {
-    "name": "Black Road",
-    "segment": {
-      "name": "Black Road",
-      "id": 268865,
-      "distance": 7301.89,
-      "average_grade": 0.07348782301568497,
-      "elevation_low": 208.4,
-      "elevation_high": 745,
-      "total_elevation_gain": 536.6,
-      "median_elevation": 476.7
-    }
-  },
-  {
     "name": "Skyline - Skylonda to Skeggs point parking lot",
     "segment": {
       "name": "Skyline - Skylonda to Skeggs point parking lot",
@@ -192,45 +1626,6 @@
       "elevation_high": 1594.4,
       "total_elevation_gain": 1291.1000000000001,
       "median_elevation": 948.85
-    }
-  },
-  {
-    "name": "Hwy 84 climb (Portola Rd to Skyline)",
-    "segment": {
-      "name": "Hwy 84 climb (Portola Rd to Skyline)",
-      "id": 283479,
-      "distance": 5183.18,
-      "average_grade": 0.06119795183651734,
-      "elevation_low": 133.3,
-      "elevation_high": 450.5,
-      "total_elevation_gain": 317.2,
-      "median_elevation": 291.9
-    }
-  },
-  {
-    "name": "Mt Hamilton Backside",
-    "segment": {
-      "name": "Mt Hamilton Backside",
-      "id": 302113,
-      "distance": 6907.82,
-      "average_grade": 0.08383252603571024,
-      "elevation_low": 694,
-      "elevation_high": 1273.1,
-      "total_elevation_gain": 579.0999999999999,
-      "median_elevation": 983.55
-    }
-  },
-  {
-    "name": "Alba Road",
-    "segment": {
-      "name": "Alba Road",
-      "id": 326187,
-      "distance": 6124.5,
-      "average_grade": 0.10440035921299698,
-      "elevation_low": 113,
-      "elevation_high": 752.4,
-      "total_elevation_gain": 639.4,
-      "median_elevation": 432.7
     }
   },
   {
@@ -260,19 +1655,6 @@
     }
   },
   {
-    "name": "San Bruno Hill Climb",
-    "segment": {
-      "name": "San Bruno Hill Climb",
-      "id": 378701,
-      "distance": 5925.45,
-      "average_grade": 0.05962416356563637,
-      "elevation_low": 37.5,
-      "elevation_high": 390.8,
-      "total_elevation_gain": 353.3,
-      "median_elevation": 214.15
-    }
-  },
-  {
     "name": "OLD VERSION - Redwood Gulch",
     "segment": {
       "name": "OLD VERSION - Redwood Gulch",
@@ -286,19 +1668,6 @@
     }
   },
   {
-    "name": "Bohlman Rd",
-    "segment": {
-      "name": "Bohlman Rd",
-      "id": 384773,
-      "distance": 6685.44,
-      "average_grade": 0.0881318207926479,
-      "elevation_low": 160.6,
-      "elevation_high": 749.8,
-      "total_elevation_gain": 589.1999999999999,
-      "median_elevation": 455.2
-    }
-  },
-  {
     "name": "Diablo South Gate to Junction",
     "segment": {
       "name": "Diablo South Gate to Junction",
@@ -309,19 +1678,6 @@
       "elevation_high": 574,
       "total_elevation_gain": 426,
       "median_elevation": 361
-    }
-  },
-  {
-    "name": "Henry Coe Hill Climb",
-    "segment": {
-      "name": "Henry Coe Hill Climb",
-      "id": 580717,
-      "distance": 10879.5,
-      "average_grade": 0.05553564042465187,
-      "elevation_low": 190.5,
-      "elevation_high": 794.7,
-      "total_elevation_gain": 604.2,
-      "median_elevation": 492.6
     }
   },
   {
@@ -364,32 +1720,6 @@
     }
   },
   {
-    "name": "Kings Mountain (Tripp to Skyline)",
-    "segment": {
-      "name": "Kings Mountain (Tripp to Skyline)",
-      "id": 611413,
-      "distance": 7024.13,
-      "average_grade": 0.06904769701016354,
-      "elevation_low": 185.2,
-      "elevation_high": 670.2,
-      "total_elevation_gain": 485.00000000000006,
-      "median_elevation": 427.70000000000005
-    }
-  },
-  {
-    "name": "Umunhum peak (N. Hicks)",
-    "segment": {
-      "name": "Umunhum peak (N. Hicks)",
-      "id": 611999,
-      "distance": 8281.49,
-      "average_grade": 0.09790508712804097,
-      "elevation_low": 197.6,
-      "elevation_high": 1008.4,
-      "total_elevation_gain": 810.8,
-      "median_elevation": 603
-    }
-  },
-  {
     "name": "DVRSR Stage 2 Onion Valley",
     "segment": {
       "name": "DVRSR Stage 2 Onion Valley",
@@ -400,19 +1730,6 @@
       "elevation_high": 2765.8,
       "total_elevation_gain": 1532.9,
       "median_elevation": 1999.3500000000001
-    }
-  },
-  {
-    "name": "RWG \u0026 Highway 9",
-    "segment": {
-      "name": "RWG \u0026 Highway 9",
-      "id": 614409,
-      "distance": 7082.9,
-      "average_grade": 0.08029197080291972,
-      "elevation_low": 247.7,
-      "elevation_high": 816.4,
-      "total_elevation_gain": 568.7,
-      "median_elevation": 532.05
     }
   },
   {
@@ -533,19 +1850,6 @@
     }
   },
   {
-    "name": "West OLH (84 to Skyline)",
-    "segment": {
-      "name": "West OLH (84 to Skyline)",
-      "id": 622755,
-      "distance": 3883.16,
-      "average_grade": 0.043675769218883595,
-      "elevation_low": 340,
-      "elevation_high": 509.6,
-      "total_elevation_gain": 169.60000000000002,
-      "median_elevation": 424.8
-    }
-  },
-  {
     "name": "Mix Canyon from Pleasants Valley Road",
     "segment": {
       "name": "Mix Canyon from Pleasants Valley Road",
@@ -624,19 +1928,6 @@
     }
   },
   {
-    "name": "Montebello",
-    "segment": {
-      "name": "Montebello",
-      "id": 627158,
-      "distance": 8297.61,
-      "average_grade": 0.07129763871765483,
-      "elevation_low": 188.6,
-      "elevation_high": 780.2,
-      "total_elevation_gain": 591.6,
-      "median_elevation": 484.40000000000003
-    }
-  },
-  {
     "name": "Gates Canyon climb (to the Gate)",
     "segment": {
       "name": "Gates Canyon climb (to the Gate)",
@@ -647,19 +1938,6 @@
       "elevation_high": 424.3,
       "total_elevation_gain": 339,
       "median_elevation": 254.8
-    }
-  },
-  {
-    "name": "Bohlman - On Orbit - Bohlman",
-    "segment": {
-      "name": "Bohlman - On Orbit - Bohlman",
-      "id": 637762,
-      "distance": 6700.7,
-      "average_grade": 0.08916978823108034,
-      "elevation_low": 178.8,
-      "elevation_high": 776.3,
-      "total_elevation_gain": 597.5,
-      "median_elevation": 477.54999999999995
     }
   },
   {
@@ -715,32 +1993,6 @@
     }
   },
   {
-    "name": "Mt Charlie Climb",
-    "segment": {
-      "name": "Mt Charlie Climb",
-      "id": 646647,
-      "distance": 6480.65,
-      "average_grade": 0.05098254033160254,
-      "elevation_low": 259,
-      "elevation_high": 589.4,
-      "total_elevation_gain": 330.4,
-      "median_elevation": 424.2
-    }
-  },
-  {
-    "name": "Felton Empire Climb",
-    "segment": {
-      "name": "Felton Empire Climb",
-      "id": 648888,
-      "distance": 5842.64,
-      "average_grade": 0.07897115002806951,
-      "elevation_low": 82.8,
-      "elevation_high": 544.2,
-      "total_elevation_gain": 461.40000000000003,
-      "median_elevation": 313.5
-    }
-  },
-  {
     "name": "BtC Full Course",
     "segment": {
       "name": "BtC Full Course",
@@ -764,19 +2016,6 @@
       "elevation_high": 1058.7,
       "total_elevation_gain": 790.3000000000001,
       "median_elevation": 663.55
-    }
-  },
-  {
-    "name": "84 Pescadero to Skyline",
-    "segment": {
-      "name": "84 Pescadero to Skyline",
-      "id": 658330,
-      "distance": 10959.4,
-      "average_grade": 0.030457871781301892,
-      "elevation_low": 117.4,
-      "elevation_high": 451.2,
-      "total_elevation_gain": 333.79999999999995,
-      "median_elevation": 284.3
     }
   },
   {
@@ -832,19 +2071,6 @@
     }
   },
   {
-    "name": "Calaveras to Top Sierra - Full Climb",
-    "segment": {
-      "name": "Calaveras to Top Sierra - Full Climb",
-      "id": 671251,
-      "distance": 13756.3,
-      "average_grade": 0.04080312293276535,
-      "elevation_low": 4.2,
-      "elevation_high": 565.5,
-      "total_elevation_gain": 561.3,
-      "median_elevation": 284.85
-    }
-  },
-  {
     "name": "Home stretch / Are we done yet?",
     "segment": {
       "name": "Home stretch / Are we done yet?",
@@ -868,19 +2094,6 @@
       "elevation_high": 184.2,
       "total_elevation_gain": 149.39999999999998,
       "median_elevation": 109.5
-    }
-  },
-  {
-    "name": "Alpe d'Huez (Official Crono Course)",
-    "segment": {
-      "name": "Alpe d'Huez (Official Crono Course)",
-      "id": 683473,
-      "distance": 13914.3,
-      "average_grade": 0.0789834918033965,
-      "elevation_low": 733.2,
-      "elevation_high": 1832.2,
-      "total_elevation_gain": 1099,
-      "median_elevation": 1282.7
     }
   },
   {
@@ -923,32 +2136,6 @@
     }
   },
   {
-    "name": "Montevina",
-    "segment": {
-      "name": "Montevina",
-      "id": 744314,
-      "distance": 5537.71,
-      "average_grade": 0.0869673565426864,
-      "elevation_low": 213.8,
-      "elevation_high": 695.4,
-      "total_elevation_gain": 481.59999999999997,
-      "median_elevation": 454.6
-    }
-  },
-  {
-    "name": "Diablo North Gate entrance sign to summit parking lot (LKHC)",
-    "segment": {
-      "name": "Diablo North Gate entrance sign to summit parking lot (LKHC)",
-      "id": 745209,
-      "distance": 17496.5,
-      "average_grade": 0.06072643100048581,
-      "elevation_low": 106.5,
-      "elevation_high": 1169,
-      "total_elevation_gain": 1062.5,
-      "median_elevation": 637.75
-    }
-  },
-  {
     "name": "Devil's PostPile (complete climb)",
     "segment": {
       "name": "Devil's PostPile (complete climb)",
@@ -988,58 +2175,6 @@
     }
   },
   {
-    "name": "St Nizier",
-    "segment": {
-      "name": "St Nizier",
-      "id": 780273,
-      "distance": 14701.7,
-      "average_grade": 0.06210166171259106,
-      "elevation_low": 127.2,
-      "elevation_high": 1040.2,
-      "total_elevation_gain": 913,
-      "median_elevation": 583.7
-    }
-  },
-  {
-    "name": "Skyline Climb--92 to MPROSD Lot",
-    "segment": {
-      "name": "Skyline Climb--92 to MPROSD Lot",
-      "id": 787299,
-      "distance": 6810.76,
-      "average_grade": 0.05135990697073454,
-      "elevation_low": 260,
-      "elevation_high": 609.8,
-      "total_elevation_gain": 349.79999999999995,
-      "median_elevation": 434.9
-    }
-  },
-  {
-    "name": "Sierra Road - Start at Fulbar",
-    "segment": {
-      "name": "Sierra Road - Start at Fulbar",
-      "id": 789267,
-      "distance": 5745.35,
-      "average_grade": 0.09487672639612904,
-      "elevation_low": 66.9,
-      "elevation_high": 612,
-      "total_elevation_gain": 545.1,
-      "median_elevation": 339.45
-    }
-  },
-  {
-    "name": "Page Mill Road (Low-Key Hillclimbs)",
-    "segment": {
-      "name": "Page Mill Road (Low-Key Hillclimbs)",
-      "id": 794318,
-      "distance": 13371,
-      "average_grade": 0.04527709221449405,
-      "elevation_low": 86,
-      "elevation_high": 691.4,
-      "total_elevation_gain": 605.4,
-      "median_elevation": 388.7
-    }
-  },
-  {
     "name": "Bohlman-Norton-Kittridge-Quickert-On Orbit-Bohlman (Low-Key Hillclimbs)",
     "segment": {
       "name": "Bohlman-Norton-Kittridge-Quickert-On Orbit-Bohlman (Low-Key Hillclimbs)",
@@ -1050,19 +2185,6 @@
       "elevation_high": 767.9,
       "total_elevation_gain": 586.8,
       "median_elevation": 474.5
-    }
-  },
-  {
-    "name": "Palomares Road from Niles Canyon (Low-Key Hillclimbs)",
-    "segment": {
-      "name": "Palomares Road from Niles Canyon (Low-Key Hillclimbs)",
-      "id": 809073,
-      "distance": 7273.59,
-      "average_grade": 0.04433849034658264,
-      "elevation_low": 45.3,
-      "elevation_high": 367.8,
-      "total_elevation_gain": 322.5,
-      "median_elevation": 206.55
     }
   },
   {
@@ -1102,19 +2224,6 @@
       "elevation_high": 494.7,
       "total_elevation_gain": 371.4,
       "median_elevation": 309
-    }
-  },
-  {
-    "name": "HWY 92 climb from Crystal Springs",
-    "segment": {
-      "name": "HWY 92 climb from Crystal Springs",
-      "id": 921320,
-      "distance": 2728.01,
-      "average_grade": 0.060263708710745184,
-      "elevation_low": 96.3,
-      "elevation_high": 260.7,
-      "total_elevation_gain": 164.39999999999998,
-      "median_elevation": 178.5
     }
   },
   {
@@ -1180,6 +2289,19 @@
       "elevation_high": 4217.4,
       "total_elevation_gain": 4185.5,
       "median_elevation": 2124.6499999999996
+    }
+  },
+  {
+    "name": "Ring of Fire",
+    "segment": {
+      "name": "Ring of Fire",
+      "id": 1543870,
+      "distance": 31030.3,
+      "average_grade": -0,
+      "elevation_low": 92,
+      "elevation_high": 426,
+      "total_elevation_gain": 781.4,
+      "median_elevation": 259
     }
   },
   {
@@ -1258,19 +2380,6 @@
       "elevation_high": 642.8,
       "total_elevation_gain": 420.79999999999995,
       "median_elevation": 432.4
-    }
-  },
-  {
-    "name": "LKHC Soda Springs Rd.",
-    "segment": {
-      "name": "LKHC Soda Springs Rd.",
-      "id": 2719563,
-      "distance": 8436.85,
-      "average_grade": 0.08513841066274735,
-      "elevation_low": 215.4,
-      "elevation_high": 933.7,
-      "total_elevation_gain": 718.3000000000001,
-      "median_elevation": 574.5500000000001
     }
   },
   {
@@ -1508,19 +2617,6 @@
     }
   },
   {
-    "name": "Mt. Hamilton (official to gate)",
-    "segment": {
-      "name": "Mt. Hamilton (official to gate)",
-      "id": 6144714,
-      "distance": 29446.3,
-      "average_grade": 0.038768877583940944,
-      "elevation_low": 133.8,
-      "elevation_high": 1275.4,
-      "total_elevation_gain": 1141.6000000000001,
-      "median_elevation": 704.6
-    }
-  },
-  {
     "name": "Mount Diablo Descent to the first rise",
     "segment": {
       "name": "Mount Diablo Descent to the first rise",
@@ -1677,32 +2773,6 @@
     }
   },
   {
-    "name": "Old La Honda (Bridge to Mailboxes)",
-    "segment": {
-      "name": "Old La Honda (Bridge to Mailboxes)",
-      "id": 8109834,
-      "distance": 4808.9,
-      "average_grade": 0.08118280687891202,
-      "elevation_low": 107.6,
-      "elevation_high": 498,
-      "total_elevation_gain": 390.4,
-      "median_elevation": 302.8
-    }
-  },
-  {
-    "name": "Jamison Creek",
-    "segment": {
-      "name": "Jamison Creek",
-      "id": 8574858,
-      "distance": 4652.2,
-      "average_grade": 0.09752375220325867,
-      "elevation_low": 241.6,
-      "elevation_high": 695.3,
-      "total_elevation_gain": 453.69999999999993,
-      "median_elevation": 468.45
-    }
-  },
-  {
     "name": "H2W",
     "segment": {
       "name": "H2W",
@@ -1778,32 +2848,6 @@
       "elevation_high": 1148.9,
       "total_elevation_gain": 451.80000000000007,
       "median_elevation": 923
-    }
-  },
-  {
-    "name": "Moody and Page Mill to Skyline",
-    "segment": {
-      "name": "Moody and Page Mill to Skyline",
-      "id": 10029832,
-      "distance": 13965.7,
-      "average_grade": 0.04207451112368158,
-      "elevation_low": 102.7,
-      "elevation_high": 690.3,
-      "total_elevation_gain": 587.5999999999999,
-      "median_elevation": 396.5
-    }
-  },
-  {
-    "name": "Mill Creek - LKHC 2015",
-    "segment": {
-      "name": "Mill Creek - LKHC 2015",
-      "id": 10749571,
-      "distance": 6789.1,
-      "average_grade": 0.05894743043996996,
-      "elevation_low": 51.4,
-      "elevation_high": 451.6,
-      "total_elevation_gain": 400.20000000000005,
-      "median_elevation": 251.5
     }
   },
   {
@@ -1937,19 +2981,6 @@
     }
   },
   {
-    "name": "Col de Menté (le vrai)",
-    "segment": {
-      "name": "Col de Menté (le vrai)",
-      "id": 15424801,
-      "distance": 9904.5,
-      "average_grade": 0.08632439800090867,
-      "elevation_low": 503,
-      "elevation_high": 1358,
-      "total_elevation_gain": 855,
-      "median_elevation": 930.5
-    }
-  },
-  {
     "name": "Hicks W kink to Mt Umunhum Cube (full climb)",
     "segment": {
       "name": "Hicks W kink to Mt Umunhum Cube (full climb)",
@@ -1973,6 +3004,19 @@
       "elevation_high": -5.6,
       "total_elevation_gain": 4.6,
       "median_elevation": -7.8999999999999995
+    }
+  },
+  {
+    "name": "Old Growth Classic Full Route",
+    "segment": {
+      "name": "Old Growth Classic Full Route",
+      "id": 18676571,
+      "distance": 83308.3,
+      "average_grade": 0,
+      "elevation_low": 5,
+      "elevation_high": 711.9,
+      "total_elevation_gain": 2789.8,
+      "median_elevation": 358.45
     }
   }
 ]
