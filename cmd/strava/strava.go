@@ -27,9 +27,6 @@ func main() {
 
 	flag.Parse()
 	args := flag.Args()
-	if len(args) < 1 {
-		exit(fmt.Errorf("requires args be specified"))
-	}
 
 	climbs, err := GetClimbs(climbsFile)
 	if err != nil {
@@ -42,7 +39,7 @@ func main() {
 	}
 
 	fi, _ := os.Stdout.Stat()
-	if outputJson || (fi.Mode() & os.ModeCharDevice) != 0 {
+	if outputJson || (fi.Mode()&os.ModeCharDevice) != 0 {
 		j, err := json.MarshalIndent(s, "", "  ")
 		if err != nil {
 			exit(err)
@@ -57,34 +54,46 @@ func main() {
 }
 
 func findSegment(token string, climbs []Climb, args []string) (*Segment, error) {
-	if len(args) == 1 {
+	argc := len(args)
+	if argc == 1 {
 		id, err := strconv.ParseInt(args[0], 10, 0)
 		if err == nil {
 			return GetSegmentByID(id, climbs, token)
 		}
 	}
 
-	arg := simplify(strings.Join(args, " "))
-
 	var names []string
 	namedClimbs := make(map[string]Climb)
 
 	for _, c := range climbs {
-		n := simplify(c.Name)
+		n := simplify(c.Name, argc > 0)
 		namedClimbs[n] = c
 		names = append(names, n)
 
-		n = simplify(c.Segment.Name)
+		n = simplify(c.Segment.Name, argc > 0)
 		namedClimbs[n] = c
 		names = append(names, n)
 
 		for _, alias := range c.Aliases {
-			a := simplify(alias)
+			a := simplify(alias, argc > 0)
 			namedClimbs[a] = c
 			names = append(names, a)
 		}
 	}
 
+	if argc == 0 {
+		m, err := fuzzy.FzfMatch(names)
+		if err != nil {
+			return nil, fmt.Errorf("could not find a segment: %s", err)
+		}
+		c, ok := namedClimbs[m]
+		if !ok {
+			return nil, fmt.Errorf("could not find a segment matching: %s", m)
+		}
+		return &c.Segment, nil
+	}
+
+	arg := simplify(strings.Join(args, " "), true)
 	exact, ok := namedClimbs[arg]
 	if ok {
 		return &exact.Segment, nil
@@ -99,8 +108,12 @@ func findSegment(token string, climbs []Climb, args []string) (*Segment, error) 
 	return nil, fmt.Errorf("could not find a segment matching: %s", args)
 }
 
-func simplify(name string) string {
-	return strings.ToLower(alphanum.ReplaceAllString(name, ""))
+func simplify(name string, a bool) string {
+	if a {
+		return strings.ToLower(alphanum.ReplaceAllString(name, ""))
+	} else {
+		return name
+	}
 }
 
 func exit(err error) {
