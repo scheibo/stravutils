@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/scheibo/geo"
 	"github.com/strava/go.strava"
 )
 
@@ -21,14 +22,19 @@ type Climb struct {
 }
 
 type Segment struct {
-	Name               string  `json:"name"`
-	ID                 int64   `json:"id"`
-	Distance           float64 `json:"distance"`
-	AverageGrade       float64 `json:"average_grade"`
-	ElevationLow       float64 `json:"elevation_low"`
-	ElevationHigh      float64 `json:"elevation_high"`
-	TotalElevationGain float64 `json:"total_elevation_gain"`
-	MedianElevation    float64 `json:"median_elevation"`
+	Name               string     `json:"name"`
+	ID                 int64      `json:"id"`
+	Distance           float64    `json:"distance"`
+	AverageGrade       float64    `json:"average_grade"`
+	ElevationLow       float64    `json:"elevation_low"`
+	ElevationHigh      float64    `json:"elevation_high"`
+	TotalElevationGain float64    `json:"total_elevation_gain"`
+	MedianElevation    float64    `json:"median_elevation"`
+	StartLocation      geo.LatLng `json:"start_location"`
+	EndLocation        geo.LatLng `json:"end_location"`
+	AverageLocation    geo.LatLng `json:"average_location,omitempty"`
+	AverageDirection   float64    `json:average_direction,omitempty"`
+	Map                string     `json:"map,omitempty"`
 }
 
 func GetClimbs(files ...string) ([]Climb, error) {
@@ -75,6 +81,12 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 		gr = s.AverageGrade
 	}
 
+	poly := string(s.Map.Polyline)
+	lls, err := geo.DecodePolyline(string(s.Map.Polyline))
+	if err != nil {
+		return nil, err
+	}
+
 	return &Segment{
 		ID:                 segmentID,
 		Name:               s.Name,
@@ -84,6 +96,11 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 		ElevationHigh:      s.ElevationHigh,
 		TotalElevationGain: gain,
 		MedianElevation:    (s.ElevationHigh + s.ElevationLow) / 2,
+		StartLocation:      geo.LatLng{s.StartLocation[0], s.StartLocation[1]},
+		EndLocation:        geo.LatLng{s.EndLocation[0], s.EndLocation[1]},
+		AverageLocation:    geo.Average(lls),
+		AverageDirection:   geo.AverageDirection(lls),
+		Map:                poly,
 	}, nil
 }
 
