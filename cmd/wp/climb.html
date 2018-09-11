@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- TODO --><link rel="icon" href="https://rvamag.com/wp-content/themes/genesis-bfg/build/images/favicons/favicon.ico?v=1.1">
+  <link rel="canonical" href="{{AbsoluteRootUrl}}/{{CanonicalPath}}">
+  <title>Weather</title>
+  <style>
+  .color-5 {background-color:rgba(165,0,38, 0.85)}
+  .color-4 {background-color:rgba(215,48,39, 0.85)}
+  .color-3 {background-color:rgba(244,109,67, 0.85)}
+  .color-2 {background-color:rgba(253,174,97, 0.85)}
+  .color-1 {background-color:rgba(254,224,139, 0.85)}
+  .color0 {background-color:rgba(255,255,191, 0.85)}
+  .color1 {background-color:rgba(217,239,139, 0.85)}
+  .color2 {background-color:rgba(166,217,106, 0.85)}
+  .color3 {background-color:rgba(102,189,99, 0.85)}
+  .color4 {background-color:rgba(26,152,80, 0.85)}
+  .color5 {background-color:rgba(0,104,55, 0.85)}
+    body {
+      font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    }
+    h1 { 
+      text-transform: uppercase;
+    }
+    header {
+      text-align: center;
+    }
+    h1 {
+      font-weight: 900;
+      margin-bottom: 0.33em;
+    }
+    #container {
+      padding-top: 0.5em;
+      margin: 0px auto;
+      max-width: 800px;
+    }
+
+    #data {
+      border-collapse: collapse;
+      min-width: 100%;
+      margin: 0px auto;
+      text-align: left;
+      border-spacing: 0px;
+      line-height: 1.15em;
+
+    }
+    .current, .best, .score, .date, .time, .rank {
+     text-align: right;
+    }
+    td, th, #attribution {
+      padding: 0.33em;
+    }
+    th {
+      border-bottom: 1px solid black;
+    }
+    td {
+      border-top: 1px solid #CDCDCD;
+    }
+    td.score {
+      background-color: #F0F0F0;
+    }
+    #main-nav, #page-nav {
+      padding-bottom: 0.5em;
+    }
+    a, a:hover, a:visited, a:focus, a:active  {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Mobile - Small */ 
+    table { font-size: 10px; }
+    h1 { font-size: 24px; }
+    #main-nav { font-size: 14px; }
+    #page-nav { font-size: 12px; }
+    #attribution { font-size: 6px; }
+    /* Mobile - Medium */ 
+    @media(min-width: 375px) {
+      table { font-size: 12px; }
+      h1 { font-size: 32px; }
+      #main-nav { font-size: 16px; }
+      #page-nav { font-size: 13px; }
+      #attribution { font-size: 7px; }
+      #container { max-width: 400px; }
+    }
+    /* Mobile - Large */ 
+    @media(min-width: 425px) {
+      table { font-size: 13px; }
+      h1 { font-size: 36px; }
+      #main-nav { font-size: 18px; }
+      #page-nav { font-size: 13px; }
+      #attribution { font-size: 8px; }
+      #container { max-width: 500px; }
+    }
+    /* Tablet */ 
+    @media(min-width: 768px) {
+      table { font-size: 15px; }
+      h1 { font-size: 40px; }
+      #main-nav { font-size: 20px; }
+      #page-nav { font-size: 15px; }
+      #attribution { font-size: 10px; }
+      #container { max-width: 600px; }
+    }
+    /* Laptop */ 
+    @media(min-width: 1024px) {
+      table { font-size: 16px; }
+      h1 { font-size: 44px; }
+      #main-nav { font-size: 22px; }
+      #page-nav { font-size: 18px; }
+      #attribution { font-size: 11px; }
+      #container { max-width: 700px; }
+    }
+
+    .current, .best {
+      width: 10%;
+    }
+    #attribution {
+      color: #878787;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <header>
+      <h1>Weather</h1>
+    </header>
+    <div id='container'>
+    <div id='container2'>
+      <table id='data'>
+        <thead>
+          <tr>
+            <th class="name">Name</th>
+            <th class="current">Current</th>
+            <th class="date">Date</th>
+            <th class="best">Best</th>
+          </tr>
+        </thead>
+        <tbody>
+         <tr>
+           <td class="name"><a href="/climbs/foo" title="NNW (318°)">Old La Honda</a></td>
+            <td class="current color1" title="5 km/h S (90°)">1.05%</td>
+            <td class="date">Saturday 4PM</td>
+            <td class="best color5" title="18 km/h W (180°)">5.63%</td>
+          </tr>
+          <tr>
+            <td class="name"><a href="/climbs/foo">Kings Mountain</a></td>
+            <td class="current color-2">-2.58%</td>
+            <td class="date">Wednesday 6AM</td>
+            <td class="best color0">0.97%</td>
+          </tr>
+          <tr>
+            <td class="name"><a href="/climbs/foo">Montebello</a></td>
+            <td class="current color0">-0.10%</td>
+            <td class="date">Wednesday 6AM</td>
+            <td class="best color3">3.95%</td>
+          </tr>
+          <tr>
+            <td class="name"><a href="/climbs/foo">Highway 9</a></td>
+            <td class="current color-3">-3.46%</td>
+            <td class="date">Friday 7PM</td>
+            <td class="best color2">2.95%</td>
+          </tr>
+          <tr>
+            <td class="name"><a href="/climbs/foo">Hicks / Mt. Umunhum</a></td>
+            <td class="current color3">3.89%</td>
+            <td class="date">Thursday 12PM</td>
+            <td class="best color4">4.30%</td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="attribution"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></div>
+    </div>
+    </div>
+  </div>
+</body>
+</html>
