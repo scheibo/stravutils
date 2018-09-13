@@ -11,6 +11,7 @@ import (
 
 	"html/template"
 
+	"github.com/scheibo/calc"
 	"github.com/scheibo/perf"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
@@ -28,15 +29,20 @@ const minHour = 6
 const maxHour = 18
 
 func main() {
-	var key, climbsFile string
+	var output, key, climbsFile string
 	var min, max int
 
+	flag.StringVar(&output, "output", "weather-panel", "Output directory")
 	flag.StringVar(&key, "key", "", "DarkySky API Key")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
 	flag.IntVar(&min, "min", 6, "Minimum hour [0-23] to include in forecasts")
 	flag.IntVar(&max, "max", 18, "Maximum hour [0-23] to include in forecasts")
 
 	flag.Parse()
+
+	if min < 0 || max > 23 || min >= max {
+		exit(fmt.Errorf("min and max must be in the range [0-23] with min < max but got min=%d max=%d", min, max))
+	}
 
 	climbs, err := GetClimbs(climbsFile)
 	if err != nil {
@@ -52,26 +58,46 @@ func main() {
 			exit(err)
 		}
 		c := climb
-		forecasts = append(forecasts, trimAndScore(&c, f, min, max))
+		cf, err := trimAndScore(&c, f, min, max)
+		if err != nil {
+			exit(err)
+		}
+		forecasts = append(forecasts, cf)
 	}
 
-	// TODO(kjs): handle nested pages
-	t := template.Must(compileTemplates(resource("wp.html")))
-	err = t.Execute(os.Stdout, struct {
-		Forecasts []*ClimbForecast
-	}{
-		forecasts,
-	})
-
+	err = render(output, forecasts)
 	if err != nil {
 		exit(err)
 	}
 }
 
+func render(dir string, forecasts []*ClimbForecast) error {
+	err := os.MkdirAll(dir, 0644)
+	if err != nil {
+		return err
+	}
+
+	// TODO(kjs): handle nested pages
+	file, err := os.Create(filepath.Join(dir, "index.html"))
+	if err != nil {
+		return err
+	}
+
+	t := template.Must(compileTemplates(resource("wp.html")))
+	err = t.Execute(file, struct {
+		Forecasts []*ClimbForecast
+	}{
+		forecasts,
+	})
+	file.Close()
+
+	return err
+}
+
 type ScoredConditions struct {
 	*weather.Conditions
 	historical float64
-	baseline float64
+	baseline   float64
 }
 
 type DayForecast struct {
@@ -80,9 +106,9 @@ type DayForecast struct {
 }
 
 type ScoredForecast struct {
-	Days []*DayForecast
+	Days       []*DayForecast
 	Historical *ScoredConditions
-	Baseline *ScoredConditions
+	Baseline   *ScoredConditions
 }
 
 type ClimbForecast struct {
@@ -98,11 +124,11 @@ func (f *ClimbForecast) Current() *ScoredConditions {
 	return f.Forecast.Days[0].Conditions[0]
 }
 
-func trimAndScore(c *Climb, f *weather.Forecast, min, max int) *ClimbForecast {
+func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, error) {
 	scored := ScoredForecast{}
 	result := &ClimbForecast{Climb: c, Forecast: &scored}
 	if len(f.Hourly) == 0 {
-		return result
+		return result, nil
 	}
 
 	df := DayForecast{}
@@ -132,42 +158,55 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) *ClimbForecast {
 		scored.Days = append(scored.Days, &df)
 	}
 
-	// pad(scored.Days, max-min) // TODO use an array of size max-min to begin with, use time to calculate index?
+	// The first and last day will usually not have all the data, we pad the slices with nulls.
+	hours := max - min
+	pad(&scored.Days, hours)
 
-	return result
+	// Verify invariants
+	if len(scored.Days) != 7 {
+		return nil, fmt.Errorf("expected 7 days worth of data and got %d", len(scored.Days))
+	}
+	for _, d := range scored.Days {
+		if len(d.Conditions) != hours {
+			return nil, fmt.Errorf("expected each day to have %d hours of data but %s had only %d",
+				hours, d.Day, len(d.Conditions))
+		}
+	}
+
+	return result, nil
 }
 
-//func pad(days []*DayForecast, expected float64) {
-	//if len(days) > 0 {
-		//first := scored.Days[0]
-		//actual := len(first.Conditions) // > 0
-		//if actual < expected {
-			//padded = make([]*DayForecast, expected)
-			//for i := actual; i < expected; i++ {
-				//padded[i] := first.Conditions[actual - i]
-			//}
-			//first = padded // TODO do we need to make this a pointer?
-		//}
-	//}
+func pad(days *[]*DayForecast, expected int) {
+	if len(*days) > 0 {
+		first := (*days)[0]
+		actual := len(first.Conditions) // > 0
+		if actual < expected {
+			padded := make([]*ScoredConditions, expected)
+			for i := actual; i < expected; i++ {
+				padded[i] = first.Conditions[actual-i]
+			}
+			first.Conditions = padded
+		}
+	}
 
-	//if len(days) > 1 {
-		//last := scored.Days[len(days) - 1]
-		//actual := len(last.Conditions) // > 0
-		//if actual < expected {
-			//padded = make([]*DayForecast, expected)
-			//copy(padded, 
-		//}
-	//}
-//}
-
+	if len(*days) > 1 {
+		last := (*days)[len(*days)-1]
+		actual := len(last.Conditions) // > 0
+		if actual < expected {
+			padded := make([]*ScoredConditions, expected)
+			copy(padded, last.Conditions)
+			last.Conditions = padded
+		}
+	}
+}
 
 func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64) *ScoredConditions {
-	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation),
+	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
+
 	// TODO(kjs): use c.Map polyline for more accurate score.
 	historical := wnf.Power2(
 		power,
 		climb.Segment.Distance,
-		climb.Segment.MedianElevation,
 		rhoH,
 		conditions.AirDensity,
 		wnf.CdaClimb,
@@ -178,6 +217,7 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
+
 	baseline := wnf.Power(
 		power,
 		climb.Segment.Distance,
@@ -189,6 +229,7 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
+
 	return &ScoredConditions{conditions, historical, baseline}
 }
 
@@ -198,7 +239,7 @@ func (c *ScoredConditions) Rank(s float64) int {
 		mod = -1
 	}
 
-	rank := int(math.Abs(s-1) * 100) / 2
+	rank := int(math.Abs(s-1)*100) / 2
 	if rank > 5 {
 		rank = 5
 	}

@@ -119,6 +119,7 @@
         <!-- TODO: make this conditional, proper links and bold correct -->
         <a id="historical" href="/">Historical</a></b> /
         <b><a id="baseline" href="/baseline">Baseline</a>
+        <!-- TODO include navigation for hours -->
       </nav>
     </header>
     <div id='container'>
@@ -136,13 +137,14 @@
           <tr>
             <td class="name"><a href="https://www.strava.com/segments/{{$f.Climb.Segment.ID}}" title="{{$f.ClimbDirection}}">{{$f.Climb.Name}}</a></td>
             <td class="current color{{$f.Current.Rank}}" title="{{$f.Current.Wind}}">{{$f.Current.Score}}</td>
-            <td class="date">{{$f.Forecast.Best.DayTime}}</td>
-            <td class="best color{{$f.Forecast.Best.Rank}}" title="{{$f.Forecast.Best.Wind}}">{{$f.Forecast.Best.Score}}</td>
+            <td class="date" title={{$f.Forecase.Baseline.Time}}>{{$f.Forecast.Baseline.DayTime}}</td>
+            <td class="best color{{$f.Forecast.Baseline.Rank}}" title="{{$f.Forecast.BaslineWind}}">{{$f.Forecast.Baseline.Score}}</td>
           </tr>
           {{end}}
         </tbody>
       </table>
       <div id="attribution"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></div>
+      <!-- TODO include (1) google analytics (2) keyboard navigation on hour pages -->
     </div>
   </div>
 </body>
