@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- TODO use climacon --><link rel="icon" href="/favicon.ico">
+  <link rel="canonical" href="{{.AbsoluteURL}}/{{.CanonicalPath}}">
+  <title>{{.Title}}</title>
+  <style>
+    /* http://colorbrewer2.org/?type=diverging&scheme=RdYlGn&n=11 */
+    .color-5 { background-color: rgba(165,0,38, 0.85) }
+    .color-4 { background-color: rgba(215,48,39, 0.85) }
+    .color-3 { background-color: rgba(244,109,67, 0.85) }
+    .color-2 { background-color: rgba(253,174,97, 0.85) }
+    .color-1 { background-color: rgba(254,224,139, 0.85) }
+    .color0 { background-color: rgba(255,255,191, 0.85) }
+    .color1 { background-color: rgba(217,239,139, 0.85) }
+    .color2 { background-color: rgba(166,217,106, 0.85) }
+    .color3 { background-color: rgba(102,189,99, 0.85) }
+    .color4 { background-color: rgba(26,152,80, 0.85) }
+    .color5 { background-color: rgba(0,104,55, 0.85) }
+
+    body {
+      font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    h1 {
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 0.33em;
+    }
+
+    #container {
+      padding-top: 0.5em;
+      margin: 0px auto;
+      max-width: 800px;
+    }
+
+    #data {
+      border-collapse: collapse;
+      min-width: 100%;
+      margin: 0px auto;
+      text-align: left;
+      border-spacing: 0px;
+      line-height: 1.15em;
+
+    }
+    .current, .best, .date {
+     text-align: right;
+    }
+
+    td, th, #attribution {
+      padding: 0.33em;
+    }
+
+    th {
+      border-bottom: 1px solid black;
+    }
+
+    td {
+      border-top: 1px solid #CDCDCD;
+    }
+
+    a, a:hover, a:visited, a:focus, a:active  {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    #main-nav, #page-nav {
+      padding-bottom: 0.5em;
+    }
+
+    /* Mobile - Small */ 
+    table { font-size: 10px; }
+    h1 { font-size: 24px; }
+    #main-nav { font-size: 14px; }
+    #page-nav { font-size: 12px; }
+    #attribution { font-size: 6px; }
+    /* Mobile - Medium */ 
+    @media(min-width: 375px) {
+      table { font-size: 12px; }
+      h1 { font-size: 32px; }
+      #main-nav { font-size: 16px; }
+      #page-nav { font-size: 13px; }
+      #attribution { font-size: 7px; }
+      #container { max-width: 400px; }
+    }
+    /* Mobile - Large */ 
+    @media(min-width: 425px) {
+      table { font-size: 13px; }
+      h1 { font-size: 36px; }
+      #main-nav { font-size: 18px; }
+      #page-nav { font-size: 13px; }
+      #attribution { font-size: 8px; }
+      #container { max-width: 500px; }
+    }
+    /* Tablet */ 
+    @media(min-width: 768px) {
+      table { font-size: 15px; }
+      h1 { font-size: 40px; }
+      #main-nav { font-size: 20px; }
+      #page-nav { font-size: 15px; }
+      #attribution { font-size: 10px; }
+      #container { max-width: 600px; }
+    }
+    /* Laptop */ 
+    @media(min-width: 1024px) {
+      table { font-size: 16px; }
+      h1 { font-size: 44px; }
+      #main-nav { font-size: 22px; }
+      #page-nav { font-size: 18px; }
+      #attribution { font-size: 11px; }
+      #container { max-width: 700px; }
+    }
+
+    .current, .best {
+      width: 10%;
+    }
+
+    #attribution {
+      color: #878787;
+    }
+
+    .selected {
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); // TODO
+    ga('set', 'transport', 'beacon');
+    ga('send', 'pageview');
+    </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+</head>
+<body>
+  <header>
+    <h1><a href="/">Weather</a></h1>
+    <nav id="main-nav">
+      <a id="historical" class="{{if .Historical}}selected{{end}}" href="historical">Historical</a> /
+      <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="baseline">Baseline</a>
+    </nav>
+    {{template "page-nav" .}}
+  </header>
+  <div id="content">
+    {{template "content" .}}
+  </div>
+  {{template "scripts" .}}
+</body>
+</html>

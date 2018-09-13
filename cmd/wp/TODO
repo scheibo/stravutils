@@ -1,0 +1,15 @@
+# Root
+/index.html (= alias historical)
+/baseline/index.html
+/historical/index.html
+
+# Dated
+/saturday-5pm/index.html
+/saturday-5pm/baseline/index.html
+/saturday-5pm/historical/index.html
+
+#Climbs
+/old-la-honda/index.html
+/old-la-honda/baseline/index.html
+/old-la-honda/historical/index.html
+

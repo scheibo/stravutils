@@ -43,8 +43,8 @@ type DayForecast struct {
 
 type ScoredForecast struct {
 	Days       []*DayForecast
-	Historical *ScoredConditions
-	Baseline   *ScoredConditions
+	historical *ScoredConditions
+	baseline   *ScoredConditions
 }
 
 type ClimbForecast struct {
@@ -53,9 +53,12 @@ type ClimbForecast struct {
 }
 
 func main() {
-	var output, key, climbsFile string
+	var output, key, climbsFile, absoluteURL string
+	var baseline bool
 	var min, max int
 
+	flag.BoolVar(&baseline, "baseline", false, "Default to baseline instead of historical")
+	flag.StringVar(&absoluteURL, "absoluteURL", "https://wp.scheibo.com", "Absolute root URL of the site")
 	flag.StringVar(&output, "output", "weather-panel", "Output directory")
 	flag.StringVar(&key, "key", "", "DarkySky API Key")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
@@ -73,6 +76,7 @@ func main() {
 		exit(err)
 	}
 
+	templates := getTemplates()
 	w := weather.NewClient(weather.DarkSky(key))
 
 	var forecasts []*ClimbForecast
@@ -89,10 +93,20 @@ func main() {
 		forecasts = append(forecasts, cf)
 	}
 
-	err = render(output, forecasts)
+	err = render(templates, !baseline, absoluteURL, output, forecasts)
 	if err != nil {
 		exit(err)
 	}
+}
+
+func getTemplates() map[string]*template.Template {
+	templates := make(map[string]*template.Template)
+
+	layout := resource("layout.tmpl.html")
+	templates["root"] = template.Must(compileTemplates(layout, resource("root.tmpl.html")))
+	templates["climb"] = template.Must(compileTemplates(layout, resource("climb.tmpl.html")))
+	templates["time"] = template.Must(compileTemplates(layout, resource("time.tmpl.html")))
+	return templates
 }
 
 func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, error) {
@@ -104,12 +118,12 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 
 	df := DayForecast{}
 	for _, w := range f.Hourly {
-		hours, _, _ := w.time.Clock()
+		hours, _, _ := w.Time.Clock()
 		if hours < min || hours > max {
 			continue
 		}
 
-		s := score(c, w, calc.Rho0, 0.0, 0.0) // TODO: include historical
+		s := score(c, w, calc.Rho0, 0.0, 0.0) // TODO: include historical!
 		day := s.Day()
 		if df.Day == "" {
 			df.Day = day
@@ -118,11 +132,11 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 			df = DayForecast{Day: day}
 		}
 		df.Conditions = append(df.Conditions, s)
-		if scored.Historical == nil || s.historical > scored.Historical.historical {
-			scored.Historical = s
+		if scored.historical == nil || s.historical > scored.historical.historical {
+			scored.historical = s
 		}
-		if scored.Baseline == nil || s.baseline > scored.Baseline.baseline {
-			scored.Baseline = s
+		if scored.baseline == nil || s.baseline > scored.baseline.baseline {
+			scored.baseline = s
 		}
 	}
 	if df.Day != "" {
@@ -204,32 +218,111 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 	return &ScoredConditions{conditions, historical, baseline}
 }
 
-func render(dir string, forecasts []*ClimbForecast) error {
-	err := os.MkdirAll(dir, 0755)
-	if err != nil {
-		return err
-	}
-
-	// TODO(kjs): handle nested pages
-	file, err := os.Create(filepath.Join(dir, "index.html"))
-	if err != nil {
-		return err
-	}
-
-	t := template.Must(compileTemplates(resource("wp.html")))
-	err = t.Execute(file, struct {
-		Forecasts []*ClimbForecast
-	}{
-		forecasts,
-	})
-	file.Close()
-
-	return err
+type LayoutTmpl struct {
+	AbsoluteURL   string
+	CanonicalPath string
+	Title         string // "Weather" +
+	Historical    bool
 }
 
-func resource(filename string) string {
+type RootTmpl struct {
+	LayoutTmpl
+	Forecasts []*ClimbForecast
+}
+
+//type ClimbTmpl struct {
+//LayoutTmpl
+//// TODO
+//}
+
+//type DayTimeTmpl {
+//LayoutTmpl
+//DayTimeConditions
+//}
+
+//type DayTimeConditions struct {
+//DayTime string
+//Climbs *ClimbConditions
+//}
+
+//type ClimbConditions {
+//Climb    *Climb
+//Conditions *ScoredConditions
+//}
+
+func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+	err := os.RemoveAll(dir)
+	if err != nil {
+		return err
+	}
+
+	tmpl, _ := templates["root"]
+	err = renderRoot(tmpl, historical, absoluteURL, dir, forecasts)
+	if err != nil {
+		return err
+	}
+	// TODO
+	// renderDayTimes(dir, forecasts)
+	// renderClimbs(dir, forecasts)
+	return nil
+}
+
+const TEMPLATE = "layout.tmpl.html"
+
+func renderRoot(t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+	data := RootTmpl{LayoutTmpl{AbsoluteURL: absoluteURL, Title: "Weather"}, forecasts}
+
+	// Historical
+	data.CanonicalPath = "historical"
+	data.Historical = true
+
+	h := filepath.Join(dir, "historical", "index.html")
+	f, err := create(h)
+	if err != nil {
+		return err
+	}
+
+	err = t.ExecuteTemplate(f, TEMPLATE, data)
+	f.Close()
+	if err != nil {
+		return err
+	}
+
+	// Baseline
+	data.CanonicalPath = "baseline"
+	data.Historical = false
+
+	b := filepath.Join(dir, "baseline", "index.html")
+	f, err = create(b)
+	if err != nil {
+		return err
+	}
+	err = t.ExecuteTemplate(f, TEMPLATE, data)
+	f.Close()
+	if err != nil {
+		return err
+	}
+
+	// Index
+	i := filepath.Join(dir, "index.html")
+	if historical {
+		return os.Symlink(h, i)
+	} else {
+		return os.Symlink(b, i)
+	}
+}
+
+func create(path string) (*os.File, error) {
+	err := os.MkdirAll(filepath.Dir(path), 0755)
+	if err != nil {
+		return nil, err
+	}
+	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0644)
+}
+
+func resource(name string) string {
 	_, src, _, _ := runtime.Caller(0)
-	return filepath.Join(filepath.Dir(src), filename)
+	return filepath.Join(filepath.Dir(src), name)
 }
 
 func compileTemplates(filenames ...string) (*template.Template, error) {
@@ -285,20 +378,28 @@ func (f *ClimbForecast) Current() *ScoredConditions {
 	return f.Forecast.Days[0].Conditions[0]
 }
 
-func (c *ScoredConditions) HistoricalScore() string {
-	return displayScore(c.historical)
+func (f *ScoredForecast) Best(historical bool) *ScoredConditions {
+	if historical {
+		return f.historical
+	} else {
+		return f.baseline
+	}
 }
 
-func (c *ScoredConditions) BaselineScore() string {
-	return displayScore(c.baseline)
+func (c *ScoredConditions) Score(historical bool) string {
+	if historical {
+		return displayScore(c.historical)
+	} else {
+		return displayScore(c.baseline)
+	}
 }
 
-func (c *ScoredConditions) HistoricalRank() int {
-	return rank(c.historical)
-}
-
-func (c *ScoredConditions) BaselineRank() int {
-	return rank(c.baseline)
+func (c *ScoredConditions) Rank(historical bool) int {
+	if historical {
+		return rank(c.historical)
+	} else {
+		return rank(c.baseline)
+	}
 }
 
 func displayScore(s float64) string {
@@ -324,13 +425,13 @@ func (c *ScoredConditions) Wind() string {
 }
 
 func (c *ScoredConditions) Day() string {
-	return c.time.Format("Monday")
+	return c.Time.Format("Monday")
 }
 
 func (c *ScoredConditions) DayTime() string {
-	return c.time.Format("Monday 3PM")
+	return c.Time.Format("Monday 3PM")
 }
 
-func (c *ScoredConditions) Time() string {
-	return c.time.Format("2006-01-02 15:04")
+func (c *ScoredConditions) FullTime() string {
+	return c.Time.Format("2006-01-02 15:04")
 }

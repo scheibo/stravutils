@@ -1,0 +1,21 @@
+{{define "page-nav"}}
+<nav id="page-nav">
+  <h2><a href="/TODO-slug/{{if .Historical}}historical{{else}}baseline{{end}}">{{.Climb.Name}}</a></h2>
+  <div id="direction">{{.ClimbDirection}}</div>
+</nav>
+{{end}}
+
+{{define "content"}}
+<div id='container'>
+  <table id='data'>
+    <!-- TODO -->
+  </table>
+  <div id="attribution"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></div>
+</div>
+{{end}}
+
+{{define "scripts"}}
+<script>
+  // TODO go between climbs with L/U + R/D
+</script>
+{{end}}
