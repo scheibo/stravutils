@@ -70,7 +70,8 @@ func main() {
 
 type ScoredConditions struct {
 	*weather.Conditions
-	score float64
+	historical float64
+	baseline float64
 }
 
 type DayForecast struct {
@@ -80,7 +81,8 @@ type DayForecast struct {
 
 type ScoredForecast struct {
 	Days []*DayForecast
-	Best *ScoredConditions
+	Historical *ScoredConditions
+	Baseline *ScoredConditions
 }
 
 type ClimbForecast struct {
@@ -110,7 +112,7 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) *ClimbForecast {
 			continue
 		}
 
-		s := score(c, w)
+		s := score(c, w, calc.Rho0, 0.0, 0.0) // TODO: include historical
 		day := s.Day()
 		if df.Day == "" {
 			df.Day = day
@@ -119,21 +121,65 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) *ClimbForecast {
 			df = DayForecast{Day: day}
 		}
 		df.Conditions = append(df.Conditions, s)
-		if scored.Best == nil || s.score > scored.Best.score {
-			scored.Best = s
+		if scored.Historical == nil || s.historical > scored.Historical.historical {
+			scored.Historical = s
+		}
+		if scored.Baseline == nil || s.baseline > scored.Baseline.baseline {
+			scored.Baseline = s
 		}
 	}
 	if df.Day != "" {
 		scored.Days = append(scored.Days, &df)
 	}
 
+	// pad(scored.Days, max-min) // TODO use an array of size max-min to begin with, use time to calculate index?
+
 	return result
 }
 
-func score(climb *Climb, conditions *weather.Conditions) *ScoredConditions {
+//func pad(days []*DayForecast, expected float64) {
+	//if len(days) > 0 {
+		//first := scored.Days[0]
+		//actual := len(first.Conditions) // > 0
+		//if actual < expected {
+			//padded = make([]*DayForecast, expected)
+			//for i := actual; i < expected; i++ {
+				//padded[i] := first.Conditions[actual - i]
+			//}
+			//first = padded // TODO do we need to make this a pointer?
+		//}
+	//}
+
+	//if len(days) > 1 {
+		//last := scored.Days[len(days) - 1]
+		//actual := len(last.Conditions) // > 0
+		//if actual < expected {
+			//padded = make([]*DayForecast, expected)
+			//copy(padded, 
+		//}
+	//}
+//}
+
+
+func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64) *ScoredConditions {
+	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation),
 	// TODO(kjs): use c.Map polyline for more accurate score.
-	score := wnf.Power(
-		perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation),
+	historical := wnf.Power2(
+		power,
+		climb.Segment.Distance,
+		climb.Segment.MedianElevation,
+		rhoH,
+		conditions.AirDensity,
+		wnf.CdaClimb,
+		vwH,
+		conditions.WindSpeed,
+		dwH,
+		conditions.WindBearing,
+		climb.Segment.AverageDirection,
+		climb.Segment.AverageGrade,
+		wnf.Mt)
+	baseline := wnf.Power(
+		power,
 		climb.Segment.Distance,
 		climb.Segment.MedianElevation,
 		conditions.AirDensity,
@@ -142,17 +188,17 @@ func score(climb *Climb, conditions *weather.Conditions) *ScoredConditions {
 		conditions.WindBearing,
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
-		wnf.Mr+wnf.Mb)
-	return &ScoredConditions{conditions, score}
+		wnf.Mt)
+	return &ScoredConditions{conditions, historical, baseline}
 }
 
-func (c *ScoredConditions) Rank() int {
+func (c *ScoredConditions) Rank(s float64) int {
 	mod := 1
-	if c.score < 1.0 {
+	if s < 1.0 {
 		mod = -1
 	}
 
-	rank := int(math.Abs(c.score-1) * 100)
+	rank := int(math.Abs(s-1) * 100) / 2
 	if rank > 5 {
 		rank = 5
 	}
@@ -160,8 +206,16 @@ func (c *ScoredConditions) Rank() int {
 	return mod * rank
 }
 
-func (c *ScoredConditions) Score() string {
-	return fmt.Sprintf("%.2f%%", (c.score-1)*100)
+func (c *ScoredConditions) Historical() string {
+	return displayScore(c.historical)
+}
+
+func (c *ScoredConditions) Baseline() string {
+	return displayScore(c.baseline)
+}
+
+func displayScore(s float64) string {
+	return fmt.Sprintf("%.2f%%", (s-1)*100)
 }
 
 func (c *ScoredConditions) Wind() string {
