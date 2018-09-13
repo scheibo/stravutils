@@ -198,7 +198,7 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 		vwH,
 		conditions.WindSpeed,
 		dwH,
-		conditions.WindBearing,
+		conditions.WindBearing, // TODO make sure bearing is correct
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
@@ -210,7 +210,7 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 		conditions.AirDensity,
 		wnf.CdaClimb,
 		conditions.WindSpeed,
-		conditions.WindBearing,
+		conditions.WindBearing, // TODO ditto
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
@@ -421,7 +421,7 @@ func rank(s float64) int {
 }
 
 func (c *ScoredConditions) Wind() string {
-	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed, weather.Direction(c.WindBearing))
+	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed * msToKmh, weather.Direction(c.WindBearing))
 }
 
 func (c *ScoredConditions) Day() string {
