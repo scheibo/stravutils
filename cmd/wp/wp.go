@@ -7,7 +7,9 @@ import (
 	"math"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
+	"strings"
 
 	"html/template"
 
@@ -27,6 +29,28 @@ const msToKmh = 3600.0 / 1000.0
 
 const minHour = 6
 const maxHour = 18
+
+type ScoredConditions struct {
+	*weather.Conditions
+	historical float64
+	baseline   float64
+}
+
+type DayForecast struct {
+	Day        string
+	Conditions []*ScoredConditions
+}
+
+type ScoredForecast struct {
+	Days       []*DayForecast
+	Historical *ScoredConditions
+	Baseline   *ScoredConditions
+}
+
+type ClimbForecast struct {
+	Climb    *Climb
+	Forecast *ScoredForecast
+}
 
 func main() {
 	var output, key, climbsFile string
@@ -71,59 +95,6 @@ func main() {
 	}
 }
 
-func render(dir string, forecasts []*ClimbForecast) error {
-	err := os.MkdirAll(dir, 0644)
-	if err != nil {
-		return err
-	}
-
-	// TODO(kjs): handle nested pages
-	file, err := os.Create(filepath.Join(dir, "index.html"))
-	if err != nil {
-		return err
-	}
-
-	t := template.Must(compileTemplates(resource("wp.html")))
-	err = t.Execute(file, struct {
-		Forecasts []*ClimbForecast
-	}{
-		forecasts,
-	})
-	file.Close()
-
-	return err
-}
-
-type ScoredConditions struct {
-	*weather.Conditions
-	historical float64
-	baseline   float64
-}
-
-type DayForecast struct {
-	Day        string
-	Conditions []*ScoredConditions
-}
-
-type ScoredForecast struct {
-	Days       []*DayForecast
-	Historical *ScoredConditions
-	Baseline   *ScoredConditions
-}
-
-type ClimbForecast struct {
-	Climb    *Climb
-	Forecast *ScoredForecast
-}
-
-func (f *ClimbForecast) ClimbDirection() string {
-	return weather.Direction(f.Climb.Segment.AverageDirection)
-}
-
-func (f *ClimbForecast) Current() *ScoredConditions {
-	return f.Forecast.Days[0].Conditions[0]
-}
-
 func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, error) {
 	scored := ScoredForecast{}
 	result := &ClimbForecast{Climb: c, Forecast: &scored}
@@ -133,7 +104,7 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 
 	df := DayForecast{}
 	for _, w := range f.Hourly {
-		hours, _, _ := w.Time.Clock()
+		hours, _, _ := w.time.Clock()
 		if hours < min || hours > max {
 			continue
 		}
@@ -159,7 +130,7 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 	}
 
 	// The first and last day will usually not have all the data, we pad the slices with nulls.
-	hours := max - min
+	hours := max - min + 1
 	pad(&scored.Days, hours)
 
 	// Verify invariants
@@ -168,7 +139,7 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 	}
 	for _, d := range scored.Days {
 		if len(d.Conditions) != hours {
-			return nil, fmt.Errorf("expected each day to have %d hours of data but %s had only %d",
+			return nil, fmt.Errorf("expected each day to have %d hours of data but %s had %d",
 				hours, d.Day, len(d.Conditions))
 		}
 	}
@@ -233,42 +204,27 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 	return &ScoredConditions{conditions, historical, baseline}
 }
 
-func (c *ScoredConditions) Rank(s float64) int {
-	mod := 1
-	if s < 1.0 {
-		mod = -1
+func render(dir string, forecasts []*ClimbForecast) error {
+	err := os.MkdirAll(dir, 0755)
+	if err != nil {
+		return err
 	}
 
-	rank := int(math.Abs(s-1)*100) / 2
-	if rank > 5 {
-		rank = 5
+	// TODO(kjs): handle nested pages
+	file, err := os.Create(filepath.Join(dir, "index.html"))
+	if err != nil {
+		return err
 	}
 
-	return mod * rank
-}
+	t := template.Must(compileTemplates(resource("wp.html")))
+	err = t.Execute(file, struct {
+		Forecasts []*ClimbForecast
+	}{
+		forecasts,
+	})
+	file.Close()
 
-func (c *ScoredConditions) Historical() string {
-	return displayScore(c.historical)
-}
-
-func (c *ScoredConditions) Baseline() string {
-	return displayScore(c.baseline)
-}
-
-func displayScore(s float64) string {
-	return fmt.Sprintf("%.2f%%", (s-1)*100)
-}
-
-func (c *ScoredConditions) Wind() string {
-	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed, weather.Direction(c.WindBearing))
-}
-
-func (c *ScoredConditions) Day() string {
-	return c.Time.Format("Monday")
-}
-
-func (c *ScoredConditions) DayTime() string {
-	return c.Time.Format("Monday 3PM")
+	return err
 }
 
 func resource(filename string) string {
@@ -313,4 +269,68 @@ func exit(err error) {
 	fmt.Fprintf(os.Stderr, "%s\n\n", err)
 	flag.PrintDefaults()
 	os.Exit(1)
+}
+
+var SLUG_REGEXP = regexp.MustCompile("[^A-Za-z0-9]+")
+
+func (f *ClimbForecast) Slug() string {
+	return strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(f.Climb.Name, "-"), "-"))
+}
+
+func (f *ClimbForecast) ClimbDirection() string {
+	return weather.Direction(f.Climb.Segment.AverageDirection)
+}
+
+func (f *ClimbForecast) Current() *ScoredConditions {
+	return f.Forecast.Days[0].Conditions[0]
+}
+
+func (c *ScoredConditions) HistoricalScore() string {
+	return displayScore(c.historical)
+}
+
+func (c *ScoredConditions) BaselineScore() string {
+	return displayScore(c.baseline)
+}
+
+func (c *ScoredConditions) HistoricalRank() int {
+	return rank(c.historical)
+}
+
+func (c *ScoredConditions) BaselineRank() int {
+	return rank(c.baseline)
+}
+
+func displayScore(s float64) string {
+	return fmt.Sprintf("%.2f%%", (s-1)*100)
+}
+
+func rank(s float64) int {
+	mod := 1
+	if s < 1.0 {
+		mod = -1
+	}
+
+	rank := int(math.Abs(s-1)*100) / 2
+	if rank > 5 {
+		rank = 5
+	}
+
+	return mod * rank
+}
+
+func (c *ScoredConditions) Wind() string {
+	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed, weather.Direction(c.WindBearing))
+}
+
+func (c *ScoredConditions) Day() string {
+	return c.time.Format("Monday")
+}
+
+func (c *ScoredConditions) DayTime() string {
+	return c.time.Format("Monday 3PM")
+}
+
+func (c *ScoredConditions) Time() string {
+	return c.time.Format("2006-01-02 15:04")
 }

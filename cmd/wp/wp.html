@@ -135,10 +135,10 @@
         <tbody>
           {{range $f := .Forecasts}}
           <tr>
-            <td class="name"><a href="https://www.strava.com/segments/{{$f.Climb.Segment.ID}}" title="{{$f.ClimbDirection}}">{{$f.Climb.Name}}</a></td>
-            <td class="current color{{$f.Current.Rank}}" title="{{$f.Current.Wind}}">{{$f.Current.Score}}</td>
-            <td class="date" title={{$f.Forecase.Baseline.Time}}>{{$f.Forecast.Baseline.DayTime}}</td>
-            <td class="best color{{$f.Forecast.Baseline.Rank}}" title="{{$f.Forecast.BaslineWind}}">{{$f.Forecast.Baseline.Score}}</td>
+            <td class="name"><a href="/{{$f.Slug}}/baseline" title="{{$f.ClimbDirection}}">{{$f.Climb.Name}}</a></td>
+            <td class="current color{{$f.Current.BaselineRank}}" title="{{$f.Current.Wind}}">{{$f.Current.BaselineScore}}</td>
+            <td class="date" title={{$f.Forecast.Baseline.Time}}>{{$f.Forecast.Baseline.DayTime}}</td>
+            <td class="best color{{$f.Forecast.Baseline.BaselineRank}}" title="{{$f.Forecast.Baseline.Wind}}">{{$f.Forecast.Baseline.BaselineScore}}</td>
           </tr>
           {{end}}
         </tbody>
