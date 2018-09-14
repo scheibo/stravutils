@@ -1,20 +1,66 @@
 {{define "page-nav"}}
 <nav id="page-nav">
-  <h2><a href="/slug-TODO/{{if .Historical}}historical{{else}}baseline{{end}}">{{.DayTime}}</a></h2>
+  <h2><a href="/{{.Slug}}/{{if .Historical}}historical{{else}}baseline{{end}}">{{.DayTime}}</a></h2>
 </nav>
 {{end}}
 
 {{define "content"}}
 <div id='container'>
   <table id='data'>
-    <!-- TODO -->
+    <thead>
+      <tr>
+        <th class="name">Name</th>
+        <th class="score">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range $c := .Conditions}}
+      <tr>
+        <td class="name">
+          <a href="/{{$c.Slug}}/{{if $.Historical}}historical{{else}}baseline{{end}}"
+             title="{{$c.ClimbDirection}}">{{$c.Climb.Name}}</a>
+        </td>
+        <td class="score color{{$c.Conditions.Rank $.Historical}}"
+            title="{{$c.Conditions.Wind}}">
+          {{$c.Conditions.Score $.Historical}}
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
   </table>
+
   <div id="attribution"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></div>
 </div>
 {{end}}
 
 {{define "scripts"}}
-<script>
-  // TODO go between times with L/U + U + D + R/D etc
-</script>
+{{if or (ne .Up "") (ne .Down "") (ne .Left "") (ne .Right "")}}
+  <script>
+    document.addEventListener("keydown", function(e) {
+      var key = e.which || e.keyCode;
+      switch(key) {
+      {{if ne .Left ""}}
+        case 37:
+          window.location = "../../{{.Left}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      {{if ne .Up ""}}
+        case 38:
+          window.location = "../../{{.Up}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      {{if ne .Right ""}}
+        case 39:
+          window.location = "../../{{.Right}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      {{if ne .Down ""}}
+        case 40:
+          window.location = "../../{{.Down}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      }
+    }, false);
+  </script>
+{{end}}
 {{end}}

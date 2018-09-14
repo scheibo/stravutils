@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"math"
 	"os"
@@ -26,6 +27,8 @@ import (
 )
 
 const msToKmh = 3600.0 / 1000.0
+
+const TEMPLATE = "layout.tmpl.html"
 
 const minHour = 6
 const maxHour = 18
@@ -129,10 +132,10 @@ func DEBUG_SATURDAY(forecasts []*ClimbForecast) {
 func getTemplates() map[string]*template.Template {
 	templates := make(map[string]*template.Template)
 
-	layout := resource("layout.tmpl.html")
+	layout := resource(TEMPLATE)
 	templates["root"] = template.Must(compileTemplates(layout, resource("root.tmpl.html")))
-	templates["climb"] = template.Must(compileTemplates(layout, resource("climb.tmpl.html")))
 	templates["time"] = template.Must(compileTemplates(layout, resource("time.tmpl.html")))
+	templates["climb"] = template.Must(compileTemplates(layout, resource("climb.tmpl.html")))
 	return templates
 }
 
@@ -253,33 +256,37 @@ type LayoutTmpl struct {
 	Historical    bool
 }
 
+type Navigation struct {
+	Left  string
+	Right string
+	Up    string
+	Down  string
+}
+
 type RootTmpl struct {
 	LayoutTmpl
 	Forecasts []*ClimbForecast
 }
 
-//type ClimbTmpl struct {
-//LayoutTmpl
-//// TODO
-//}
+type DayTimeTmpl struct {
+	LayoutTmpl
+	Slug       string
+	DayTime    string
+	Conditions []*ClimbConditions
+	Navigation
+}
 
-//type DayTimeTmpl {
-//LayoutTmpl
-//DayTimeConditions
-//}
-
-//type DayTimeConditions struct {
-//DayTime string
-//Climbs *ClimbConditions
-//}
-
-//type ClimbConditions {
-//Climb    *Climb
-//Conditions *ScoredConditions
-//}
+type ClimbConditions struct {
+	Climb      *Climb
+	Conditions *ScoredConditions
+}
 
 func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
 	err := os.RemoveAll(dir)
+	if err != nil {
+		return err
+	}
+	err = copyFile(resource("favicon.ico"), filepath.Join(dir, "favicon.ico"))
 	if err != nil {
 		return err
 	}
@@ -289,19 +296,103 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 	if err != nil {
 		return err
 	}
+	tmpl, _ = templates["time"]
+	err = renderDayTimes(tmpl, historical, absoluteURL, dir, forecasts)
+	if err != nil {
+		return err
+	}
 	// TODO
-	// renderDayTimes(dir, forecasts)
-	// renderClimbs(dir, forecasts)
+	//tmpl, _ = templates["climb"]
+	//err = renderClimbs(tmpl, historical, absoluteURL, dir, forecasts)
+	//if err != nil {
+	//return err
+	//}
 	return nil
 }
 
-const TEMPLATE = "layout.tmpl.html"
-
 func renderRoot(t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
 	data := RootTmpl{LayoutTmpl{AbsoluteURL: absoluteURL, Title: "Weather"}, forecasts}
+	return renderAllRoot(t, &data, historical, dir)
+}
 
+func renderDayTimes(t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+
+	m := make(map[string]*DayTimeTmpl)
+
+	for i := 0; i < len(forecasts); i++ {
+		cf := forecasts[i]
+		for j := 0; j < len(cf.Forecast.Days); j++ {
+			df := cf.Forecast.Days[j]
+			for k := 0; k < len(df.Conditions); k++ {
+				c := df.Conditions[k]
+
+				path := filepath.Join(dir, c.DayTimeSlug())
+				existing, ok := m[path]
+				if !ok {
+					data := DayTimeTmpl{}
+					data.AbsoluteURL = absoluteURL
+					data.DayTime = c.DayTime()
+					data.Slug = c.DayTimeSlug()
+					data.Title = "Weather - " + data.DayTime
+					data.CanonicalPath = data.Slug + "/"
+
+					days := cf.Forecast.Days
+					data.Up = dayTimeUp(days, j, k)
+					data.Down = dayTimeDown(days, j, k)
+					data.Left = dayTimeLeft(days, j, k)
+					data.Right = dayTimeRight(days, j, k)
+
+					m[path] = &data
+					existing = &data
+				}
+
+				existing.Conditions = append(existing.Conditions, &ClimbConditions{Climb: cf.Climb, Conditions: c})
+			}
+		}
+	}
+
+	for dir, data := range m {
+		err := renderAllDayTime(t, data, historical, dir)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func dayTimeUp(days []*DayForecast, j, k int) string {
+	if k-1 < 0 {
+		return dayTimeLeft(days, j, len(days[j].Conditions)-1)
+	}
+	return days[j].Conditions[k-1].DayTimeSlug()
+}
+
+func dayTimeDown(days []*DayForecast, j, k int) string {
+	if k+1 >= len(days[j].Conditions) {
+		return dayTimeRight(days, j, 0)
+	}
+	return days[j].Conditions[k+1].DayTimeSlug()
+}
+
+func dayTimeLeft(days []*DayForecast, j, k int) string {
+	if j-1 < 0 {
+		return ""
+	}
+	return days[j-1].Conditions[k].DayTimeSlug()
+}
+
+func dayTimeRight(days []*DayForecast, j, k int) string {
+	if j+1 >= len(days) {
+		return ""
+	}
+	return days[j+1].Conditions[k].DayTimeSlug()
+}
+
+func renderAllRoot(t *template.Template, data *RootTmpl, historical bool, dir string) error {
+	path := data.CanonicalPath
 	// Historical
-	data.CanonicalPath = "historical"
+	data.CanonicalPath = path + "historical"
 	data.Historical = true
 
 	h := filepath.Join(dir, "historical", "index.html")
@@ -317,7 +408,7 @@ func renderRoot(t *template.Template, historical bool, absoluteURL, dir string, 
 	}
 
 	// Baseline
-	data.CanonicalPath = "baseline"
+	data.CanonicalPath = path + "baseline"
 	data.Historical = false
 
 	b := filepath.Join(dir, "baseline", "index.html")
@@ -334,9 +425,51 @@ func renderRoot(t *template.Template, historical bool, absoluteURL, dir string, 
 	// Index
 	i := filepath.Join(dir, "index.html")
 	if historical {
-		return os.Symlink(h, i)
+		return os.Symlink("historical/index.html", i)
 	} else {
-		return os.Symlink(b, i)
+		return os.Symlink("baseline/index.html", i)
+	}
+}
+
+func renderAllDayTime(t *template.Template, data *DayTimeTmpl, historical bool, dir string) error {
+	path := data.CanonicalPath
+	// Historical
+	data.CanonicalPath = path + "historical"
+	data.Historical = true
+
+	h := filepath.Join(dir, "historical", "index.html")
+	f, err := create(h)
+	if err != nil {
+		return err
+	}
+
+	err = t.ExecuteTemplate(f, TEMPLATE, data)
+	f.Close()
+	if err != nil {
+		return err
+	}
+
+	// Baseline
+	data.CanonicalPath = path + "baseline"
+	data.Historical = false
+
+	b := filepath.Join(dir, "baseline", "index.html")
+	f, err = create(b)
+	if err != nil {
+		return err
+	}
+	err = t.ExecuteTemplate(f, TEMPLATE, data)
+	f.Close()
+	if err != nil {
+		return err
+	}
+
+	// Index
+	i := filepath.Join(dir, "index.html")
+	if historical {
+		return os.Symlink("historical/index.html", i)
+	} else {
+		return os.Symlink("baseline/index.html", i)
 	}
 }
 
@@ -374,11 +507,12 @@ func compileTemplates(filenames ...string) (*template.Template, error) {
 			return nil, err
 		}
 
-		mb, err := m.Bytes("text/html", b)
-		if err != nil {
-			return nil, err
-		}
-		_, err = tmpl.Parse(string(mb))
+		// TODO fix minify
+		//mb, err := m.Bytes("text/html", b)
+		//if err != nil {
+		//return nil, err
+		//}
+		_, err = tmpl.Parse(string(b))
 		if err != nil {
 			return nil, err
 		}
@@ -393,6 +527,14 @@ func exit(err error) {
 }
 
 var SLUG_REGEXP = regexp.MustCompile("[^A-Za-z0-9]+")
+
+func (c *ClimbConditions) Slug() string {
+	return slugify(c.Climb.Name)
+}
+
+func (c *ClimbConditions) ClimbDirection() string {
+	return weather.Direction(c.Climb.Segment.AverageDirection)
+}
 
 func (f *ClimbForecast) Slug() string {
 	return slugify(f.Climb.Name)
@@ -471,4 +613,25 @@ func (c *ScoredConditions) FullTime() string {
 
 func slugify(s string) string {
 	return strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(s, "-"), "-"))
+}
+
+func copyFile(src, dst string) error {
+	println(src, dst)
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	out, err := create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, in)
+	if err != nil {
+		return err
+	}
+	return out.Close()
 }
