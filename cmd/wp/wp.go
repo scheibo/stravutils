@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math"
 	"os"
 	"path/filepath"
@@ -133,9 +132,9 @@ func getTemplates() map[string]*template.Template {
 	templates := make(map[string]*template.Template)
 
 	layout := resource(TEMPLATE)
-	templates["root"] = template.Must(compileTemplates(layout, resource("root.tmpl.html")))
-	templates["time"] = template.Must(compileTemplates(layout, resource("time.tmpl.html")))
-	templates["climb"] = template.Must(compileTemplates(layout, resource("climb.tmpl.html")))
+	templates["root"] = template.Must(template.ParseFiles(layout, resource("root.tmpl.html")))
+	templates["time"] = template.Must(template.ParseFiles(layout, resource("time.tmpl.html")))
+	templates["climb"] = template.Must(template.ParseFiles(layout, resource("climb.tmpl.html")))
 	return templates
 }
 
@@ -282,6 +281,12 @@ type ClimbConditions struct {
 }
 
 func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+	m := minify.New()
+	m.AddFunc("text/css", css.Minify)
+	m.AddFunc("text/html", html.Minify)
+	m.AddFunc("text/javascript", js.Minify)
+	m.AddFunc("image/svg+xml", svg.Minify)
+
 	err := os.RemoveAll(dir)
 	if err != nil {
 		return err
@@ -292,12 +297,12 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 	}
 
 	tmpl, _ := templates["root"]
-	err = renderRoot(tmpl, historical, absoluteURL, dir, forecasts)
+	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts)
 	if err != nil {
 		return err
 	}
 	tmpl, _ = templates["time"]
-	err = renderDayTimes(tmpl, historical, absoluteURL, dir, forecasts)
+	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts)
 	if err != nil {
 		return err
 	}
@@ -310,14 +315,14 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 	return nil
 }
 
-func renderRoot(t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+func renderRoot(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
 	data := RootTmpl{LayoutTmpl{AbsoluteURL: absoluteURL, Title: "Weather"}, forecasts}
-	return renderAllRoot(t, &data, historical, dir)
+	return renderAllRoot(m, t, &data, historical, dir)
 }
 
-func renderDayTimes(t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+func renderDayTimes(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
 
-	m := make(map[string]*DayTimeTmpl)
+	dayTimes := make(map[string]*DayTimeTmpl)
 
 	for i := 0; i < len(forecasts); i++ {
 		cf := forecasts[i]
@@ -327,7 +332,7 @@ func renderDayTimes(t *template.Template, historical bool, absoluteURL, dir stri
 				c := df.Conditions[k]
 
 				path := filepath.Join(dir, c.DayTimeSlug())
-				existing, ok := m[path]
+				existing, ok := dayTimes[path]
 				if !ok {
 					data := DayTimeTmpl{}
 					data.AbsoluteURL = absoluteURL
@@ -342,7 +347,7 @@ func renderDayTimes(t *template.Template, historical bool, absoluteURL, dir stri
 					data.Left = dayTimeLeft(days, j, k)
 					data.Right = dayTimeRight(days, j, k)
 
-					m[path] = &data
+					dayTimes[path] = &data
 					existing = &data
 				}
 
@@ -351,8 +356,8 @@ func renderDayTimes(t *template.Template, historical bool, absoluteURL, dir stri
 		}
 	}
 
-	for dir, data := range m {
-		err := renderAllDayTime(t, data, historical, dir)
+	for dir, data := range dayTimes {
+		err := renderAllDayTime(m, t, data, historical, dir)
 		if err != nil {
 			return err
 		}
@@ -389,20 +394,14 @@ func dayTimeRight(days []*DayForecast, j, k int) string {
 	return days[j+1].Conditions[k].DayTimeSlug()
 }
 
-func renderAllRoot(t *template.Template, data *RootTmpl, historical bool, dir string) error {
+func renderAllRoot(m *minify.M, t *template.Template, data *RootTmpl, historical bool, dir string) error {
 	path := data.CanonicalPath
 	// Historical
 	data.CanonicalPath = path + "historical"
 	data.Historical = true
 
 	h := filepath.Join(dir, "historical", "index.html")
-	f, err := create(h)
-	if err != nil {
-		return err
-	}
-
-	err = t.ExecuteTemplate(f, TEMPLATE, data)
-	f.Close()
+	err := executeTemplateRoot(m, t, data, h)
 	if err != nil {
 		return err
 	}
@@ -412,12 +411,7 @@ func renderAllRoot(t *template.Template, data *RootTmpl, historical bool, dir st
 	data.Historical = false
 
 	b := filepath.Join(dir, "baseline", "index.html")
-	f, err = create(b)
-	if err != nil {
-		return err
-	}
-	err = t.ExecuteTemplate(f, TEMPLATE, data)
-	f.Close()
+	err = executeTemplateRoot(m, t, data, b)
 	if err != nil {
 		return err
 	}
@@ -431,20 +425,37 @@ func renderAllRoot(t *template.Template, data *RootTmpl, historical bool, dir st
 	}
 }
 
-func renderAllDayTime(t *template.Template, data *DayTimeTmpl, historical bool, dir string) error {
+func executeTemplateRoot(m *minify.M, t *template.Template, data *RootTmpl, path string) error {
+	f, err := create(path)
+	if err != nil {
+		return err
+	}
+
+	w := m.Writer("text/html", f)
+	err = t.ExecuteTemplate(w, TEMPLATE, data)
+	if err != nil {
+		w.Close()
+		f.Close()
+		return err
+	}
+
+	err = w.Close()
+	if err != nil {
+		f.Close()
+		return err
+	}
+
+	return f.Close()
+}
+
+func renderAllDayTime(m *minify.M, t *template.Template, data *DayTimeTmpl, historical bool, dir string) error {
 	path := data.CanonicalPath
 	// Historical
 	data.CanonicalPath = path + "historical"
 	data.Historical = true
 
 	h := filepath.Join(dir, "historical", "index.html")
-	f, err := create(h)
-	if err != nil {
-		return err
-	}
-
-	err = t.ExecuteTemplate(f, TEMPLATE, data)
-	f.Close()
+	err := executeTemplateDayTime(m, t, data, h)
 	if err != nil {
 		return err
 	}
@@ -454,12 +465,7 @@ func renderAllDayTime(t *template.Template, data *DayTimeTmpl, historical bool, 
 	data.Historical = false
 
 	b := filepath.Join(dir, "baseline", "index.html")
-	f, err = create(b)
-	if err != nil {
-		return err
-	}
-	err = t.ExecuteTemplate(f, TEMPLATE, data)
-	f.Close()
+	err = executeTemplateDayTime(m, t, data, b)
 	if err != nil {
 		return err
 	}
@@ -471,6 +477,29 @@ func renderAllDayTime(t *template.Template, data *DayTimeTmpl, historical bool, 
 	} else {
 		return os.Symlink("baseline/index.html", i)
 	}
+}
+
+func executeTemplateDayTime(m *minify.M, t *template.Template, data *DayTimeTmpl, path string) error {
+	f, err := create(path)
+	if err != nil {
+		return err
+	}
+
+	w := m.Writer("text/html", f)
+	err = t.ExecuteTemplate(w, TEMPLATE, data)
+	if err != nil {
+		w.Close()
+		f.Close()
+		return err
+	}
+
+	err = w.Close()
+	if err != nil {
+		f.Close()
+		return err
+	}
+
+	return f.Close()
 }
 
 func create(path string) (*os.File, error) {
@@ -484,40 +513,6 @@ func create(path string) (*os.File, error) {
 func resource(name string) string {
 	_, src, _, _ := runtime.Caller(0)
 	return filepath.Join(filepath.Dir(src), name)
-}
-
-func compileTemplates(filenames ...string) (*template.Template, error) {
-	m := minify.New()
-	m.AddFunc("text/css", css.Minify)
-	m.AddFunc("text/html", html.Minify)
-	m.AddFunc("text/javascript", js.Minify)
-	m.AddFunc("image/svg+xml", svg.Minify)
-
-	var tmpl *template.Template
-	for _, filename := range filenames {
-		name := filepath.Base(filename)
-		if tmpl == nil {
-			tmpl = template.New(name)
-		} else {
-			tmpl = tmpl.New(name)
-		}
-
-		b, err := ioutil.ReadFile(filename)
-		if err != nil {
-			return nil, err
-		}
-
-		// TODO fix minify
-		//mb, err := m.Bytes("text/html", b)
-		//if err != nil {
-		//return nil, err
-		//}
-		_, err = tmpl.Parse(string(b))
-		if err != nil {
-			return nil, err
-		}
-	}
-	return tmpl, nil
 }
 
 func exit(err error) {
@@ -616,7 +611,6 @@ func slugify(s string) string {
 }
 
 func copyFile(src, dst string) error {
-	println(src, dst)
 	in, err := os.Open(src)
 	if err != nil {
 		return err
