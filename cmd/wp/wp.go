@@ -93,9 +93,36 @@ func main() {
 		forecasts = append(forecasts, cf)
 	}
 
+	DEBUG_SATURDAY(forecasts) // TODO delete
+
 	err = render(templates, !baseline, absoluteURL, output, forecasts)
 	if err != nil {
 		exit(err)
+	}
+}
+
+// TODO DEBUG
+func DEBUG_SATURDAY(forecasts []*ClimbForecast) {
+	for _, cf := range forecasts {
+		for _, df := range cf.Forecast.Days {
+			for _, c := range df.Conditions {
+				if c == nil {
+					continue
+				}
+				if c != nil &&
+					c.DayTime() == "Saturday 8AM" ||
+					c.DayTime() == "Saturday 9AM" ||
+					c.DayTime() == "Saturday 10AM" ||
+					c.DayTime() == "Saturday 11AM" {
+					fmt.Printf("%s: %s [%s] = %s [%s]\n",
+						c.DayTime(),
+						cf.Climb.Name,
+						cf.ClimbDirection(),
+						c.Score(true),
+						c.Wind())
+				}
+			}
+		}
 	}
 }
 
@@ -123,19 +150,20 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 			continue
 		}
 
-		s := score(c, w, calc.Rho0, 0.0, 0.0) // TODO: include historical!
+		s := score(c, w, calc.Rho(c.Segment.MedianElevation, calc.G), 0.0, 0.0) // TODO: include historical!
 		day := s.Day()
 		if df.Day == "" {
 			df.Day = day
 		} else if day != df.Day {
-			scored.Days = append(scored.Days, &df)
+			ptr := df
+			scored.Days = append(scored.Days, &ptr)
 			df = DayForecast{Day: day}
 		}
 		df.Conditions = append(df.Conditions, s)
-		if scored.historical == nil || s.historical > scored.historical.historical {
+		if scored.historical == nil || s.historical < scored.historical.historical {
 			scored.historical = s
 		}
-		if scored.baseline == nil || s.baseline > scored.baseline.baseline {
+		if scored.baseline == nil || s.baseline < scored.baseline.baseline {
 			scored.baseline = s
 		}
 	}
@@ -198,7 +226,7 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 		vwH,
 		conditions.WindSpeed,
 		dwH,
-		conditions.WindBearing, // TODO make sure bearing is correct
+		conditions.WindBearing,
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
@@ -210,7 +238,7 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 		conditions.AirDensity,
 		wnf.CdaClimb,
 		conditions.WindSpeed,
-		conditions.WindBearing, // TODO ditto
+		conditions.WindBearing,
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
@@ -367,7 +395,7 @@ func exit(err error) {
 var SLUG_REGEXP = regexp.MustCompile("[^A-Za-z0-9]+")
 
 func (f *ClimbForecast) Slug() string {
-	return strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(f.Climb.Name, "-"), "-"))
+	return slugify(f.Climb.Name)
 }
 
 func (f *ClimbForecast) ClimbDirection() string {
@@ -404,11 +432,12 @@ func (c *ScoredConditions) Rank(historical bool) int {
 
 func displayScore(s float64) string {
 	return fmt.Sprintf("%.2f%%", (s-1)*100)
+
 }
 
 func rank(s float64) int {
 	mod := 1
-	if s < 1.0 {
+	if s > 1.0 {
 		mod = -1
 	}
 
@@ -421,7 +450,7 @@ func rank(s float64) int {
 }
 
 func (c *ScoredConditions) Wind() string {
-	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed * msToKmh, weather.Direction(c.WindBearing))
+	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed*msToKmh, weather.Direction(c.WindBearing))
 }
 
 func (c *ScoredConditions) Day() string {
@@ -432,6 +461,14 @@ func (c *ScoredConditions) DayTime() string {
 	return c.Time.Format("Monday 3PM")
 }
 
+func (c *ScoredConditions) DayTimeSlug() string {
+	return slugify(c.DayTime())
+}
+
 func (c *ScoredConditions) FullTime() string {
 	return c.Time.Format("2006-01-02 15:04")
+}
+
+func slugify(s string) string {
+	return strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(s, "-"), "-"))
 }

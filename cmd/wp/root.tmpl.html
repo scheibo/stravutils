@@ -16,7 +16,7 @@
       <tr>
         <td class="name"><a href="/{{$f.Slug}}/{{if $.Historical}}historical{{else}}baseline{{end}}" title="{{$f.ClimbDirection}}">{{$f.Climb.Name}}</a></td>
         <td class="current color{{$f.Current.Rank $.Historical}}" title="{{$f.Current.Wind}}">{{$f.Current.Score $.Historical}}</td>
-        <td class="date" title="{{($f.Forecast.Best $.Historical).FullTime}}">{{($f.Forecast.Best $.Historical).DayTime}}</td>
+				<td class="date" title="{{($f.Forecast.Best $.Historical).FullTime}}"><a href="/{{($f.Forecast.Best $.Historical).DayTimeSlug}}/{{if $.Historical}}historical{{else}}baseline{{end}}">{{($f.Forecast.Best $.Historical).DayTime}}</a></td>
         <td class="best color{{($f.Forecast.Best $.Historical).Rank $.Historical}}" title="{{($f.Forecast.Best $.Historical).Wind}}">{{($f.Forecast.Best $.Historical).Score $.Historical}}</td>
       </tr>
       {{end}}

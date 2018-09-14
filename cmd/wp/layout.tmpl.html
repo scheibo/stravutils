@@ -74,13 +74,13 @@
       padding-bottom: 0.5em;
     }
 
-    /* Mobile - Small */ 
+    /* Mobile - Small */
     table { font-size: 10px; }
     h1 { font-size: 24px; }
     #main-nav { font-size: 14px; }
     #page-nav { font-size: 12px; }
     #attribution { font-size: 6px; }
-    /* Mobile - Medium */ 
+    /* Mobile - Medium */
     @media(min-width: 375px) {
       table { font-size: 12px; }
       h1 { font-size: 32px; }
@@ -89,7 +89,7 @@
       #attribution { font-size: 7px; }
       #container { max-width: 400px; }
     }
-    /* Mobile - Large */ 
+    /* Mobile - Large */
     @media(min-width: 425px) {
       table { font-size: 13px; }
       h1 { font-size: 36px; }
@@ -98,7 +98,7 @@
       #attribution { font-size: 8px; }
       #container { max-width: 500px; }
     }
-    /* Tablet */ 
+    /* Tablet */
     @media(min-width: 768px) {
       table { font-size: 15px; }
       h1 { font-size: 40px; }
@@ -107,7 +107,7 @@
       #attribution { font-size: 10px; }
       #container { max-width: 600px; }
     }
-    /* Laptop */ 
+    /* Laptop */
     @media(min-width: 1024px) {
       table { font-size: 16px; }
       h1 { font-size: 44px; }
@@ -141,8 +141,8 @@
   <header>
     <h1><a href="/">Weather</a></h1>
     <nav id="main-nav">
-      <a id="historical" class="{{if .Historical}}selected{{end}}" href="historical">Historical</a> /
-      <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="baseline">Baseline</a>
+      <a id="historical" class="{{if .Historical}}selected{{end}}" href="../historical">Historical</a> /
+      <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="../baseline">Baseline</a>
     </nav>
     {{template "page-nav" .}}
   </header>
