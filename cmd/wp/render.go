@@ -17,9 +17,10 @@ func getTemplates() map[string]*template.Template {
 	templates := make(map[string]*template.Template)
 
 	layout := resource(TEMPLATE)
+	script := resource("script.tmpl.html")
 	templates["root"] = template.Must(template.ParseFiles(layout, resource("root.tmpl.html")))
-	templates["time"] = template.Must(template.ParseFiles(layout, resource("time.tmpl.html")))
-	templates["climb"] = template.Must(template.ParseFiles(layout, resource("climb.tmpl.html")))
+	templates["time"] = template.Must(template.ParseFiles(layout, resource("time.tmpl.html"), script))
+	templates["climb"] = template.Must(template.ParseFiles(layout, resource("climb.tmpl.html"), script))
 	return templates
 }
 
@@ -44,17 +45,18 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 	if err != nil {
 		return err
 	}
+
 	tmpl, _ = templates["time"]
 	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts)
 	if err != nil {
 		return err
 	}
-	// TODO
-	//tmpl, _ = templates["climb"]
-	//err = renderClimbs(tmpl, historical, absoluteURL, dir, forecasts)
-	//if err != nil {
-	//return err
-	//}
+
+	tmpl, _ = templates["climb"]
+	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -110,6 +112,10 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 		}
 	}
 
+	return nil
+}
+
+func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
 	return nil
 }
 

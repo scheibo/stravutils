@@ -1,0 +1,31 @@
+{{define "script"}}
+{{if or (ne .Up "") (ne .Down "") (ne .Left "") (ne .Right "")}}
+  <script>
+    document.addEventListener("keydown", function(e) {
+      var key = e.which || e.keyCode;
+      switch(key) {
+      {{if ne .Left ""}}
+        case 37:
+          window.location = "../../{{.Left}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      {{if ne .Up ""}}
+        case 38:
+          window.location = "../../{{.Up}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      {{if ne .Right ""}}
+        case 39:
+          window.location = "../../{{.Right}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      {{if ne .Down ""}}
+        case 40:
+          window.location = "../../{{.Down}}/{{if .Historical}}historical{{else}}baseline{{end}}"
+          break;
+      {{end}}
+      }
+    }, false);
+  </script>
+{{end}}
+{{end}}
