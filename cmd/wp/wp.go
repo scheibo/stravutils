@@ -108,6 +108,8 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 		return nil, err
 	}
 
+	scored.Current = score(c, f.Hourly[0], loc, calc.Rho(c.Segment.MedianElevation, calc.G), 0.0, 0.0) // TODO: include historical!
+
 	df := DayForecast{}
 	for _, w := range f.Hourly {
 
@@ -154,6 +156,7 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 		}
 		println()
 	}
+	println("current", scored.Current)
 
 	// Verify invariants
 	if len(scored.Days) > 8 || len(scored.Days) < 7 {

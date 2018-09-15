@@ -26,12 +26,8 @@ func (f *ClimbForecast) ClimbDirection() string {
 	return weather.Direction(f.Climb.Segment.AverageDirection)
 }
 
-func (f *ClimbForecast) Current() *ScoredConditions {
-	day := f.Forecast.Days[0]
-	return day.Conditions[day.current]
-}
-
 type ScoredForecast struct {
+	Current    *ScoredConditions
 	Days       []*DayForecast
 	historical *ScoredConditions
 	baseline   *ScoredConditions
