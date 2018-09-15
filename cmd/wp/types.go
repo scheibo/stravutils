@@ -5,6 +5,7 @@ import (
 	"math"
 	"regexp"
 	"strings"
+	"time"
 
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
@@ -26,7 +27,8 @@ func (f *ClimbForecast) ClimbDirection() string {
 }
 
 func (f *ClimbForecast) Current() *ScoredConditions {
-	return f.Forecast.Days[0].Conditions[0]
+	day := f.Forecast.Days[0]
+	return day.Conditions[day.current]
 }
 
 type ScoredForecast struct {
@@ -46,10 +48,13 @@ func (f *ScoredForecast) Best(historical bool) *ScoredConditions {
 type DayForecast struct {
 	Day        string
 	Conditions []*ScoredConditions
+	dDay       string
+	current    int
 }
 
 type ScoredConditions struct {
 	*weather.Conditions
+	LocalTime  time.Time
 	historical float64
 	baseline   float64
 }
@@ -74,12 +79,16 @@ func (c *ScoredConditions) Wind() string {
 	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed*msToKmh, weather.Direction(c.WindBearing))
 }
 
+func (c *ScoredConditions) disambiguatedDay() string {
+	return c.LocalTime.Format("Monday 2")
+}
+
 func (c *ScoredConditions) Day() string {
-	return c.Time.Format("Monday")
+	return c.LocalTime.Format("Monday")
 }
 
 func (c *ScoredConditions) DayTime() string {
-	return c.Time.Format("Monday 3PM")
+	return c.LocalTime.Format("Monday 3PM")
 }
 
 func (c *ScoredConditions) DayTimeSlug() string {
@@ -87,7 +96,7 @@ func (c *ScoredConditions) DayTimeSlug() string {
 }
 
 func (c *ScoredConditions) FullTime() string {
-	return c.Time.Format("2006-01-02 15:04")
+	return c.LocalTime.Format("2006-01-02 15:04")
 }
 
 type LayoutTmpl struct {

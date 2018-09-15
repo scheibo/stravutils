@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/scheibo/calc"
 	"github.com/scheibo/perf"
@@ -102,21 +103,28 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 		return result, nil
 	}
 
+	loc, err := time.LoadLocation("America/Los_Angeles")
+	if err != nil {
+		return nil, err
+	}
+
 	df := DayForecast{}
 	for _, w := range f.Hourly {
-		hours, _, _ := w.Time.Clock()
+
+		hours, _, _ := w.Time.In(loc).Clock()
 		if hours < min || hours > max {
 			continue
 		}
 
-		s := score(c, w, calc.Rho(c.Segment.MedianElevation, calc.G), 0.0, 0.0) // TODO: include historical!
-		day := s.Day()
-		if df.Day == "" {
-			df.Day = day
-		} else if day != df.Day {
+		s := score(c, w, loc, calc.Rho(c.Segment.MedianElevation, calc.G), 0.0, 0.0) // TODO: include historical!
+		dDay := s.disambiguatedDay()
+		if df.dDay == "" {
+			df.Day = s.Day()
+			df.dDay = dDay
+		} else if dDay != df.dDay {
 			ptr := df
 			scored.Days = append(scored.Days, &ptr)
-			df = DayForecast{Day: day}
+			df = DayForecast{Day: s.Day(), dDay: dDay}
 		}
 		df.Conditions = append(df.Conditions, s)
 		if scored.historical == nil || s.historical < scored.historical.historical {
@@ -134,9 +142,22 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 	hours := max - min + 1
 	pad(&scored.Days, hours)
 
+	// TODO DEBUG
+	for i, df := range scored.Days {
+		println(i, df.dDay, df.Day)
+		for _, c := range df.Conditions {
+			if c == nil {
+				print("nil ")
+			} else {
+				print("(", c.FullTime(), ") ")
+			}
+		}
+		println()
+	}
+
 	// Verify invariants
-	if len(scored.Days) != 7 {
-		return nil, fmt.Errorf("expected 7 days worth of data and got %d", len(scored.Days))
+	if len(scored.Days) > 8 || len(scored.Days) < 7 {
+		return nil, fmt.Errorf("expected 8 (/7) days worth of data and got %d", len(scored.Days))
 	}
 	for _, d := range scored.Days {
 		if len(d.Conditions) != hours {
@@ -152,12 +173,15 @@ func pad(days *[]*DayForecast, expected int) {
 	if len(*days) > 0 {
 		first := (*days)[0]
 		actual := len(first.Conditions) // > 0
+		println(actual, expected)
 		if actual < expected {
 			padded := make([]*ScoredConditions, expected)
-			for i := actual; i < expected; i++ {
-				padded[i] = first.Conditions[actual-i]
+			for i := 0; i < actual; i++ {
+				println(expected-actual+i, i)
+				padded[expected-actual+i] = first.Conditions[i]
 			}
 			first.Conditions = padded
+			first.current = expected - actual
 		}
 	}
 
@@ -172,7 +196,7 @@ func pad(days *[]*DayForecast, expected int) {
 	}
 }
 
-func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64) *ScoredConditions {
+func score(climb *Climb, conditions *weather.Conditions, loc *time.Location, rhoH, vwH, dwH float64) *ScoredConditions {
 	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
 
 	// TODO(kjs): use c.Map polyline for more accurate score.
@@ -202,7 +226,7 @@ func score(climb *Climb, conditions *weather.Conditions, rhoH, vwH, dwH float64)
 		climb.Segment.AverageGrade,
 		wnf.Mt)
 
-	return &ScoredConditions{conditions, historical, baseline}
+	return &ScoredConditions{conditions, conditions.Time.In(loc), historical, baseline}
 }
 
 func resource(name string) string {

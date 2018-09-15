@@ -74,6 +74,10 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 			for k := 0; k < len(df.Conditions); k++ {
 				c := df.Conditions[k]
 
+				if c == nil {
+					continue
+				}
+
 				path := filepath.Join(dir, c.DayTimeSlug())
 				existing, ok := dayTimes[path]
 				if !ok {
@@ -113,28 +117,35 @@ func dayTimeUp(days []*DayForecast, j, k int) string {
 	if k-1 < 0 {
 		return dayTimeLeft(days, j, len(days[j].Conditions)-1)
 	}
-	return days[j].Conditions[k-1].DayTimeSlug()
+	return maybeDayTimeSlug(days[j].Conditions[k-1])
 }
 
 func dayTimeDown(days []*DayForecast, j, k int) string {
 	if k+1 >= len(days[j].Conditions) {
 		return dayTimeRight(days, j, 0)
 	}
-	return days[j].Conditions[k+1].DayTimeSlug()
+	return maybeDayTimeSlug(days[j].Conditions[k+1])
 }
 
 func dayTimeLeft(days []*DayForecast, j, k int) string {
 	if j-1 < 0 {
 		return ""
 	}
-	return days[j-1].Conditions[k].DayTimeSlug()
+	return maybeDayTimeSlug(days[j-1].Conditions[k])
 }
 
 func dayTimeRight(days []*DayForecast, j, k int) string {
 	if j+1 >= len(days) {
 		return ""
 	}
-	return days[j+1].Conditions[k].DayTimeSlug()
+	return maybeDayTimeSlug(days[j+1].Conditions[k])
+}
+
+func maybeDayTimeSlug(c *ScoredConditions) string {
+	if c == nil {
+		return ""
+	}
+	return c.DayTimeSlug()
 }
 
 func copyFile(src, dst string) error {
