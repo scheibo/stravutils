@@ -63,36 +63,9 @@ func main() {
 		forecasts = append(forecasts, cf)
 	}
 
-	DEBUG_SATURDAY(forecasts) // TODO delete
-
 	err = render(templates, !baseline, absoluteURL, output, forecasts)
 	if err != nil {
 		exit(err)
-	}
-}
-
-// TODO DEBUG
-func DEBUG_SATURDAY(forecasts []*ClimbForecast) {
-	for _, cf := range forecasts {
-		for _, df := range cf.Forecast.Days {
-			for _, c := range df.Conditions {
-				if c == nil {
-					continue
-				}
-				if c != nil &&
-					c.DayTime() == "Saturday 8AM" ||
-					c.DayTime() == "Saturday 9AM" ||
-					c.DayTime() == "Saturday 10AM" ||
-					c.DayTime() == "Saturday 11AM" {
-					fmt.Printf("%s: %s [%s] = %s [%s]\n",
-						c.DayTime(),
-						cf.Climb.Name,
-						cf.ClimbDirection(),
-						c.Score(true),
-						c.Wind())
-				}
-			}
-		}
 	}
 }
 
@@ -144,20 +117,6 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 	hours := max - min + 1
 	pad(&scored.Days, hours)
 
-	// TODO DEBUG
-	for i, df := range scored.Days {
-		println(i, df.dDay, df.Day)
-		for _, c := range df.Conditions {
-			if c == nil {
-				print("nil ")
-			} else {
-				print("(", c.FullTime(), ") ")
-			}
-		}
-		println()
-	}
-	println("current", scored.Current)
-
 	// Verify invariants
 	if len(scored.Days) > 8 || len(scored.Days) < 7 {
 		return nil, fmt.Errorf("expected 8 (/7) days worth of data and got %d", len(scored.Days))
@@ -176,15 +135,12 @@ func pad(days *[]*DayForecast, expected int) {
 	if len(*days) > 0 {
 		first := (*days)[0]
 		actual := len(first.Conditions) // > 0
-		println(actual, expected)
 		if actual < expected {
 			padded := make([]*ScoredConditions, expected)
 			for i := 0; i < actual; i++ {
-				println(expected-actual+i, i)
 				padded[expected-actual+i] = first.Conditions[i]
 			}
 			first.Conditions = padded
-			first.current = expected - actual
 		}
 	}
 

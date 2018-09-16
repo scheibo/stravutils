@@ -45,7 +45,6 @@ type DayForecast struct {
 	Day        string
 	Conditions []*ScoredConditions
 	dDay       string
-	current    int
 }
 
 type ScoredConditions struct {
@@ -135,6 +134,28 @@ func (c *ClimbConditions) ClimbDirection() string {
 	return weather.Direction(c.Climb.Segment.AverageDirection)
 }
 
+type ClimbTmpl struct {
+	LayoutTmpl
+	Climb *Climb
+	Days  []string
+	Rows  []*ClimbTmplRow
+	Navigation
+}
+
+func (t *ClimbTmpl) Slug() string {
+	return slugify(t.Climb.Name)
+}
+
+func (t *ClimbTmpl) ClimbDirection() string {
+	return weather.Direction(t.Climb.Segment.AverageDirection)
+}
+
+type ClimbTmplRow struct {
+	Time       string
+	FullTime   string
+	Conditions []*ScoredConditions
+}
+
 func slugify(s string) string {
 	return strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(s, "-"), "-"))
 }
@@ -150,7 +171,7 @@ func rank(s float64) int {
 		mod = -1
 	}
 
-	rank := int(math.Abs(s-1)*100) / 2
+	rank := int(math.Abs(s-1)*100) / 3 // 15+
 	if rank > 5 {
 		rank = 5
 	}

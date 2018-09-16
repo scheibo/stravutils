@@ -66,7 +66,6 @@ func renderRoot(m *minify.M, t *template.Template, historical bool, absoluteURL,
 }
 
 func renderDayTimes(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
-
 	dayTimes := make(map[string]*DayTimeTmpl)
 
 	for i := 0; i < len(forecasts); i++ {
@@ -116,7 +115,67 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 }
 
 func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+	if len(forecasts) == 0 {
+		return nil
+	}
+
+	var names []string
+	for _, df := range forecasts[0].Forecast.Days {
+		names = append(names, df.Day)
+	}
+
+	for k, cf := range forecasts {
+		days := cf.Forecast.Days
+
+		data := ClimbTmpl{}
+		data.Climb = cf.Climb
+
+		data.AbsoluteURL = absoluteURL
+		data.Title = "Weather - " + cf.Climb.Name
+		data.CanonicalPath = data.Slug() + "/"
+		data.Days = names
+
+		hours := len(days[0].Conditions) // guaranteed to exist
+		data.Rows = make([]*ClimbTmplRow, hours)
+		for i := 0; i < hours; i++ {
+			data.Rows[i] = &ClimbTmplRow{}
+			data.Rows[i].Conditions = make([]*ScoredConditions, len(days))
+			for j := 0; j < len(days); j++ {
+				sc := days[j].Conditions[i]
+				if sc != nil && data.Rows[i].Time == "" {
+					data.Rows[i].Time = sc.LocalTime.Format("3PM")
+					data.Rows[i].FullTime = sc.FullTime()
+				}
+				data.Rows[i].Conditions[j] = sc
+			}
+		}
+
+		data.Up = climbUp(forecasts, k)
+		data.Left = data.Up
+		data.Down = climbDown(forecasts, k)
+		data.Right = data.Down
+
+		err := renderAllClimb(m, t, &data, historical, filepath.Join(dir, data.Slug()))
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
+}
+
+func climbUp(cf []*ClimbForecast, k int) string {
+	if k-1 < 0 {
+		return ""
+	}
+	return cf[k-1].Slug()
+}
+
+func climbDown(cf []*ClimbForecast, k int) string {
+	if k+1 >= len(cf) {
+		return ""
+	}
+	return cf[k+1].Slug()
 }
 
 func dayTimeUp(days []*DayForecast, j, k int) string {

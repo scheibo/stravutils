@@ -1,6 +1,6 @@
 {{define "page-nav"}}
 <nav id="page-nav">
-  <h2><a href="/TODO-slug/{{if .Historical}}historical{{else}}baseline{{end}}">{{.Climb.Name}}</a></h2>
+  <h2 class="climb"><a href="/{{.Slug}}/{{if .Historical}}historical{{else}}baseline{{end}}">{{.Climb.Name}}</a></h2>
   <div id="direction">{{.ClimbDirection}}</div>
 </nav>
 {{end}}
@@ -8,7 +8,32 @@
 {{define "content"}}
 <div id='container'>
   <table id='data'>
-    <!-- TODO -->
+    <thead>
+      <tr>
+        <th></th> <!-- TODO color? -->
+        {{range $d := .Days}}
+        <th class="weekday">{{$d}}</th>
+        {{end}}
+      </tr>
+    </thead>
+    <tbody>
+      {{range $r := .Rows}}
+      <tr>
+        <td class="hour" title={{$r.FullTime}}>{{$r.Time}}</td>
+        {{range $c := $r.Conditions}}
+          {{if $c}}
+            <td class="cell color{{$c.Rank $.Historical}}"
+                title="{{$c.Wind}}">
+              <a href="/{{$c.DayTimeSlug}}/{{if $.Historical}}historical{{else}}baseline{{end}}">
+                {{$c.Score $.Historical}}</a>
+            </td>
+          {{else}}
+            <td class="cell absent"></td> <!-- TODO color? -->
+          {{end}}
+        {{end}}
+      </tr>
+      {{end}}
+    </tbody>
   </table>
   <div id="attribution"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></div>
 </div>
