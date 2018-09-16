@@ -1,17 +1,25 @@
 {{define "page-nav"}}
 <nav id="page-nav">
-  <h2 class="climb"><a href="/{{.Slug}}/{{if .Historical}}historical{{else}}baseline{{end}}">{{.Climb.Name}}</a></h2>
-  <div id="direction">{{.ClimbDirection}}</div>
+  <h2 class="climb">
+    <a href="https://www.strava.com/segments/{{.Climb.Segment.ID}}"
+       title="{{.ClimbDirection}}">{{.Climb.Name}}</a></h2>
+  <!-- TODO include historical weather in title attr if .Historical -->
 </nav>
 {{end}}
 
 {{define "content"}}
 <div id='container'>
-  <table id='data'>
+  <table id='data' class="climb">
     <thead>
-      <tr>
-        <th></th> <!-- TODO color? -->
+      <tr class="longdays">
+        <th></th>
         {{range $d := .Days}}
+        <th class="weekday">{{$d}}</th>
+        {{end}}
+      </tr>
+      <tr class="shortdays">
+        <th></th>
+        {{range $d := .ShortDays}}
         <th class="weekday">{{$d}}</th>
         {{end}}
       </tr>
@@ -19,13 +27,12 @@
     <tbody>
       {{range $r := .Rows}}
       <tr>
-        <td class="hour" title={{$r.FullTime}}>{{$r.Time}}</td>
+        <td class="hour" title={{$r.FullTime}}>{{if lt (len $r.Time) 4}}&nbsp;&nbsp;{{end}}{{$r.Time}}</td>
         {{range $c := $r.Conditions}}
           {{if $c}}
             <td class="cell color{{$c.Rank $.Historical}}"
-                title="{{$c.Wind}}">
-              <a href="/{{$c.DayTimeSlug}}/{{if $.Historical}}historical{{else}}baseline{{end}}">
-                {{$c.Score $.Historical}}</a>
+                title="{{$c.Weather}}">
+              {{$c.Score $.Historical}}
             </td>
           {{else}}
             <td class="cell absent"></td> <!-- TODO color? -->

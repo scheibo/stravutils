@@ -70,8 +70,12 @@ func (c *ScoredConditions) Rank(historical bool) int {
 	}
 }
 
-func (c *ScoredConditions) Wind() string {
-	return fmt.Sprintf("%.1f km/h %s", c.WindSpeed*msToKmh, weather.Direction(c.WindBearing))
+func (c *ScoredConditions) Weather() string {
+	precip := ""
+	if c.PrecipProbability > 0.1 {
+		precip = fmt.Sprintf("\n%s", c.Precip())
+	}
+	return fmt.Sprintf("%.1f°C (%.3f kg/m³)%s\n%s", c.Temperature, c.AirDensity, precip, c.Wind())
 }
 
 func (c *ScoredConditions) disambiguatedDay() string {
@@ -97,7 +101,7 @@ func (c *ScoredConditions) FullTime() string {
 type LayoutTmpl struct {
 	AbsoluteURL   string
 	CanonicalPath string
-	Title         string // "Weather" +
+	Title         string
 	Historical    bool
 }
 
@@ -115,8 +119,8 @@ type RootTmpl struct {
 
 type DayTimeTmpl struct {
 	LayoutTmpl
-	Slug       string
 	DayTime    string
+	FullTime   string
 	Conditions []*ClimbConditions
 	Navigation
 }
@@ -136,9 +140,10 @@ func (c *ClimbConditions) ClimbDirection() string {
 
 type ClimbTmpl struct {
 	LayoutTmpl
-	Climb *Climb
-	Days  []string
-	Rows  []*ClimbTmplRow
+	Climb     *Climb
+	Days      []string
+	ShortDays []string
+	Rows      []*ClimbTmplRow
 	Navigation
 }
 

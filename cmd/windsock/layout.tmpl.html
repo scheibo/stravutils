@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- TODO use climacon --><link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="/favicon.ico">
   <link rel="canonical" href="{{.AbsoluteURL}}/{{.CanonicalPath}}">
   <title>{{.Title}}</title>
   <style>
@@ -80,6 +80,10 @@
     #main-nav { font-size: 14px; }
     #page-nav { font-size: 12px; }
     #attribution { font-size: 6px; }
+
+    .longdays{ display: none; }
+    .shortdays{ display: table-row; }
+
     /* Mobile - Medium */
     @media(min-width: 375px) {
       table { font-size: 12px; }
@@ -89,6 +93,7 @@
       #attribution { font-size: 7px; }
       #container { max-width: 400px; }
     }
+
     /* Mobile - Large */
     @media(min-width: 425px) {
       table { font-size: 13px; }
@@ -98,6 +103,7 @@
       #attribution { font-size: 8px; }
       #container { max-width: 500px; }
     }
+
     /* Tablet */
     @media(min-width: 768px) {
       table { font-size: 15px; }
@@ -106,7 +112,11 @@
       #page-nav { font-size: 15px; }
       #attribution { font-size: 10px; }
       #container { max-width: 600px; }
+
+      .longdays{ display: table-row; }
+      .shortdays{ display: none; }
     }
+
     /* Laptop */
     @media(min-width: 1024px) {
       table { font-size: 16px; }
@@ -128,6 +138,7 @@
     #attribution {
       color: #878787;
       margin-bottom: 10em;
+      padding-top: 0.7em;
     }
 
     h2.climb {
@@ -141,6 +152,10 @@
     .selected, .hour {
       font-weight: bold;
     }
+
+    .absent {
+      background-color: #EEEEEE;
+    }
   </style>
   <script>
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -152,7 +167,7 @@
 </head>
 <body>
   <header>
-    <h1><a href="/">Weather</a></h1>
+    <h1><a href="/">Bay Area<br />Windsock</a></h1>
     <nav id="main-nav">
       <a id="historical" class="{{if .Historical}}selected{{end}}" href="../historical">Historical</a> /
       <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="../baseline">Baseline</a>

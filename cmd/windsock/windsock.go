@@ -29,7 +29,7 @@ func main() {
 
 	flag.BoolVar(&baseline, "baseline", false, "Default to baseline instead of historical")
 	flag.StringVar(&absoluteURL, "absoluteURL", "https://wp.scheibo.com", "Absolute root URL of the site")
-	flag.StringVar(&output, "output", "weather-panel", "Output directory")
+	flag.StringVar(&output, "output", "site", "Output directory")
 	flag.StringVar(&key, "key", "", "DarkySky API Key")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
 	flag.IntVar(&min, "min", 6, "Minimum hour [0-23] to include in forecasts")

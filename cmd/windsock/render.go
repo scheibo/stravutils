@@ -61,7 +61,7 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 }
 
 func renderRoot(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
-	data := RootTmpl{LayoutTmpl{AbsoluteURL: absoluteURL, Title: "Weather"}, forecasts}
+	data := RootTmpl{LayoutTmpl{AbsoluteURL: absoluteURL, Title: "Windsock - Bay Area"}, forecasts}
 	return renderAllRoot(m, t, &data, historical, dir)
 }
 
@@ -85,9 +85,9 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 					data := DayTimeTmpl{}
 					data.AbsoluteURL = absoluteURL
 					data.DayTime = c.DayTime()
-					data.Slug = c.DayTimeSlug()
-					data.Title = "Weather - " + data.DayTime
-					data.CanonicalPath = data.Slug + "/"
+					data.FullTime = c.FullTime()
+					data.Title = "Windsock - Bay Area - " + data.DayTime
+					data.CanonicalPath = c.DayTimeSlug() + "/"
 
 					days := cf.Forecast.Days
 					data.Up = dayTimeUp(days, j, k)
@@ -119,9 +119,10 @@ func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteUR
 		return nil
 	}
 
-	var names []string
+	var names, short []string
 	for _, df := range forecasts[0].Forecast.Days {
 		names = append(names, df.Day)
+		short = append(short, df.Day[:3])
 	}
 
 	for k, cf := range forecasts {
@@ -131,9 +132,10 @@ func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteUR
 		data.Climb = cf.Climb
 
 		data.AbsoluteURL = absoluteURL
-		data.Title = "Weather - " + cf.Climb.Name
+		data.Title = "Windsock - Bay Area - " + cf.Climb.Name
 		data.CanonicalPath = data.Slug() + "/"
 		data.Days = names
+		data.ShortDays = short
 
 		hours := len(days[0].Conditions) // guaranteed to exist
 		data.Rows = make([]*ClimbTmplRow, hours)
