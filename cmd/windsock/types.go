@@ -99,10 +99,11 @@ func (c *ScoredConditions) FullTime() string {
 }
 
 type LayoutTmpl struct {
-	AbsoluteURL   string
-	CanonicalPath string
-	Title         string
-	Historical    bool
+	GenerationTime time.Time
+	AbsoluteURL    string
+	CanonicalPath  string
+	Title          string
+	Historical     bool
 }
 
 type Navigation struct {

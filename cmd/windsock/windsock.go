@@ -37,6 +37,8 @@ func main() {
 
 	flag.Parse()
 
+	genTime := time.Now()
+
 	if min < 0 || max > 23 || min >= max {
 		exit(fmt.Errorf("min and max must be in the range [0-23] with min < max but got min=%d max=%d", min, max))
 	}
@@ -63,7 +65,7 @@ func main() {
 		forecasts = append(forecasts, cf)
 	}
 
-	err = render(templates, !baseline, absoluteURL, output, forecasts)
+	err = render(templates, !baseline, absoluteURL, output, forecasts, genTime)
 	if err != nil {
 		exit(err)
 	}

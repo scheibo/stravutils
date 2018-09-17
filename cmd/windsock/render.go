@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/tdewolff/minify"
 	"github.com/tdewolff/minify/css"
@@ -24,7 +25,7 @@ func getTemplates() map[string]*template.Template {
 	return templates
 }
 
-func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
 	m := minify.New()
 	m.AddFunc("text/css", css.Minify)
 	m.AddFunc("text/html", html.Minify)
@@ -41,31 +42,31 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 	}
 
 	tmpl, _ := templates["root"]
-	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts)
+	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts, now)
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["time"]
-	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts)
+	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts, now)
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["climb"]
-	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts)
+	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts, now)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func renderRoot(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
-	data := RootTmpl{LayoutTmpl{AbsoluteURL: absoluteURL, Title: "Windsock - Bay Area"}, forecasts}
+func renderRoot(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
+	data := RootTmpl{LayoutTmpl{GenerationTime: now, AbsoluteURL: absoluteURL, Title: "Windsock - Bay Area"}, forecasts}
 	return renderAllRoot(m, t, &data, historical, dir)
 }
 
-func renderDayTimes(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+func renderDayTimes(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
 	dayTimes := make(map[string]*DayTimeTmpl)
 
 	for i := 0; i < len(forecasts); i++ {
@@ -83,6 +84,7 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 				existing, ok := dayTimes[path]
 				if !ok {
 					data := DayTimeTmpl{}
+					data.GenerationTime = now
 					data.AbsoluteURL = absoluteURL
 					data.DayTime = c.DayTime()
 					data.FullTime = c.FullTime()
@@ -114,7 +116,7 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 	return nil
 }
 
-func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast) error {
+func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
 	if len(forecasts) == 0 {
 		return nil
 	}
@@ -131,6 +133,7 @@ func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteUR
 		data := ClimbTmpl{}
 		data.Climb = cf.Climb
 
+		data.GenerationTime = now
 		data.AbsoluteURL = absoluteURL
 		data.Title = "Windsock - Bay Area - " + cf.Climb.Name
 		data.CanonicalPath = data.Slug() + "/"

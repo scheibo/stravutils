@@ -156,6 +156,10 @@
     .absent {
       background-color: #EEEEEE;
     }
+
+    #generation-time {
+      display: none;
+    }
   </style>
   <script>
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -178,5 +182,6 @@
     {{template "content" .}}
   </div>
   {{template "script" .}}
+  <div id="generation-time">{{.GenerationTime}}</div>
 </body>
 </html>
