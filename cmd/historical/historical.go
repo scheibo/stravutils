@@ -96,34 +96,24 @@ func main() {
 		}
 	}
 
-	for _, c := range climbs {
-		fs, _ := all[c.Segment.ID]
-		f, s := average(&c, fs)
-		fmt.Printf("%s (%v -> %v):%s\nSCORE: a=%.5f b=%.5f\n\n", c.Name, t1, t2, f, s, score(&c, f))
+	for _, climb := range climbs {
+		cs, _ := all[climb.Segment.ID]
+		mc, ms := mean(&climb, cs)
+		vc, vs := variance(&c, cs, mc, ms)
+		fmt.Printf("%s (%v -> %v):%s\n%s%s\nSCORE: t=%.5f m=%.5f v=%f\n\n",
+			climb.Name, t1, t2, mc, vc, score(&c, mf), ms, vs)
 	}
 }
 
-// TODO also compute VARIANCE - handle vector subtraction!
-func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float64) {
+func mean(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float64) {
+	avg := weather.Conditions{}
 	n := len(cs)
 	if n == 0 {
-		return &weather.Conditions{}, 0
+		return &avg, 0
 	}
 
-	t0 := time.Time{}
-
-	avg := cs[0]
-	avg.Icon = ""
-	avg.Time = t0
-	avg.PrecipType = ""
-	avg.SunriseTime = t0
-	avg.SunsetTime = t0
-	s := score(climb, cs[0])
-
-	var nsws, ewws, nswg, ewwg, wb float64
-
-	for i := 1; i < n; i++ {
-		c := cs[i]
+	var nsws, ewws, nswg, ewwg, wb, uv float64
+	for _, c : range cs {
 		avg.Temperature += c.Temperature
 		avg.Humidity += c.Humidity
 		avg.ApparentTemperature += c.ApparentTemperature
@@ -132,13 +122,13 @@ func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float
 		avg.AirPressure += c.AirPressure
 		avg.AirDensity += c.AirDensity
 		avg.CloudCover += c.CloudCover
-		avg.UVIndex += c.UVIndex
+		uv += c.UVIndex
 
 		wb = c.WindBearing * geo.DEGREES_TO_RADIANS
-		ewws += c.WindSpeed * math.Sin(wb)
-		nsws += c.WindSpeed * math.Cos(wb)
-		ewwg += c.WindGust * math.Sin(wb)
-		nswg += c.WindGust * math.Cos(wb)
+		ewws += c.WindSpeed * math.Cos(wb)
+		nsws += c.WindSpeed * math.Sin(wb)
+		ewwg += c.WindGust * math.Cos(wb)
+		nswg += c.WindGust * math.Sin(wb)
 
 		s += score(climb, c)
 	}
@@ -152,22 +142,75 @@ func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float
 	avg.AirPressure /= f
 	avg.AirDensity /= f
 	avg.CloudCover /= f
-	avg.UVIndex /= n
+	uv /= f
+	avg.UVIndex = int(math.Round(uv))
 
 	ewws /= f
 	nsws /= f
 	ewwg /= f
 	nswg /= f
 
-	avg.WindSpeed = math.Sqrt(nsws*nsws + ewws*ewws)
-	avg.WindGust = math.Sqrt(nswg*nswg + ewwg*ewwg)
-	wb = math.Atan2(ewws, nsws)
+	avg.WindSpeed = math.Sqrt(ewws*ewws + nsws*nsws)
+	avg.WindGust = math.Sqrt(ewwg*ewwg + nswg*nswg)
+	wb = math.Atan2(nsws, ewws)
 	if nsws < 0 {
 		wb += math.Pi
 	}
 	avg.WindBearing = normalizeBearing(wb * geo.RADIANS_TO_DEGREES)
 
 	return avg, s / f
+}
+
+func zero(w *weather.Conditions) weather.Conditions {
+}
+
+func variance(climb *Climb, cs []*weather.Conditions, mc *weather.Conditions, ms float64) (*weather.Conditions, float64) {
+	v := weather.Conditions{}
+	n := len(cs)
+	if n == 0 {
+		return &v, 0
+	}
+
+	mwb = c.WindBearing * geo.DEGREES_TO_RADIANS
+	mewws := mc.WindSpeed * math.Cos(wb)
+	mnsws := mc.WindSpeed * math.Sin(wb)
+	mewwg := mc.WindGust * math.Cos(wb)
+	mnswg := mc.WindGust * math.Sin(wb)
+
+	var nsws, ewws, nswg, ewwg, wb, uv float64
+
+	for _, c : range cs {
+		v.Temperature += math.Pow(mc.Temperature - c.Temperature, 2)
+		v.Humidity += math.Pow(mc.Humidity - c.Humidity, 2)
+		v.ApparentTemperature += math.Pow(mc.ApparentTemperature - c.ApparentTemperature, 2)
+		v.PrecipProbability += math.Pow(mc.PrecipProbability - c.PrecipProbability, 2)
+		v.PrecipIntensity += math.Pow(mc.PrecipIntensity - c.PrecipIntensity, 2)
+		v.AirPressure += math.Pow(mc.AirPressure - c.AirPressure, 2)
+		v.AirDensity += math.Pow(mc.AirDensity - c.AirDensity, 2)
+		v.CloudCover += math.Pow(mc.CloudCover - c.CloudCover, 2)
+		uv += math.Pow(float64(mc.UVIndex - c.UVIndex), 2)
+
+		wb = c.WindBearing * geo.DEGREES_TO_RADIANS
+		ewws += c.WindSpeed * math.Cos(wb)
+		nsws += c.WindSpeed * math.Sin(wb)
+		ewwg += c.WindGust * math.Cos(wb)
+		nswg += c.WindGust * math.Sin(wb)
+
+		s += score(climb, c)
+	}
+
+
+}
+
+
+
+func vadd(a, ad, b, bd float64) (float64, float64) {
+	ad *= geo.DEGREES_TO_RADIANS
+	bd *= geo.DEGREES_TO_RADIANS
+	x := a * math.Cos(ad) + b * math.Cos(bd)
+	y := a * math.Sin(ad) + b * math.Sin(bd)
+	fmt.Printf("%.5f %.5f\n", x, y)
+	return math.Sqrt(x*x + y*y), normalizeBearing(math.Atan2(y, x)*geo.RADIANS_TO_DEGREES)
 }
 
 func score(climb *Climb, conditions *weather.Conditions) float64 {
