@@ -22,16 +22,19 @@ import (
 	"github.com/scheibo/wnf"
 )
 
-type Provider struct {
+type Weather struct {
 	ds       *darksky.Client
-	w        *weather.DarkSkyProvider
 	cache    string
 	throttle <-chan time.Time
+	min      int
+	max      int
+	loc      *time.Location
 }
 
 func main() {
 	var token, climbsFile string
 	var key, cache, begin, end string
+	var min, max int
 	var qps int
 
 	flag.StringVar(&token, "token", "", "Access Token")
@@ -42,9 +45,15 @@ func main() {
 	//flag.StringVar(&end, "end", "2018-01-01", "YYYY-MM-DD to end at")
 	flag.StringVar(&begin, "begin", "2015-10-30", "YYYY-MM-DD to start from")
 	flag.StringVar(&end, "end", "2015-11-04", "YYYY-MM-DD to end at")
-	flag.IntVar(&qps, "qps", 10, "maximum queries per second against darksky")
+	flag.IntVar(&min, "min", 6, "Minimum hour [0-23] to include in forecasts")
+	flag.IntVar(&max, "max", 18, "Maximum hour [0-23] to include in forecasts")
+	flag.IntVar(&qps, "qps", 100, "maximum queries per second against darksky")
 
 	flag.Parse()
+
+	if min < 0 || max > 23 || min >= max {
+		exit(fmt.Errorf("min and max must be in the range [0-23] with min < max but got min=%d max=%d", min, max))
+	}
 
 	climbs, err := GetClimbs(climbsFile)
 	if err != nil {
@@ -67,23 +76,23 @@ func main() {
 		exit(err)
 	}
 
-	w := weather.NewClient(
-		weather.Custom(&Provider{
-			ds:       darksky.NewClient(key),
-			w:        weather.NewDarkSkyProvider(key, loc),
-			cache:    cache,
-			throttle: time.Tick(time.Second / time.Duration(qps)),
-		}))
+	w := Weather{
+		ds:       darksky.NewClient(key),
+		cache:    cache,
+		throttle: time.Tick(time.Second / time.Duration(qps)),
+		min:      min,
+		max:      max,
+		loc:      loc,
+	}
 
 	all := make(map[int64][]*weather.Conditions)
 	for d := t1; d.Before(t2); d = d.AddDate(0, 0, 1) {
 		for _, c := range climbs {
-			f, err := w.History(c.Segment.AverageLocation, d)
+			f, err := w.Historical(c.Segment.AverageLocation, d)
 			if err != nil {
 				exit(err)
 			}
-			//fmt.Printf("%s %v:\n%s\nSCORE: %.5f\n\n", c.Name, d, f, score(&c, f)) // TODO
-			all[c.Segment.ID] = append(all[c.Segment.ID], f)
+			all[c.Segment.ID] = append(all[c.Segment.ID], f.Hourly...)
 		}
 	}
 
@@ -94,6 +103,7 @@ func main() {
 	}
 }
 
+// TODO also compute VARIANCE - handle vector subtraction!
 func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float64) {
 	n := len(cs)
 	if n == 0 {
@@ -181,30 +191,19 @@ func normalizeBearing(b float64) float64 {
 	return b + math.Ceil(-b/360)*360
 }
 
-func (p *Provider) Current(ll geo.LatLng) (*weather.Conditions, error) {
-	<-p.throttle
-	return p.w.Current(ll)
-}
-
-func (p *Provider) Forecast(ll geo.LatLng) (*weather.Forecast, error) {
-	<-p.throttle
-	return p.w.Forecast(ll)
-}
-
-// TODO need hourly in 6am - 6pm window, not exactly at the time specified!
-func (p *Provider) History(ll geo.LatLng, t time.Time) (*weather.Conditions, error) {
+func (w *Weather) Historical(ll geo.LatLng, t time.Time) (*weather.Forecast, error) {
 	cache := filepath.Join(
-		p.cache,
+		w.cache,
 		fmt.Sprintf("%s,%s", geo.Coordinate(ll.Lat), geo.Coordinate(ll.Lng)),
 		fmt.Sprintf("%d.json.gz", t.Unix()))
 
 	if _, err := os.Stat(cache); err == nil {
-		return p.load(cache)
+		return w.load(cache)
 	}
 
 	path := fmt.Sprintf("%s,%s,%d", geo.Coordinate(ll.Lat), geo.Coordinate(ll.Lng), t.Unix())
-	<-p.throttle
-	r, err := p.ds.GetRaw(path, weather.DarkSkyHistoryArguments)
+	<-w.throttle
+	r, err := w.ds.GetRaw(path, darksky.Arguments{"excludes": "alerts,flags", "units": "si"})
 	if err != nil {
 		return nil, err
 	}
@@ -213,15 +212,15 @@ func (p *Provider) History(ll geo.LatLng, t time.Time) (*weather.Conditions, err
 	var buf bytes.Buffer
 	tee := io.TeeReader(r, &buf)
 
-	err = p.save(cache, tee)
+	err = w.save(cache, tee)
 	if err != nil {
 		return nil, err
 	}
 
-	return p.toConditions(&buf)
+	return w.toTrimmedForecast(&buf)
 }
 
-func (p *Provider) load(path string) (*weather.Conditions, error) {
+func (w *Weather) load(path string) (*weather.Forecast, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
@@ -234,10 +233,10 @@ func (p *Provider) load(path string) (*weather.Conditions, error) {
 	}
 	defer gz.Close()
 
-	return p.toConditions(gz)
+	return w.toTrimmedForecast(gz)
 }
 
-func (p *Provider) save(path string, r io.Reader) error {
+func (w *Weather) save(path string, r io.Reader) error {
 	file, err := create(path)
 	if err != nil {
 		return err
@@ -254,7 +253,7 @@ func (p *Provider) save(path string, r io.Reader) error {
 	return err
 }
 
-func (p *Provider) toConditions(r io.Reader) (*weather.Conditions, error) {
+func (w *Weather) toTrimmedForecast(r io.Reader) (*weather.Forecast, error) {
 	var f darksky.Forecast
 
 	decoder := json.NewDecoder(r)
@@ -263,10 +262,23 @@ func (p *Provider) toConditions(r io.Reader) (*weather.Conditions, error) {
 		return nil, err
 	}
 
+	// Should be only a single daily data point for time machine requests.
 	if len(f.Daily.Data) < 1 {
 		return nil, fmt.Errorf("missing daily data")
 	}
-	return p.w.ToConditions(f.Currently, &f.Daily.Data[0]), nil
+	d := &f.Daily.Data[0]
+
+	forecast := weather.Forecast{}
+	for _, h := range f.Hourly.Data {
+		hours, _, _ := h.Time.In(w.loc).Clock()
+		if hours < w.min || hours > w.max {
+			continue
+		}
+
+		forecast.Hourly = append(forecast.Hourly, weather.DarkSkyToConditions(&h, d, w.loc))
+	}
+
+	return &forecast, nil
 }
 
 func resource(name string) string {
