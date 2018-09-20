@@ -81,8 +81,17 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 		gr = s.AverageGrade
 	}
 
-	poly := string(s.Map.Polyline)
 	lls, err := geo.DecodePolyline(string(s.Map.Polyline))
+	if err != nil {
+		return nil, err
+	}
+
+	maps, err := geo.NewClient()
+	if err != nil {
+		return nil, err
+	}
+
+	lles, err := maps.Elevation(lls)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +109,7 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 		EndLocation:        geo.LatLng{s.EndLocation[0], s.EndLocation[1]},
 		AverageLocation:    geo.Average(lls),
 		AverageDirection:   geo.AverageDirection(lls),
-		Map:                poly,
+		Map:                geo.EncodeZPolyline(lles),
 	}, nil
 }
 
