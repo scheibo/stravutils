@@ -7,6 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"math"
 	"os"
 	"time"
 
@@ -15,8 +16,10 @@ import (
 
 	"github.com/scheibo/darksky"
 	"github.com/scheibo/geo"
+	"github.com/scheibo/perf"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
+	"github.com/scheibo/wnf"
 )
 
 type Provider struct {
@@ -72,18 +75,112 @@ func main() {
 			throttle: time.Tick(time.Second / time.Duration(qps)),
 		}))
 
+	all := make(map[int64][]*weather.Conditions)
 	for d := t1; d.Before(t2); d = d.AddDate(0, 0, 1) {
-		fmt.Printf("%v\n", d)
 		for _, c := range climbs {
-			fmt.Printf("%s\n", c.Name)
 			f, err := w.History(c.Segment.AverageLocation, d)
 			if err != nil {
 				exit(err)
 			}
-			fmt.Printf("%s\n", f)
+			//fmt.Printf("%s %v:\n%s\nSCORE: %.5f\n\n", c.Name, d, f, score(&c, f)) // TODO
+			all[c.Segment.ID] = append(all[c.Segment.ID], f)
 		}
 	}
+
+	for _, c := range climbs {
+		fs, _ := all[c.Segment.ID]
+		f, s := average(&c, fs)
+		fmt.Printf("%s (%v -> %v):%s\nSCORE: a=%.5f b=%.5f\n\n", c.Name, t1, t2, f, s, score(&c, f))
+	}
 }
+
+func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float64) {
+	n := len(cs)
+	if n == 0 {
+		return &weather.Conditions{}, 0
+	}
+
+	t0 := time.Time{}
+
+	avg := cs[0]
+	avg.Icon = ""
+	avg.Time = t0
+	avg.PrecipType = ""
+	avg.SunriseTime = t0
+	avg.SunsetTime = t0
+	s := score(climb, cs[0])
+
+	var nsws, ewws, nswg, ewwg, wb float64
+
+	for i := 1; i < n; i++ {
+		c := cs[i]
+		avg.Temperature += c.Temperature
+		avg.Humidity += c.Humidity
+		avg.ApparentTemperature += c.ApparentTemperature
+		avg.PrecipProbability += c.PrecipProbability
+		avg.PrecipIntensity += c.PrecipIntensity
+		avg.AirPressure += c.AirPressure
+		avg.AirDensity += c.AirDensity
+		avg.CloudCover += c.CloudCover
+		avg.UVIndex += c.UVIndex
+
+		wb = c.WindBearing * geo.DEGREES_TO_RADIANS
+		ewws += c.WindSpeed * math.Sin(wb)
+		nsws += c.WindSpeed * math.Cos(wb)
+		ewwg += c.WindGust * math.Sin(wb)
+		nswg += c.WindGust * math.Cos(wb)
+
+		s += score(climb, c)
+	}
+
+	f := float64(n)
+	avg.Temperature /= f
+	avg.Humidity /= f
+	avg.ApparentTemperature /= f
+	avg.PrecipProbability /= f
+	avg.PrecipIntensity /= f
+	avg.AirPressure /= f
+	avg.AirDensity /= f
+	avg.CloudCover /= f
+	avg.UVIndex /= n
+
+	ewws /= f
+	nsws /= f
+	ewwg /= f
+	nswg /= f
+
+	avg.WindSpeed = math.Sqrt(nsws*nsws + ewws*ewws)
+	avg.WindGust = math.Sqrt(nswg*nswg + ewwg*ewwg)
+	wb = math.Atan2(ewws, nsws)
+	if nsws < 0 {
+		wb += math.Pi
+	}
+	avg.WindBearing = normalizeBearing(wb * geo.RADIANS_TO_DEGREES)
+
+	return avg, s / f
+}
+
+func score(climb *Climb, conditions *weather.Conditions) float64 {
+	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
+
+	// TODO(kjs): use c.Map polyline for more accurate score.
+	return wnf.Power(
+		power,
+		climb.Segment.Distance,
+		climb.Segment.MedianElevation,
+		conditions.AirDensity,
+		wnf.CdaClimb,
+		conditions.WindSpeed,
+		conditions.WindBearing,
+		climb.Segment.AverageDirection,
+		climb.Segment.AverageGrade,
+		wnf.Mt)
+}
+
+func normalizeBearing(b float64) float64 {
+	return b + math.Ceil(-b/360)*360
+}
+
 func (p *Provider) Current(ll geo.LatLng) (*weather.Conditions, error) {
 	<-p.throttle
 	return p.w.Current(ll)
@@ -94,6 +191,7 @@ func (p *Provider) Forecast(ll geo.LatLng) (*weather.Forecast, error) {
 	return p.w.Forecast(ll)
 }
 
+// TODO need hourly in 6am - 6pm window, not exactly at the time specified!
 func (p *Provider) History(ll geo.LatLng, t time.Time) (*weather.Conditions, error) {
 	cache := filepath.Join(
 		p.cache,
