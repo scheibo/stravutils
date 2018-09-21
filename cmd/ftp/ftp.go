@@ -68,5 +68,3 @@ func exit(err error) {
 	flag.PrintDefaults()
 	os.Exit(1)
 }
-
-
