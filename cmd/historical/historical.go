@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"math"
@@ -11,16 +12,13 @@ import (
 	"runtime"
 
 	"github.com/scheibo/geo"
-	"github.com/scheibo/perf"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
-	"github.com/scheibo/wnf"
 )
 
 func main() {
 	var token, climbsFile string
 	var key, cache, begin, end string
-	var min, max int
 	var qps int
 	var offline bool
 
@@ -32,16 +30,10 @@ func main() {
 	//flag.StringVar(&end, "end", "2018-01-01", "YYYY-MM-DD to end at")
 	flag.StringVar(&begin, "begin", "2015-10-30", "YYYY-MM-DD to start from")
 	flag.StringVar(&end, "end", "2015-11-04", "YYYY-MM-DD to end at")
-	flag.IntVar(&min, "min", 6, "Minimum hour [0-23] to include in forecasts")
-	flag.IntVar(&max, "max", 18, "Maximum hour [0-23] to include in forecasts")
 	flag.IntVar(&qps, "qps", 100, "maximum queries per second against darksky")
 	flag.BoolVar(&offline, "offline", false, "whether or not to run in offline mode")
 
 	flag.Parse()
-
-	if min < 0 || max > 23 || min >= max {
-		exit(fmt.Errorf("min and max must be in the range [0-23] with min < max but got min=%d max=%d", min, max))
-	}
 
 	climbs, err := GetClimbs(climbsFile)
 	if err != nil {
@@ -64,30 +56,57 @@ func main() {
 		exit(err)
 	}
 
-	w := NewWeatherClient(key, cache, qps, min, max, loc, offline)
+	w := NewWeatherClient(key, cache, qps, loc, offline)
 
-	all := make(map[int64][]*weather.Conditions)
+	all := make(map[int64][12][24][]*weather.Conditions)
 	for d := t1; d.Before(t2); d = d.AddDate(0, 0, 1) {
 		for _, c := range climbs {
 			f, err := w.Historical(c.Segment.AverageLocation, d)
 			if err != nil {
 				exit(err)
 			}
-			all[c.Segment.ID] = append(all[c.Segment.ID], f.Hourly...)
+
+			for _, h := range f.Hourly {
+				t := h.Time.In(loc)
+				_, month, _ := t.Date()
+				hour, _, _ := t.Clock()
+
+				v := all[c.Segment.ID]
+				v[month][hour] = append(v[month][hour], h)
+				all[c.Segment.ID] = v
+			}
 		}
 	}
 
+	var avgs []HistoricalClimbAverages
 	for _, c := range climbs {
 		fs, _ := all[c.Segment.ID]
-		f, s := average(&c, fs)
-		fmt.Printf("%s (%v -> %v):%s\nSCORE: a=%.5f b=%.5f\n\n", c.Name, t1, t2, f, s, score(&c, f))
+		hca := HistoricalClimbAverages{}
+		hca.ID = c.Segment.ID
+		hca.Monthly = make([]*HistoricalHourlyAverages, 12)
+		for month := 0; month < 12; month++ {
+			hha := HistoricalHourlyAverages{}
+			hca.Monthly[month] = &hha
+			hha.Hourly = make([]*weather.Conditions, 24)
+			for hour := 0; hour < 24; hour++ {
+				hca.Monthly[month].Hourly[hour] = average(&c, fs[month][hour])
+			}
+		}
+
+		avgs = append(avgs, hca)
 	}
+
+	j, err := json.MarshalIndent(avgs, "", "  ")
+	if err != nil {
+		exit(err)
+	}
+	fmt.Println(string(j))
 }
 
-func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float64) {
+func average(climb *Climb, cs []*weather.Conditions) *weather.Conditions {
 	n := len(cs)
 	if n == 0 {
-		return &weather.Conditions{}, 0
+		return &weather.Conditions{}
 	}
 
 	t0 := time.Time{}
@@ -98,7 +117,6 @@ func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float
 	avg.PrecipType = ""
 	avg.SunriseTime = t0
 	avg.SunsetTime = t0
-	s := score(climb, cs[0])
 
 	var nsws, ewws, nswg, ewwg, wb float64
 
@@ -119,8 +137,6 @@ func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float
 		nsws += c.WindSpeed * math.Cos(wb)
 		ewwg += c.WindGust * math.Sin(wb)
 		nswg += c.WindGust * math.Cos(wb)
-
-		s += score(climb, c)
 	}
 
 	f := float64(n)
@@ -147,24 +163,7 @@ func average(climb *Climb, cs []*weather.Conditions) (*weather.Conditions, float
 	}
 	avg.WindBearing = normalizeBearing(wb * geo.RADIANS_TO_DEGREES)
 
-	return avg, s / f
-}
-
-func score(climb *Climb, conditions *weather.Conditions) float64 {
-	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
-
-	// TODO(kjs): use c.Map polyline for more accurate score.
-	return wnf.Power(
-		power,
-		climb.Segment.Distance,
-		climb.Segment.MedianElevation,
-		conditions.AirDensity,
-		wnf.CdaClimb,
-		conditions.WindSpeed,
-		conditions.WindBearing,
-		climb.Segment.AverageDirection,
-		climb.Segment.AverageGrade,
-		wnf.Mt)
+	return avg
 }
 
 func normalizeBearing(b float64) float64 {

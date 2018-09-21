@@ -20,19 +20,24 @@ type Weather struct {
 	ds       *darksky.Client
 	cache    string
 	throttle <-chan time.Time
-	min      int
-	max      int
 	loc      *time.Location
 	offline  bool
 }
 
-func NewWeatherClient(key, cache string, qps, min, max int, loc *time.Location, offline bool) *Weather {
+type HistoricalClimbAverages struct {
+	ID int64 `json:"id"`
+	Monthly []*HistoricalHourlyAverages `json:"monthly"`
+}
+
+type HistoricalHourlyAverages struct {
+	Hourly []*weather.Conditions `json:"hourly"`
+}
+
+func NewWeatherClient(key, cache string, qps int, loc *time.Location, offline bool) *Weather {
 	return &Weather{
 		ds:       darksky.NewClient(key),
 		cache:    cache,
 		throttle: time.Tick(time.Second / time.Duration(qps)),
-		min:      min,
-		max:      max,
 		loc:      loc,
 		offline:  offline,
 	}
@@ -121,11 +126,6 @@ func (w *Weather) toTrimmedForecast(r io.Reader) (*weather.Forecast, error) {
 
 	forecast := weather.Forecast{}
 	for _, h := range f.Hourly.Data {
-		hours, _, _ := h.Time.In(w.loc).Clock()
-		if hours < w.min || hours > w.max {
-			continue
-		}
-
 		forecast.Hourly = append(forecast.Hourly, weather.DarkSkyToConditions(&h, d, w.loc))
 	}
 
