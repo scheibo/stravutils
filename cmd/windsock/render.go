@@ -25,7 +25,7 @@ func getTemplates() map[string]*template.Template {
 	return templates
 }
 
-func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
+func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, last int, now time.Time) error {
 	m := minify.New()
 	m.AddFunc("text/css", css.Minify)
 	m.AddFunc("text/html", html.Minify)
@@ -42,19 +42,20 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 	}
 
 	tmpl, _ := templates["root"]
-	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts, now)
+	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts[:last], now)
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["time"]
-	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts, now)
+	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts[:last], now)
+
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["climb"]
-	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts, now)
+	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts, last, now)
 	if err != nil {
 		return err
 	}
@@ -116,7 +117,7 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 	return nil
 }
 
-func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
+func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, last int, now time.Time) error {
 	if len(forecasts) == 0 {
 		return nil
 	}
@@ -155,10 +156,12 @@ func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteUR
 			}
 		}
 
-		data.Up = climbUp(forecasts, k)
-		data.Left = data.Up
-		data.Down = climbDown(forecasts, k)
-		data.Right = data.Down
+		if k < last {
+			data.Up = climbUp(forecasts, k)
+			data.Left = data.Up
+			data.Down = climbDown(forecasts, k, last)
+			data.Right = data.Down
+		}
 
 		err := renderAllClimb(m, t, &data, historical, filepath.Join(dir, data.Slug()))
 		if err != nil {
@@ -176,8 +179,8 @@ func climbUp(cf []*ClimbForecast, k int) string {
 	return cf[k-1].Slug()
 }
 
-func climbDown(cf []*ClimbForecast, k int) string {
-	if k+1 >= len(cf) {
+func climbDown(cf []*ClimbForecast, k, last int) string {
+	if k+1 >= last {
 		return ""
 	}
 	return cf[k+1].Slug()

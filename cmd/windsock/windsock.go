@@ -22,7 +22,7 @@ const minHour = 6
 const maxHour = 18
 
 func main() {
-	var output, key, climbsFile, absoluteURL string
+	var output, key, climbsFile, hiddenFile, absoluteURL string
 	var baseline bool
 	var min, max int
 
@@ -31,6 +31,7 @@ func main() {
 	flag.StringVar(&output, "output", "site", "Output directory")
 	flag.StringVar(&key, "key", "", "DarkySky API Key")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
+	flag.StringVar(&hiddenFile, "hidden", "", "Bonus hidden segments to include in the output")
 	flag.IntVar(&min, "min", 6, "Minimum hour [0-23] to include in forecasts")
 	flag.IntVar(&max, "max", 18, "Maximum hour [0-23] to include in forecasts")
 
@@ -45,6 +46,18 @@ func main() {
 	climbs, err := GetClimbs(climbsFile)
 	if err != nil {
 		exit(err)
+	}
+
+	last := len(climbs)
+	if hiddenFile != "" {
+		hs, err := GetClimbs(hiddenFile)
+		if err != nil {
+			exit(err)
+		}
+
+		for _, h := range hs {
+			climbs = append(climbs, h)
+		}
 	}
 
 	loc, err := time.LoadLocation("America/Los_Angeles")
@@ -75,7 +88,7 @@ func main() {
 		forecasts = append(forecasts, cf)
 	}
 
-	err = render(templates, !baseline, absoluteURL, output, forecasts, genTime)
+	err = render(templates, !baseline, absoluteURL, output, forecasts, last, genTime)
 	if err != nil {
 		exit(err)
 	}
