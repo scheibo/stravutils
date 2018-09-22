@@ -8,9 +8,9 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"time"
-
 	"path/filepath"
+	"runtime"
+	"time"
 
 	"github.com/scheibo/darksky"
 	"github.com/scheibo/geo"
@@ -26,6 +26,9 @@ type Weather struct {
 }
 
 func NewWeatherClient(key, cache string, qps int, loc *time.Location, offline bool) *Weather {
+	if cache == "" {
+		cache = resource("cache")
+	}
 	return &Weather{
 		ds:       darksky.NewClient(key),
 		cache:    cache,
@@ -173,4 +176,9 @@ func create(path string) (*os.File, error) {
 		return nil, err
 	}
 	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0400)
+}
+
+func resource(name string) string {
+	_, src, _, _ := runtime.Caller(0)
+	return filepath.Join(filepath.Dir(src), name)
 }

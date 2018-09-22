@@ -8,9 +8,6 @@ import (
 	"os"
 	"time"
 
-	"path/filepath"
-	"runtime"
-
 	"github.com/scheibo/geo"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
@@ -25,11 +22,11 @@ func main() {
 	flag.StringVar(&token, "token", "", "Access Token")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
 	flag.StringVar(&key, "key", os.Getenv("DARKSKY_API_KEY"), "DarkySky API Key")
-	flag.StringVar(&cache, "cache", resource("cache"), "cache directory for historical queries")
-	//flag.StringVar(&begin, "begin", "2015-01-01", "YYYY-MM-DD to start from")
-	//flag.StringVar(&end, "end", "2018-01-01", "YYYY-MM-DD to end at")
-	flag.StringVar(&begin, "begin", "2015-10-30", "YYYY-MM-DD to start from")
-	flag.StringVar(&end, "end", "2015-11-04", "YYYY-MM-DD to end at")
+	flag.StringVar(&cache, "cache", "", "cache directory for historical queries")
+	flag.StringVar(&begin, "begin", "2015-01-01", "YYYY-MM-DD to start from")
+	flag.StringVar(&end, "end", "2018-01-01", "YYYY-MM-DD to end at")
+	//flag.StringVar(&begin, "begin", "2015-10-30", "YYYY-MM-DD to start from")
+	//flag.StringVar(&end, "end", "2015-11-04", "YYYY-MM-DD to end at")
 	flag.IntVar(&qps, "qps", 100, "maximum queries per second against darksky")
 	flag.BoolVar(&offline, "offline", false, "whether or not to run in offline mode")
 
@@ -168,11 +165,6 @@ func average(climb *Climb, cs []*weather.Conditions) *weather.Conditions {
 
 func normalizeBearing(b float64) float64 {
 	return b + math.Ceil(-b/360)*360
-}
-
-func resource(name string) string {
-	_, src, _, _ := runtime.Caller(0)
-	return filepath.Join(filepath.Dir(src), name)
 }
 
 func exit(err error) {
