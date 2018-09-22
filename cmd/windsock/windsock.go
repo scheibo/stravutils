@@ -8,7 +8,6 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/scheibo/calc"
 	"github.com/scheibo/perf"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
@@ -48,6 +47,17 @@ func main() {
 		exit(err)
 	}
 
+	loc, err := time.LoadLocation("America/Los_Angeles")
+	if err != nil {
+		exit(err)
+	}
+
+	// NOTE: we expect all days to be present and will segfault if there are any are null.
+	historical, err := GetHistoricalAverages()
+	if err != nil {
+		exit(err)
+	}
+
 	templates := getTemplates()
 	w := weather.NewClient(weather.DarkSky(key))
 
@@ -58,7 +68,7 @@ func main() {
 			exit(err)
 		}
 		c := climb
-		cf, err := trimAndScore(&c, f, min, max)
+		cf, err := trimAndScore(&historical, &c, f, min, max, loc)
 		if err != nil {
 			exit(err)
 		}
@@ -71,19 +81,14 @@ func main() {
 	}
 }
 
-func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, error) {
+func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min, max int, loc *time.Location) (*ClimbForecast, error) {
 	scored := ScoredForecast{}
 	result := &ClimbForecast{Climb: c, Forecast: &scored}
 	if len(f.Hourly) == 0 {
 		return result, nil
 	}
 
-	loc, err := time.LoadLocation("America/Los_Angeles")
-	if err != nil {
-		return nil, err
-	}
-
-	scored.Current = score(c, f.Hourly[0], loc, calc.Rho(c.Segment.MedianElevation, calc.G), 0.0, 0.0) // TODO: include historical!
+	scored.Current = score(c, f.Hourly[0], h.Get(c, f.Hourly[0].Time, loc), loc)
 
 	df := DayForecast{}
 	for _, w := range f.Hourly {
@@ -93,7 +98,7 @@ func trimAndScore(c *Climb, f *weather.Forecast, min, max int) (*ClimbForecast, 
 			continue
 		}
 
-		s := score(c, w, loc, calc.Rho(c.Segment.MedianElevation, calc.G), 0.0, 0.0) // TODO: include historical!
+		s := score(c, w, h.Get(c, w.Time, loc), loc)
 		dDay := s.disambiguatedDay()
 		if df.dDay == "" {
 			df.Day = s.Day()
@@ -157,20 +162,20 @@ func pad(days *[]*DayForecast, expected int) {
 	}
 }
 
-func score(climb *Climb, conditions *weather.Conditions, loc *time.Location, rhoH, vwH, dwH float64) *ScoredConditions {
+func score(climb *Climb, current *weather.Conditions, past *weather.Conditions, loc *time.Location) *ScoredConditions {
 	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
 
 	// TODO(kjs): use c.Map polyline for more accurate score.
 	historical := wnf.Power2(
 		power,
 		climb.Segment.Distance,
-		rhoH,
-		conditions.AirDensity,
+		past.AirDensity,
+		current.AirDensity,
 		wnf.CdaClimb,
-		vwH,
-		conditions.WindSpeed,
-		dwH,
-		conditions.WindBearing,
+		past.WindSpeed,
+		current.WindSpeed,
+		past.WindBearing,
+		current.WindBearing,
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
@@ -179,15 +184,15 @@ func score(climb *Climb, conditions *weather.Conditions, loc *time.Location, rho
 		power,
 		climb.Segment.Distance,
 		climb.Segment.MedianElevation,
-		conditions.AirDensity,
+		current.AirDensity,
 		wnf.CdaClimb,
-		conditions.WindSpeed,
-		conditions.WindBearing,
+		current.WindSpeed,
+		current.WindBearing,
 		climb.Segment.AverageDirection,
 		climb.Segment.AverageGrade,
 		wnf.Mt)
 
-	return &ScoredConditions{conditions, conditions.Time.In(loc), historical, baseline}
+	return &ScoredConditions{current, current.Time.In(loc), historical, baseline}
 }
 
 func resource(name string) string {
