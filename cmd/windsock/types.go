@@ -104,6 +104,7 @@ type LayoutTmpl struct {
 	CanonicalPath  string
 	Title          string
 	Historical     bool
+	Default        bool
 }
 
 type Navigation struct {

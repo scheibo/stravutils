@@ -23,10 +23,10 @@ const maxHour = 18
 
 func main() {
 	var output, key, climbsFile, hiddenFile, absoluteURL string
-	var baseline bool
+	var historical bool
 	var min, max int
 
-	flag.BoolVar(&baseline, "baseline", false, "Default to baseline instead of historical")
+	flag.BoolVar(&historical, "historical", false, "Default to historical instead of baseline")
 	flag.StringVar(&absoluteURL, "absoluteURL", "https://wp.scheibo.com", "Absolute root URL of the site")
 	flag.StringVar(&output, "output", "site", "Output directory")
 	flag.StringVar(&key, "key", "", "DarkySky API Key")
@@ -66,7 +66,7 @@ func main() {
 	}
 
 	// NOTE: we expect all days to be present and will segfault if there are any are null.
-	historical, err := GetHistoricalAverages()
+	havgs, err := GetHistoricalAverages()
 	if err != nil {
 		exit(err)
 	}
@@ -81,14 +81,14 @@ func main() {
 			exit(err)
 		}
 		c := climb
-		cf, err := trimAndScore(&historical, &c, f, min, max, loc)
+		cf, err := trimAndScore(&havgs, &c, f, min, max, loc)
 		if err != nil {
 			exit(err)
 		}
 		forecasts = append(forecasts, cf)
 	}
 
-	err = render(templates, !baseline, absoluteURL, output, forecasts, last, genTime)
+	err = render(templates, historical, absoluteURL, output, forecasts, last, genTime)
 	if err != nil {
 		exit(err)
 	}

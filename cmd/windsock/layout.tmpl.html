@@ -173,8 +173,13 @@
   <header>
     <h1><a href="/">Bay Area<br />Windsock</a></h1>
     <nav id="main-nav">
-      <a id="historical" class="{{if .Historical}}selected{{end}}" href="../historical">Historical</a> /
-      <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="../baseline">Baseline</a>
+      {{if .Default}}
+        <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="../baseline">Baseline</a> /
+        <a id="historical" class="{{if .Historical}}selected{{end}}" href="../historical">Historical</a>
+      {{else}}
+        <a id="historical" class="{{if .Historical}}selected{{end}}" href="../historical">Historical</a> /
+        <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="../baseline">Baseline</a>
+      {{end}}
     </nav>
     {{template "page-nav" .}}
   </header>
