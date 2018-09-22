@@ -17,6 +17,22 @@ import (
 	"github.com/scheibo/weather"
 )
 
+func Historical(ll geo.LatLng, t time.Time, loc *time.Location, cache ...string) (*weather.Forecast, error) {
+	c := resource("cache")
+	if len(cache) > 0 && cache[0] != "" {
+		c = cache[0]
+	}
+
+	c = filepath.Join(
+		c,
+		fmt.Sprintf("%s,%s", geo.Coordinate(ll.Lat), geo.Coordinate(ll.Lng)),
+		fmt.Sprintf("%d.json.gz", t.Unix()))
+	if _, err := os.Stat(c); err == nil {
+		return load(c, loc)
+	}
+	return nil, fmt.Errorf("could not find cached results: %s", c)
+}
+
 type Weather struct {
 	ds       *darksky.Client
 	cache    string
@@ -39,17 +55,11 @@ func NewWeatherClient(key, cache string, qps int, loc *time.Location, offline bo
 }
 
 func (w *Weather) Historical(ll geo.LatLng, t time.Time) (*weather.Forecast, error) {
-	cache := filepath.Join(
-		w.cache,
-		fmt.Sprintf("%s,%s", geo.Coordinate(ll.Lat), geo.Coordinate(ll.Lng)),
-		fmt.Sprintf("%d.json.gz", t.Unix()))
-
-	if _, err := os.Stat(cache); err == nil {
-		return w.load(cache)
-	}
-
-	if w.offline {
-		return nil, fmt.Errorf("could not find cached results: %s", cache)
+	cached, err := Historical(ll, t, w.loc, w.cache)
+	if err == nil {
+		return cached, nil
+	} else if  w.offline {
+		return nil, err
 	}
 
 	path := fmt.Sprintf("%s,%s,%d", geo.Coordinate(ll.Lat), geo.Coordinate(ll.Lng), t.Unix())
@@ -63,15 +73,15 @@ func (w *Weather) Historical(ll geo.LatLng, t time.Time) (*weather.Forecast, err
 	var buf bytes.Buffer
 	tee := io.TeeReader(r, &buf)
 
-	err = w.save(cache, tee)
+	err = save(cache, tee)
 	if err != nil {
 		return nil, err
 	}
 
-	return w.toTrimmedForecast(&buf)
+	return toTrimmedForecast(&buf)
 }
 
-func (w *Weather) load(path string) (*weather.Forecast, error) {
+func load(path string, loc *time.Location) (*weather.Forecast, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
@@ -84,10 +94,10 @@ func (w *Weather) load(path string) (*weather.Forecast, error) {
 	}
 	defer gz.Close()
 
-	return w.toTrimmedForecast(gz)
+	return toTrimmedForecast(gz, loc)
 }
 
-func (w *Weather) save(path string, r io.Reader) error {
+func save(path string, r io.Reader) error {
 	file, err := create(path)
 	if err != nil {
 		return err
@@ -104,7 +114,7 @@ func (w *Weather) save(path string, r io.Reader) error {
 	return err
 }
 
-func (w *Weather) toTrimmedForecast(r io.Reader) (*weather.Forecast, error) {
+func toTrimmedForecast(r io.Reader, loc *time.Location) (*weather.Forecast, error) {
 	var f darksky.Forecast
 
 	decoder := json.NewDecoder(r)
@@ -121,7 +131,7 @@ func (w *Weather) toTrimmedForecast(r io.Reader) (*weather.Forecast, error) {
 
 	forecast := weather.Forecast{}
 	for _, h := range f.Hourly.Data {
-		forecast.Hourly = append(forecast.Hourly, weather.DarkSkyToConditions(&h, d, w.loc))
+		forecast.Hourly = append(forecast.Hourly, weather.DarkSkyToConditions(&h, d, loc))
 	}
 
 	return &forecast, nil
