@@ -70,6 +70,7 @@ func main() {
 				t := h.Time.In(loc)
 				_, month, _ := t.Date()
 				hour, _, _ := t.Clock()
+				month--
 
 				v := all[c.Segment.ID]
 				v[month][hour] = append(v[month][hour], h)
@@ -78,22 +79,21 @@ func main() {
 		}
 	}
 
-	var avgs []HistoricalClimbAverages
+	avgs := make(map[int64]HistoricalMonthlyAverages)
 	for _, c := range climbs {
 		fs, _ := all[c.Segment.ID]
-		hca := HistoricalClimbAverages{}
-		hca.ID = c.Segment.ID
-		hca.Monthly = make([]*HistoricalHourlyAverages, 12)
+		hma := HistoricalMonthlyAverages{}
+		hma.Monthly = make([]*HistoricalHourlyAverages, 12)
 		for month := 0; month < 12; month++ {
 			hha := HistoricalHourlyAverages{}
-			hca.Monthly[month] = &hha
+			hma.Monthly[month] = &hha
 			hha.Hourly = make([]*weather.Conditions, 24)
 			for hour := 0; hour < 24; hour++ {
-				hca.Monthly[month].Hourly[hour] = average(&c, fs[month][hour])
+				hma.Monthly[month].Hourly[hour] = average(&c, fs[month][hour])
 			}
 		}
 
-		avgs = append(avgs, hca)
+		avgs[c.Segment.ID] = hma
 	}
 
 	j, err := json.MarshalIndent(avgs, "", "  ")
@@ -106,7 +106,7 @@ func main() {
 func average(climb *Climb, cs []*weather.Conditions) *weather.Conditions {
 	n := len(cs)
 	if n == 0 {
-		return &weather.Conditions{}
+		return nil
 	}
 
 	t0 := time.Time{}

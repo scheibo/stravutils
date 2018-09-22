@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"time"
 
@@ -22,15 +23,6 @@ type Weather struct {
 	throttle <-chan time.Time
 	loc      *time.Location
 	offline  bool
-}
-
-type HistoricalClimbAverages struct {
-	ID int64 `json:"id"`
-	Monthly []*HistoricalHourlyAverages `json:"monthly"`
-}
-
-type HistoricalHourlyAverages struct {
-	Hourly []*weather.Conditions `json:"hourly"`
 }
 
 func NewWeatherClient(key, cache string, qps int, loc *time.Location, offline bool) *Weather {
@@ -130,6 +122,49 @@ func (w *Weather) toTrimmedForecast(r io.Reader) (*weather.Forecast, error) {
 	}
 
 	return &forecast, nil
+}
+
+type HistoricalClimbAverages map[int64]HistoricalMonthlyAverages
+
+type HistoricalMonthlyAverages struct {
+	Monthly []*HistoricalHourlyAverages `json:"monthly"`
+}
+
+type HistoricalHourlyAverages struct {
+	Hourly []*weather.Conditions `json:"hourly"`
+}
+
+func GetHistoricalAverages(files ...string) (HistoricalClimbAverages, error) {
+	historical := make(map[int64]HistoricalMonthlyAverages)
+
+	file := Resource("historical")
+	if len(files) > 0 && files[0] != "" {
+		file = Resource(files[0])
+	}
+
+	f, err := ioutil.ReadFile(file)
+	if err != nil {
+		return historical, err
+	}
+
+	err = json.Unmarshal(f, &historical)
+	if err != nil {
+		return historical, err
+	}
+
+	return historical, nil
+}
+
+func (avgs *HistoricalClimbAverages) Get(c *Climb, t time.Time, loc *time.Location) *weather.Conditions {
+	t = t.In(loc)
+	_, month, _ := t.Date()
+	hour, _, _ := t.Clock()
+
+	monthly, ok := (*avgs)[c.Segment.ID]
+	if !ok {
+		return nil
+	}
+	return monthly.Monthly[month-1].Hourly[hour]
 }
 
 func create(path string) (*os.File, error) {
