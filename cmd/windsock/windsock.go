@@ -88,7 +88,7 @@ func main() {
 		forecasts = append(forecasts, cf)
 	}
 
-	err = render(templates, historical, absoluteURL, output, forecasts, hidden, &havgs, genTime, loc)
+	err = NewRenderer(historical, absoluteURL, output, forecasts, hidden, &havgs, genTime, loc).render(templates)
 	if err != nil {
 		exit(err)
 	}

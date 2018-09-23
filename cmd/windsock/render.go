@@ -28,53 +28,69 @@ func getTemplates() map[string]*template.Template {
 	return templates
 }
 
-func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, hidden int, havgs *HistoricalClimbAverages, now time.Time, loc *time.Location) error {
+type Renderer struct {
+	m           *minify.M
+	historical  bool
+	absoluteURL string
+	dir         string
+	forecasts   []*ClimbForecast
+	hidden      int
+	havgs       *HistoricalClimbAverages
+	now         time.Time
+	loc         *time.Location
+}
+
+func NewRenderer(historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, hidden int, havgs *HistoricalClimbAverages, now time.Time, loc *time.Location) *Renderer {
 	m := minify.New()
 	m.AddFunc("text/css", css.Minify)
 	m.AddFunc("text/html", html.Minify)
 	m.AddFunc("text/javascript", js.Minify)
 	m.AddFunc("image/svg+xml", svg.Minify)
 
-	err := os.RemoveAll(dir)
+	return &Renderer{m, historical, absoluteURL, dir, forecasts, hidden, havgs, now, loc}
+}
+
+func (r *Renderer) render(templates map[string]*template.Template) error {
+	err := os.RemoveAll(r.dir)
 	if err != nil {
 		return err
 	}
-	err = copyFile(resource("favicon.ico"), filepath.Join(dir, "favicon.ico"))
+	err = copyFile(resource("favicon.ico"), filepath.Join(r.dir, "favicon.ico"))
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ := templates["root"]
-	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts[:hidden], now)
+	err = r.renderRoot(tmpl)
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["time"]
-	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts[:hidden], havgs, now, loc)
+	err = r.renderDayTimes(tmpl)
 
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["climb"]
-	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts, hidden, havgs, now, loc)
+	err = r.renderClimbs(tmpl)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func renderRoot(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
-	data := RootTmpl{LayoutTmpl{GenerationTime: now, AbsoluteURL: absoluteURL, Title: "Windsock - Bay Area", Default: !historical}, forecasts}
-	return renderAllRoot(m, t, &data, historical, dir)
+func (r *Renderer) renderRoot(t *template.Template) error {
+	data := RootTmpl{LayoutTmpl{GenerationTime: r.now, AbsoluteURL: r.absoluteURL, Title: "Windsock - Bay Area", Default: !r.historical}, r.forecasts[:r.hidden]}
+	return renderAllRoot(r.m, t, &data, r.historical, r.dir)
 }
 
-func renderDayTimes(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, havgs *HistoricalClimbAverages, now time.Time, loc *time.Location) error {
+func (r *Renderer) renderDayTimes(t *template.Template) error {
 	dayTimes := make(map[string]*DayTimeTmpl)
 
-	for i := 0; i < len(forecasts); i++ {
-		cf := forecasts[i]
+	for i := 0; i < r.hidden; i++ {
+		cf := r.forecasts[i]
 		for j := 0; j < len(cf.Forecast.Days); j++ {
 			df := cf.Forecast.Days[j]
 			for k := 0; k < len(df.Conditions); k++ {
@@ -89,17 +105,17 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 					slug = CURRENT_SLUG
 				}
 
-				path := filepath.Join(dir, slug)
+				path := filepath.Join(r.dir, slug)
 				existing, ok := dayTimes[path]
 				if !ok {
 					data := DayTimeTmpl{}
-					data.GenerationTime = now
-					data.Default = !historical
-					data.AbsoluteURL = absoluteURL
+					data.GenerationTime = r.now
+					data.Default = !r.historical
+					data.AbsoluteURL = r.absoluteURL
 					data.LocalTime = c.LocalTime
 					data.Title = "Windsock - Bay Area - " + data.DayTime()
 					data.CanonicalPath = slug + "/"
-					data.historical = havgs.Get(cf.Climb, c.LocalTime, loc)
+					data.historical = r.havgs.Get(cf.Climb, c.LocalTime, r.loc)
 
 					days := cf.Forecast.Days
 					cur := cf.Forecast.Current
@@ -118,7 +134,7 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 	}
 
 	for dir, data := range dayTimes {
-		err := renderAllDayTime(m, t, data, historical, dir)
+		err := renderAllDayTime(r.m, t, data, r.historical, dir)
 		if err != nil {
 			return err
 		}
@@ -127,26 +143,26 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 	return nil
 }
 
-func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, hidden int, havgs *HistoricalClimbAverages, now time.Time, loc *time.Location) error {
-	if len(forecasts) == 0 {
+func (r *Renderer) renderClimbs(t *template.Template) error {
+	if len(r.forecasts) == 0 {
 		return nil
 	}
 
 	var names, short []string
-	for _, df := range forecasts[0].Forecast.Days {
+	for _, df := range r.forecasts[0].Forecast.Days {
 		names = append(names, df.Day)
 		short = append(short, df.Day[:3])
 	}
 
-	for k, cf := range forecasts {
+	for k, cf := range r.forecasts {
 		days := cf.Forecast.Days
 
 		data := ClimbTmpl{}
 		data.Climb = cf.Climb
 
-		data.GenerationTime = now
-		data.Default = !historical
-		data.AbsoluteURL = absoluteURL
+		data.GenerationTime = r.now
+		data.Default = !r.historical
+		data.AbsoluteURL = r.absoluteURL
 		data.Title = "Windsock - Bay Area - " + cf.Climb.Name
 		data.CanonicalPath = data.Slug() + "/"
 		data.Days = names
@@ -161,20 +177,20 @@ func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteUR
 				sc := days[j].Conditions[i]
 				if sc != nil && data.Rows[i].LocalTime.IsZero() {
 					data.Rows[i].LocalTime = sc.LocalTime
-					data.Rows[i].historical = havgs.Get(cf.Climb, sc.LocalTime, loc)
+					data.Rows[i].historical = r.havgs.Get(cf.Climb, sc.LocalTime, r.loc)
 				}
 				data.Rows[i].Conditions[j] = sc
 			}
 		}
 
-		if k < hidden {
-			data.Up = climbUp(forecasts, k)
+		if k < r.hidden {
+			data.Up = climbUp(r.forecasts, k)
 			data.Left = data.Up
-			data.Down = climbDown(forecasts, k, hidden)
+			data.Down = climbDown(r.forecasts, k, r.hidden)
 			data.Right = data.Down
 		}
 
-		err := renderAllClimb(m, t, &data, historical, filepath.Join(dir, data.Slug()))
+		err := renderAllClimb(r.m, t, &data, r.historical, filepath.Join(r.dir, data.Slug()))
 		if err != nil {
 			return err
 		}
