@@ -11,7 +11,7 @@ import (
 	"github.com/scheibo/weather"
 )
 
-var SLUG_REGEXP = regexp.MustCompile("[^A-Za-z0-9]+")
+var SLUG_REGEXP = regexp.MustCompile("[^\\p{L}\\d]+")
 
 type ClimbForecast struct {
 	Climb    *Climb
