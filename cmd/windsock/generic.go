@@ -80,6 +80,11 @@ func renderAllClimb(m *minify.M, t *template.Template, data *ClimbTmpl, historic
 		return err
 	}
 
+	err = aliases(data.Climb.Aliases, dir, historical)
+	if err != nil {
+		return err
+	}
+
 	return index(dir, historical)
 }
 
@@ -150,6 +155,48 @@ func executeTemplateClimb(m *minify.M, t *template.Template, data *ClimbTmpl, pa
 	}
 
 	return f.Close()
+}
+
+func aliases(as []string, orig string, historical bool) error {
+	dir := filepath.Dir(orig)
+	base := filepath.Base(orig)
+	for _, a := range as {
+		a := slugify(a)
+		path := filepath.Join(dir, a)
+		err := os.MkdirAll(path, 0755)
+		if err != nil {
+			return err
+		}
+
+		err = os.Symlink(filepath.Join("..", base, "index.html"),
+			filepath.Join(path, "index.html"))
+		if err != nil {
+			return err
+		}
+
+		h := filepath.Join(path, "historical")
+		err = os.MkdirAll(h, 0755)
+		if err != nil {
+			return err
+		}
+		err = os.Symlink(filepath.Join("..", "..", base, "historical", "index.html"),
+			filepath.Join(h, "index.html"))
+		if err != nil {
+			return err
+		}
+
+		b := filepath.Join(path, "baseline")
+		err = os.MkdirAll(b, 0755)
+		if err != nil {
+			return err
+		}
+		err = os.Symlink(filepath.Join("..", "..", base, "baseline", "index.html"),
+			filepath.Join(b, "index.html"))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func index(dir string, historical bool) error {
