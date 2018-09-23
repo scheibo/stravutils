@@ -104,7 +104,7 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 	scored.Current = score(c, f.Hourly[0], h.Get(c, f.Hourly[0].Time, loc), loc)
 
 	df := DayForecast{}
-	for _, w := range f.Hourly {
+	for i, w := range f.Hourly {
 
 		hours, _, _ := w.Time.In(loc).Clock()
 		if hours < min || hours > max {
@@ -122,6 +122,10 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 			df = DayForecast{Day: s.Day(), dDay: dDay}
 		}
 		df.Conditions = append(df.Conditions, s)
+		// Don't consider the current hour for being the best score
+		if i == 0 {
+			continue
+		}
 		if scored.historical == nil || s.historical < scored.historical.historical {
 			scored.historical = s
 		}

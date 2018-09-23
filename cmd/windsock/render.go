@@ -14,6 +14,8 @@ import (
 	"github.com/tdewolff/minify/svg"
 )
 
+const CURRENT_SLUG = "current"
+
 func getTemplates() map[string]*template.Template {
 	templates := make(map[string]*template.Template)
 
@@ -81,7 +83,12 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 					continue
 				}
 
-				path := filepath.Join(dir, c.DayTimeSlug())
+				slug := c.DayTimeSlug()
+				if *c == *cf.Forecast.Current {
+					slug = CURRENT_SLUG
+				}
+
+				path := filepath.Join(dir, slug)
 				existing, ok := dayTimes[path]
 				if !ok {
 					data := DayTimeTmpl{}
@@ -91,13 +98,14 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 					data.DayTime = c.DayTime()
 					data.FullTime = c.FullTime()
 					data.Title = "Windsock - Bay Area - " + data.DayTime
-					data.CanonicalPath = c.DayTimeSlug() + "/"
+					data.CanonicalPath = slug + "/"
 
 					days := cf.Forecast.Days
-					data.Up = dayTimeUp(days, j, k)
-					data.Down = dayTimeDown(days, j, k)
-					data.Left = dayTimeLeft(days, j, k)
-					data.Right = dayTimeRight(days, j, k)
+					cur := cf.Forecast.Current
+					data.Up = dayTimeUp(days, cur, j, k)
+					data.Down = dayTimeDown(days, cur, j, k)
+					data.Left = dayTimeLeft(days, cur, j, k)
+					data.Right = dayTimeRight(days, cur, j, k)
 
 					dayTimes[path] = &data
 					existing = &data
@@ -188,37 +196,39 @@ func climbDown(cf []*ClimbForecast, k, last int) string {
 	return cf[k+1].Slug()
 }
 
-func dayTimeUp(days []*DayForecast, j, k int) string {
+func dayTimeUp(days []*DayForecast, cur *ScoredConditions, j, k int) string {
 	if k-1 < 0 {
-		return dayTimeLeft(days, j, len(days[j].Conditions)-1)
+		return dayTimeLeft(days, cur, j, len(days[j].Conditions)-1)
 	}
-	return maybeDayTimeSlug(days[j].Conditions[k-1])
+	return maybeDayTimeSlug(days[j].Conditions[k-1], cur)
 }
 
-func dayTimeDown(days []*DayForecast, j, k int) string {
+func dayTimeDown(days []*DayForecast, cur *ScoredConditions, j, k int) string {
 	if k+1 >= len(days[j].Conditions) {
-		return dayTimeRight(days, j, 0)
+		return dayTimeRight(days, cur, j, 0)
 	}
-	return maybeDayTimeSlug(days[j].Conditions[k+1])
+	return maybeDayTimeSlug(days[j].Conditions[k+1], cur)
 }
 
-func dayTimeLeft(days []*DayForecast, j, k int) string {
+func dayTimeLeft(days []*DayForecast, cur *ScoredConditions, j, k int) string {
 	if j-1 < 0 {
 		return ""
 	}
-	return maybeDayTimeSlug(days[j-1].Conditions[k])
+	return maybeDayTimeSlug(days[j-1].Conditions[k], cur)
 }
 
-func dayTimeRight(days []*DayForecast, j, k int) string {
+func dayTimeRight(days []*DayForecast, cur *ScoredConditions, j, k int) string {
 	if j+1 >= len(days) {
 		return ""
 	}
-	return maybeDayTimeSlug(days[j+1].Conditions[k])
+	return maybeDayTimeSlug(days[j+1].Conditions[k], cur)
 }
 
-func maybeDayTimeSlug(c *ScoredConditions) string {
+func maybeDayTimeSlug(c *ScoredConditions, cur *ScoredConditions) string {
 	if c == nil {
 		return ""
+	} else if *c == *cur {
+		return CURRENT_SLUG
 	}
 	return c.DayTimeSlug()
 }
