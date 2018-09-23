@@ -17,6 +17,8 @@ import (
 	"github.com/scheibo/weather"
 )
 
+var now = time.Now()
+
 type Weather struct {
 	ds       *darksky.Client
 	cache    string
@@ -54,21 +56,27 @@ func (w *Weather) Historical(ll geo.LatLng, t time.Time) (*weather.Forecast, err
 
 	path := fmt.Sprintf("%s,%s,%d", geo.Coordinate(ll.Lat), geo.Coordinate(ll.Lng), t.Unix())
 	<-w.throttle
-	r, err := w.ds.GetRaw(path, darksky.Arguments{"excludes": "alerts", "units": "si"})
+	rc, err := w.ds.GetRaw(path, darksky.Arguments{"excludes": "alerts", "units": "si"})
 	if err != nil {
 		return nil, err
 	}
-	defer r.Close()
+	defer rc.Close()
 
-	var buf bytes.Buffer
-	tee := io.TeeReader(r, &buf)
+	var r io.Reader
+	r = rc
+	if t.Before(now) {
+		var buf bytes.Buffer
+		tee := io.TeeReader(r, &buf)
 
-	err = w.save(cache, tee)
-	if err != nil {
-		return nil, err
+		err = w.save(cache, tee)
+		if err != nil {
+			return nil, err
+		}
+
+		r = &buf
 	}
 
-	return w.toTrimmedForecast(&buf)
+	return w.toTrimmedForecast(r)
 }
 
 func (w *Weather) load(path string) (*weather.Forecast, error) {

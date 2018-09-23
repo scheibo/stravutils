@@ -64,7 +64,6 @@ func (ll *LatLngFlag) Set(v string) error {
 // COMPUTE WNF scores for climb (or if no climb, general score for latlng at time). if --historical, do historical lookup and use Time2 instead
 // output: if piped, params (no historical params? calc will choke), otherwise condtions + score
 
-
 func main() {
 	var key, tz string
 	var tf TimeFlag
