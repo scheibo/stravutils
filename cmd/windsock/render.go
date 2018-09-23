@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"time"
 
+	. "github.com/scheibo/stravutils"
 	"github.com/tdewolff/minify"
 	"github.com/tdewolff/minify/css"
 	"github.com/tdewolff/minify/html"
@@ -27,7 +28,7 @@ func getTemplates() map[string]*template.Template {
 	return templates
 }
 
-func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, last int, now time.Time) error {
+func render(templates map[string]*template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, hidden int, havgs *HistoricalClimbAverages, now time.Time, loc *time.Location) error {
 	m := minify.New()
 	m.AddFunc("text/css", css.Minify)
 	m.AddFunc("text/html", html.Minify)
@@ -44,20 +45,20 @@ func render(templates map[string]*template.Template, historical bool, absoluteUR
 	}
 
 	tmpl, _ := templates["root"]
-	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts[:last], now)
+	err = renderRoot(m, tmpl, historical, absoluteURL, dir, forecasts[:hidden], now)
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["time"]
-	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts[:last], now)
+	err = renderDayTimes(m, tmpl, historical, absoluteURL, dir, forecasts[:hidden], havgs, now, loc)
 
 	if err != nil {
 		return err
 	}
 
 	tmpl, _ = templates["climb"]
-	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts, last, now)
+	err = renderClimbs(m, tmpl, historical, absoluteURL, dir, forecasts, hidden, havgs, now, loc)
 	if err != nil {
 		return err
 	}
@@ -69,7 +70,7 @@ func renderRoot(m *minify.M, t *template.Template, historical bool, absoluteURL,
 	return renderAllRoot(m, t, &data, historical, dir)
 }
 
-func renderDayTimes(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, now time.Time) error {
+func renderDayTimes(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, havgs *HistoricalClimbAverages, now time.Time, loc *time.Location) error {
 	dayTimes := make(map[string]*DayTimeTmpl)
 
 	for i := 0; i < len(forecasts); i++ {
@@ -95,10 +96,10 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 					data.GenerationTime = now
 					data.Default = !historical
 					data.AbsoluteURL = absoluteURL
-					data.DayTime = c.DayTime()
-					data.FullTime = c.FullTime()
-					data.Title = "Windsock - Bay Area - " + data.DayTime
+					data.LocalTime = c.LocalTime
+					data.Title = "Windsock - Bay Area - " + data.DayTime()
 					data.CanonicalPath = slug + "/"
+					data.historical = havgs.Get(cf.Climb, c.LocalTime, loc)
 
 					days := cf.Forecast.Days
 					cur := cf.Forecast.Current
@@ -126,7 +127,7 @@ func renderDayTimes(m *minify.M, t *template.Template, historical bool, absolute
 	return nil
 }
 
-func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, last int, now time.Time) error {
+func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteURL, dir string, forecasts []*ClimbForecast, hidden int, havgs *HistoricalClimbAverages, now time.Time, loc *time.Location) error {
 	if len(forecasts) == 0 {
 		return nil
 	}
@@ -158,18 +159,18 @@ func renderClimbs(m *minify.M, t *template.Template, historical bool, absoluteUR
 			data.Rows[i].Conditions = make([]*ScoredConditions, len(days))
 			for j := 0; j < len(days); j++ {
 				sc := days[j].Conditions[i]
-				if sc != nil && data.Rows[i].Time == "" {
-					data.Rows[i].Time = sc.LocalTime.Format("3PM")
-					data.Rows[i].FullTime = sc.FullTime()
+				if sc != nil && data.Rows[i].LocalTime.IsZero() {
+					data.Rows[i].LocalTime = sc.LocalTime
+					data.Rows[i].historical = havgs.Get(cf.Climb, sc.LocalTime, loc)
 				}
 				data.Rows[i].Conditions[j] = sc
 			}
 		}
 
-		if k < last {
+		if k < hidden {
 			data.Up = climbUp(forecasts, k)
 			data.Left = data.Up
-			data.Down = climbDown(forecasts, k, last)
+			data.Down = climbDown(forecasts, k, hidden)
 			data.Right = data.Down
 		}
 
@@ -189,8 +190,8 @@ func climbUp(cf []*ClimbForecast, k int) string {
 	return cf[k-1].Slug()
 }
 
-func climbDown(cf []*ClimbForecast, k, last int) string {
-	if k+1 >= last {
+func climbDown(cf []*ClimbForecast, k, hidden int) string {
+	if k+1 >= hidden {
 		return ""
 	}
 	return cf[k+1].Slug()

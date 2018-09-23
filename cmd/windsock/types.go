@@ -71,6 +71,10 @@ func (c *ScoredConditions) Rank(historical bool) int {
 }
 
 func (c *ScoredConditions) Weather() string {
+	return weatherString(c.Conditions)
+}
+
+func weatherString(c *weather.Conditions) string {
 	precip := ""
 	if c.PrecipProbability > 0.1 {
 		precip = fmt.Sprintf("\n%s", c.Precip())
@@ -87,7 +91,7 @@ func (c *ScoredConditions) Day() string {
 }
 
 func (c *ScoredConditions) DayTime() string {
-	return c.LocalTime.Format("Monday 3PM")
+	return dayTime(c.LocalTime)
 }
 
 func (c *ScoredConditions) DayTimeSlug() string {
@@ -95,7 +99,7 @@ func (c *ScoredConditions) DayTimeSlug() string {
 }
 
 func (c *ScoredConditions) FullTime() string {
-	return c.LocalTime.Format("2006-01-02 15:04")
+	return fullTime(c.LocalTime)
 }
 
 type LayoutTmpl struct {
@@ -121,10 +125,22 @@ type RootTmpl struct {
 
 type DayTimeTmpl struct {
 	LayoutTmpl
-	DayTime    string
-	FullTime   string
+	LocalTime  time.Time
 	Conditions []*ClimbConditions
+	historical *weather.Conditions
 	Navigation
+}
+
+func (d *DayTimeTmpl) DayTime() string {
+	return dayTime(d.LocalTime)
+}
+
+func (d *DayTimeTmpl) TimeTitle(historical bool) string {
+	t := fullTime(d.LocalTime)
+	if historical {
+		t = fmt.Sprintf("%s\n%s", t, weatherString(d.historical))
+	}
+	return t
 }
 
 type ClimbConditions struct {
@@ -158,9 +174,29 @@ func (t *ClimbTmpl) ClimbDirection() string {
 }
 
 type ClimbTmplRow struct {
-	Time       string
-	FullTime   string
+	LocalTime  time.Time
 	Conditions []*ScoredConditions
+	historical *weather.Conditions
+}
+
+func (c *ClimbTmplRow) Time() string {
+	return c.LocalTime.Format("3PM")
+}
+
+func (c *ClimbTmplRow) TimeTitle(historical bool) string {
+	t := fullTime(c.LocalTime)
+	if historical {
+		t = fmt.Sprintf("%s\n%s", t, weatherString(c.historical))
+	}
+	return t
+}
+
+func dayTime(lt time.Time) string {
+	return lt.Format("Monday 3PM")
+}
+
+func fullTime(lt time.Time) string {
+	return lt.Format("2006-01-02 15:04")
 }
 
 func slugify(s string) string {
@@ -169,7 +205,6 @@ func slugify(s string) string {
 
 func displayScore(s float64) string {
 	return fmt.Sprintf("%.2f%%", (s-1)*100)
-
 }
 
 func rank(s float64) int {

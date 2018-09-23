@@ -27,7 +27,7 @@
     <tbody>
       {{range $r := .Rows}}
       <tr>
-        <td class="hour" title="{{$r.FullTime}}">{{if lt (len $r.Time) 4}}&nbsp;&nbsp;{{end}}{{$r.Time}}</td>
+        <td class="hour" title="{{$r.TimeTitle $.Historical}}">{{if lt (len $r.Time) 4}}&nbsp;&nbsp;{{end}}{{$r.Time}}</td>
         {{range $c := $r.Conditions}}
           {{if $c}}
             <td class="cell color{{$c.Rank $.Historical}}"

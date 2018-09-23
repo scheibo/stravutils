@@ -48,7 +48,7 @@ func main() {
 		exit(err)
 	}
 
-	last := len(climbs)
+	hidden := len(climbs)
 	if hiddenFile != "" {
 		hs, err := GetClimbs(hiddenFile)
 		if err != nil {
@@ -88,7 +88,7 @@ func main() {
 		forecasts = append(forecasts, cf)
 	}
 
-	err = render(templates, historical, absoluteURL, output, forecasts, last, genTime)
+	err = render(templates, historical, absoluteURL, output, forecasts, hidden, &havgs, genTime, loc)
 	if err != nil {
 		exit(err)
 	}
