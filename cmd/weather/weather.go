@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"io/ioutil"
+	"encoding/json"
 	"time"
 
 	"github.com/araddon/dateparse"
 	"github.com/scheibo/geo"
-	"github.com/scheibo/weather"
+	. "github.com/scheibo/stravutils"
 )
 
 type TimeFlag struct {
@@ -49,28 +51,19 @@ func (ll *LatLngFlag) Set(v string) error {
 
 /// MODE:
 //
-// read from stdin:
-// = if json, parse as Climb, use latlng from climb
-// = if not parseable as JSON, simply pass along at the start of output (-rho -vw -dw -db), require latlng
-
-// time = defaults to now, can be parsed
-// --historical = include historical avg conditions (-rhoH, -vwH, -dwH)
-
-// BONUS
-// --effort= either ID or link to strava effort = lookup and use details for that climb + date
-// (doesnt make sense with time or latlng)
-// weather --effort=https://www.strava.com/activities/983343009#24101603047 --historical
 
 // COMPUTE WNF scores for climb (or if no climb, general score for latlng at time). if --historical, do historical lookup and use Time2 instead
 // output: if piped, params (no historical params? calc will choke), otherwise condtions + score
 
 func main() {
+	var hist bool
 	var key, tz string
 	var tf TimeFlag
 	var llf LatLngFlag
 	var t time.Time
-	var ll geo.LatLng
+	var ll *geo.LatLng
 
+	flag.BoolVar(&hist, "historical", false, "include historical average weather conditions")
 	flag.StringVar(&key, "key", "", "DarkySky API Key")
 	flag.StringVar(&tz, "tz", "America/Los_Angeles", "timezone to use")
 	flag.Var(&llf, "latlng", "latitude and longitude to query weather information for")
@@ -84,24 +77,39 @@ func main() {
 		t = time.Now()
 	}
 
-	if llf.LatLng != nil {
-		ll = *llf.LatLng
-	} else {
-		exit(fmt.Errorf("latlng required"))
-	}
-
 	loc, err := time.LoadLocation(tz)
 	if err != nil {
 		exit(err)
 	}
 
-	w := weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc))
+	var c *Climb
+	var extra string
 
-	c, err := w.History(ll, t)
-	if err != nil {
-		exit(err)
+	fi, _ := os.Stdin.Stat()
+	if (fi.Mode()&os.ModeCharDevice) == 0 {
+		bytes, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			exit(err)
+		}
+
+		err = json.Unmarshal(bytes, c)
+		if err != nil {
+			extra = string(bytes)
+		}
 	}
-	fmt.Println(c)
+
+	if llf.LatLng != nil {
+		ll = llf.LatLng
+	}
+
+	if c != nil {
+		fmt.Printf("%v %s %v\n", t, loc, *c)
+	} else if ll != nil {
+		// TODO include extra
+		fmt.Printf("%v %s %s %s\n", t, loc, ll.String(), extra)
+	} else {
+		exit(fmt.Errorf("latlng or climb required"))
+	}
 }
 
 func exit(err error) {
