@@ -23,7 +23,7 @@
             title="{{$f.Forecast.Current.Weather}}">
           {{$f.Forecast.Current.Score $.Historical}}
         </td>
-	<td class="date" title="{{($f.Forecast.Best $.Historical).FullTime}}">
+        <td class="date" title="{{($f.Forecast.Best $.Historical).FullTime}}">
           <a href="/{{($f.Forecast.Best $.Historical).DayTimeSlug}}/{{if $.Historical}}historical{{else}}baseline{{end}}">
             {{($f.Forecast.Best $.Historical).DayTime}}</a>
         </td>
