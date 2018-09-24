@@ -8,10 +8,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/scheibo/perf"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
-	"github.com/scheibo/wnf"
 )
 
 const msToKmh = 3600.0 / 1000.0
@@ -101,7 +99,11 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 		return result, nil
 	}
 
-	scored.Current = score(c, f.Hourly[0], h.Get(c, f.Hourly[0].Time, loc), loc)
+	current, err := score(c, f.Hourly[0], h.Get(c, f.Hourly[0].Time, loc), loc)
+	if err != nil {
+		return nil, err
+	}
+	scored.Current = current
 
 	df := DayForecast{}
 	for i, w := range f.Hourly {
@@ -111,7 +113,10 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 			continue
 		}
 
-		s := score(c, w, h.Get(c, w.Time, loc), loc)
+		s, err := score(c, w, h.Get(c, w.Time, loc), loc)
+		if err != nil {
+			return nil, err
+		}
 		dDay := s.disambiguatedDay()
 		if df.dDay == "" {
 			df.Day = s.Day()
@@ -179,37 +184,12 @@ func pad(days *[]*DayForecast, expected int) {
 	}
 }
 
-func score(climb *Climb, current *weather.Conditions, past *weather.Conditions, loc *time.Location) *ScoredConditions {
-	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
-
-	// TODO(kjs): use c.Map polyline for more accurate score.
-	historical := wnf.Power2(
-		power,
-		climb.Segment.Distance,
-		past.AirDensity,
-		current.AirDensity,
-		wnf.CdaClimb,
-		past.WindSpeed,
-		current.WindSpeed,
-		past.WindBearing,
-		current.WindBearing,
-		climb.Segment.AverageDirection,
-		climb.Segment.AverageGrade,
-		wnf.Mt)
-
-	baseline := wnf.Power(
-		power,
-		climb.Segment.Distance,
-		climb.Segment.MedianElevation,
-		current.AirDensity,
-		wnf.CdaClimb,
-		current.WindSpeed,
-		current.WindBearing,
-		climb.Segment.AverageDirection,
-		climb.Segment.AverageGrade,
-		wnf.Mt)
-
-	return &ScoredConditions{current, current.Time.In(loc), historical, baseline}
+func score(climb *Climb, current *weather.Conditions, past *weather.Conditions, loc *time.Location) (*ScoredConditions, error) {
+	baseline, historical, err := WNF(climb, current, past, loc)
+	if err != nil {
+		return nil, err
+	}
+	return &ScoredConditions{current, current.Time.In(loc), historical, baseline}, nil
 }
 
 func resource(name string) string {

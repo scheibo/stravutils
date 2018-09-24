@@ -7,8 +7,12 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/scheibo/geo"
+	"github.com/scheibo/perf"
+	"github.com/scheibo/weather"
+	"github.com/scheibo/wnf"
 	"github.com/strava/go.strava"
 )
 
@@ -162,4 +166,49 @@ func Resource(name string) string {
 	} else {
 		return p
 	}
+}
+
+func WNF(climb *Climb, current, past *weather.Conditions, loc *time.Location) (baseline, historical float64, err error) {
+	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
+
+	lles, err := geo.DecodeZPolyline(climb.Segment.Map)
+	if err != nil {
+		return
+	}
+	lls := geo.LatLngs(lles)
+
+	cda := wnf.CdaClimb
+	if climb.Segment.AverageGrade < CLIMB_THRESHOLD {
+		cda = wnf.CdaTT
+	}
+
+	baseline = wnf.PowerLL(
+		power,
+		lls,
+		climb.Segment.Distance,
+		climb.Segment.MedianElevation,
+		current.AirDensity,
+		cda,
+		current.WindSpeed,
+		current.WindBearing,
+		climb.Segment.AverageGrade,
+		wnf.Mt)
+
+	if past != nil {
+		historical = wnf.Power2LL(
+			power,
+			lls,
+			climb.Segment.Distance,
+			past.AirDensity,
+			current.AirDensity,
+			cda,
+			past.WindSpeed,
+			current.WindSpeed,
+			past.WindBearing,
+			current.WindBearing,
+			climb.Segment.AverageGrade,
+			wnf.Mt)
+	}
+
+	return
 }

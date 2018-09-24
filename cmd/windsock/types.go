@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -111,6 +112,10 @@ type LayoutTmpl struct {
 	Default        bool
 }
 
+func (t *LayoutTmpl) Path() string {
+	return filepath.Dir(t.CanonicalPath)
+}
+
 type Navigation struct {
 	Left  string
 	Right string
@@ -213,8 +218,18 @@ func rank(s float64) int {
 		mod = -1
 	}
 
-	rank := int(math.Abs(s-1)*100) / 3 // 15+
-	if rank > 5 {
+	rank := int(math.Abs(s-1) * 100)
+	if rank < 1 {
+		rank = 0
+	} else if rank >= 1 && rank < 3 {
+		rank = 1
+	} else if rank >= 3 && rank < 6 {
+		rank = 2
+	} else if rank >= 6 && rank < 10 {
+		rank = 3
+	} else if rank >= 10 && rank < 15 {
+		rank = 4
+	} else {
 		rank = 5
 	}
 
