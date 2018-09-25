@@ -15,16 +15,15 @@
       {{range $f := .Forecasts}}
       <tr>
         <td class="name">
-          <a href="/{{$f.Slug}}/{{if $.Historical}}historical{{else}}baseline{{end}}"
+          <a href="{{$.RootedPath $f.Slug}}/{{if $.Historical}}historical{{else}}baseline{{end}}"
              title="{{$f.ClimbDirection}}">{{$f.Climb.Name}}</a>
-          <!-- TODO include historical weather in title attr if .Historical -->
         </td>
         <td class="current color{{$f.Forecast.Current.Rank $.Historical}}"
             title="{{$f.Forecast.Current.Weather}}">
           {{$f.Forecast.Current.Score $.Historical}}
         </td>
         <td class="date" title="{{($f.Forecast.Best $.Historical).FullTime}}">
-          <a href="/{{($f.Forecast.Best $.Historical).DayTimeSlug}}/{{if $.Historical}}historical{{else}}baseline{{end}}">
+          <a href="{{$.RootedPath ($f.Forecast.Best $.Historical).DayTimeSlug}}/{{if $.Historical}}historical{{else}}baseline{{end}}">
             {{($f.Forecast.Best $.Historical).DayTime}}</a>
         </td>
         <td class="best color{{($f.Forecast.Best $.Historical).Rank $.Historical}}"

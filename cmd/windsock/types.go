@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"net/url"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -112,8 +113,16 @@ type LayoutTmpl struct {
 	Default        bool
 }
 
+func (t *LayoutTmpl) RootedPath(p string) string {
+	u, err := url.Parse(t.AbsoluteURL)
+	if err != nil {
+		return p
+	}
+	return filepath.Join(u.Path, p)
+}
+
 func (t *LayoutTmpl) Path() string {
-	return filepath.Dir(t.CanonicalPath)
+	return t.RootedPath(filepath.Dir(t.CanonicalPath))
 }
 
 type Navigation struct {
