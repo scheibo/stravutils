@@ -125,6 +125,10 @@ func (t *LayoutTmpl) Path() string {
 	return t.RootedPath(filepath.Dir(t.CanonicalPath))
 }
 
+func (t *LayoutTmpl) GenTime() string {
+	return t.GenerationTime.Format(time.Stamp)
+}
+
 type Navigation struct {
 	Left  string
 	Right string

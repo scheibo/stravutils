@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" href="{{.RootedPath "/favicon.ico"}}">
   <link rel="canonical" href="{{.AbsoluteURL}}/{{.CanonicalPath}}">
   <title>{{.Title}}</title>
   <style>
@@ -188,6 +188,6 @@
     {{template "content" .}}
   </div>
   {{template "script" .}}
-  <div id="generation-time">{{.GenerationTime}}</div>
+  <div id="generation-time">{{.GenTime}}</div>
 </body>
 </html>
