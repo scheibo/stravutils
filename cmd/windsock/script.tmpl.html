@@ -24,7 +24,13 @@
           window.location = "../../{{.Down}}/{{if .Historical}}historical{{else}}baseline{{end}}"
           break;
       {{end}}
+        default:
+          return true;
       }
+
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
     }, false);
   </script>
 {{end}}
