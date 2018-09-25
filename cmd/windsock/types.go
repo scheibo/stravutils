@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"net/url"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -112,8 +113,32 @@ type LayoutTmpl struct {
 	Default        bool
 }
 
+func (t *LayoutTmpl) RootedPath(p string) string {
+	u, err := url.Parse(t.AbsoluteURL)
+	if err != nil {
+		return p
+	}
+	r := "/"
+	if u.Path != "" {
+		r = u.Path
+	}
+	return filepath.Join(r, p)
+}
+
 func (t *LayoutTmpl) Path() string {
-	return filepath.Dir(t.CanonicalPath)
+	d := filepath.Dir(t.CanonicalPath)
+	if d == "." {
+		d = ""
+	}
+	r := t.RootedPath(d)
+	if r == "/" {
+		return ""
+	}
+	return r
+}
+
+func (t *LayoutTmpl) GenTime() string {
+	return t.GenerationTime.Format(time.Stamp)
 }
 
 type Navigation struct {

@@ -17,7 +17,7 @@
       {{range $c := .Conditions}}
       <tr>
         <td class="name">
-          <a href="/{{$c.Slug}}/{{if $.Historical}}historical{{else}}baseline{{end}}"
+          <a href="{{$.RootedPath $c.Slug}}/{{if $.Historical}}historical{{else}}baseline{{end}}"
              title="{{$c.ClimbDirection}}">{{$c.Climb.Name}}</a>
           <!-- TODO include historical weather in title attr if .Historical -->
         </td>

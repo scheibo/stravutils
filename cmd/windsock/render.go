@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"regexp"
 	"time"
 
 	. "github.com/scheibo/stravutils"
@@ -44,8 +45,8 @@ func NewRenderer(historical bool, absoluteURL, dir string, forecasts []*ClimbFor
 	m := minify.New()
 	m.AddFunc("text/css", css.Minify)
 	m.AddFunc("text/html", html.Minify)
-	m.AddFunc("text/javascript", js.Minify)
 	m.AddFunc("image/svg+xml", svg.Minify)
+	m.AddFuncRegexp(regexp.MustCompile("^(application|text)/(x-)?(java|ecma)script$"), js.Minify)
 
 	return &Renderer{m, historical, absoluteURL, dir, forecasts, hidden, havgs, now, loc}
 }
