@@ -12,6 +12,7 @@ import (
 	"github.com/araddon/dateparse"
 	"github.com/scheibo/geo"
 	. "github.com/scheibo/stravutils"
+	"github.com/scheibo/weather"
 )
 
 type TimeFlag struct {
@@ -108,7 +109,10 @@ func main() {
 
 	w := NewWeatherClient(key, cache, qps, loc, offline)
 	if climb != nil {
-		c := HistoricalConditions(w, ll, t, loc)
+		c, err := HistoricalConditions(w, *ll, t, loc)
+		if err != nil {
+			exit(err)
+		}
 
 		var past *weather.Conditions
 		if hist {
@@ -116,10 +120,10 @@ func main() {
 			if err != nil {
 				exit(err)
 			}
-			past := avgs.Get(climb, t, loc)
+			past = avgs.Get(climb, t, loc)
 		}
 
-		baseline, historical, err := WNF(climb, current, past, loc)
+		baseline, historical, err := WNF(climb, c, past, loc)
 		if err != nil {
 			exit(err)
 		}
@@ -137,7 +141,11 @@ func main() {
 				c.AirDensity, c.WindSpeed, c.WindBearing, s.AverageDirection, s.Distance, s.TotalElevationGain, s.MedianElevation)
 		}
 	} else if ll != nil {
-		c := HistoricalConditions(w, ll, t, loc)
+		c, err := HistoricalConditions(w, *ll, t, loc)
+		if err != nil {
+			exit(err)
+		}
+
 		// NOTE: must specify -db!
 		fmt.Printf("-rho=%.4f -vs=%.3f -dw=%2.f %s\n", c.AirDensity, c.WindSpeed, c.WindBearing, extra)
 	} else {
@@ -145,8 +153,11 @@ func main() {
 	}
 }
 
-func HistoricalConditions(w *Weather, ll geo.LatLng, t time.Time, loc *time.Location) (*weather.Condtions, error) {
-	f := w.Historical(ll, t)
+func HistoricalConditions(w *Weather, ll geo.LatLng, t time.Time, loc *time.Location) (*weather.Conditions, error) {
+	f, err := w.Historical(ll, t)
+	if err != nil {
+		return nil, err
+	}
 	if len(f.Hourly) != 24 {
 		return nil, fmt.Errorf("forecast is wrong size: want 24, got %d", len(f.Hourly))
 	}
