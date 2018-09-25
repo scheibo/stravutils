@@ -118,11 +118,23 @@ func (t *LayoutTmpl) RootedPath(p string) string {
 	if err != nil {
 		return p
 	}
-	return filepath.Join(u.Path, p)
+	r := "/"
+	if u.Path != "" {
+		r = u.Path
+	}
+	return filepath.Join(r, p)
 }
 
 func (t *LayoutTmpl) Path() string {
-	return t.RootedPath(filepath.Dir(t.CanonicalPath))
+	d := filepath.Dir(t.CanonicalPath)
+	if d == "." {
+		d = ""
+	}
+	r := t.RootedPath(d)
+	if r == "/" {
+		return ""
+	}
+	return r
 }
 
 func (t *LayoutTmpl) GenTime() string {
