@@ -116,7 +116,7 @@ func (r *Renderer) renderDayTimes(t *template.Template) error {
 					data.LocalTime = c.LocalTime
 					data.Title = "Windsock - Bay Area - " + data.DayTime()
 					data.CanonicalPath = slug + "/"
-					data.historical = r.havgs.Get(cf.Climb, c.LocalTime, r.loc)
+					data.historical = r.havgs.Get(&cf.Climb.Segment, c.LocalTime, r.loc)
 
 					days := cf.Forecast.Days
 					cur := cf.Forecast.Current
@@ -178,7 +178,7 @@ func (r *Renderer) renderClimbs(t *template.Template) error {
 				sc := days[j].Conditions[i]
 				if sc != nil && data.Rows[i].LocalTime.IsZero() {
 					data.Rows[i].LocalTime = sc.LocalTime
-					data.Rows[i].historical = r.havgs.Get(cf.Climb, sc.LocalTime, r.loc)
+					data.Rows[i].historical = r.havgs.Get(&cf.Climb.Segment, sc.LocalTime, r.loc)
 				}
 				data.Rows[i].Conditions[j] = sc
 			}

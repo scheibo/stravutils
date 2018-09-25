@@ -87,7 +87,7 @@ func main() {
 		exit(err)
 	}
 
-	var climb *Climb
+	var s Segment
 	var extra string
 
 	fi, _ := os.Stdin.Stat()
@@ -97,7 +97,7 @@ func main() {
 			exit(err)
 		}
 
-		err = json.Unmarshal(bytes, climb)
+		err = json.Unmarshal(bytes, &s)
 		if err != nil {
 			extra = string(bytes)
 		}
@@ -108,8 +108,8 @@ func main() {
 	}
 
 	w := NewWeatherClient(key, cache, qps, loc, offline)
-	if climb != nil {
-		c, err := HistoricalConditions(w, *ll, t, loc)
+	if s.ID != 0 {
+		c, err := HistoricalConditions(w, s.AverageLocation, t, loc)
 		if err != nil {
 			exit(err)
 		}
@@ -120,10 +120,10 @@ func main() {
 			if err != nil {
 				exit(err)
 			}
-			past = avgs.Get(climb, t, loc)
+			past = avgs.Get(&s, t, loc)
 		}
 
-		baseline, historical, err := WNF(climb, c, past, loc)
+		baseline, historical, err := WNF(&s, c, past, loc)
 		if err != nil {
 			exit(err)
 		}
@@ -131,13 +131,12 @@ func main() {
 		fi, _ := os.Stdout.Stat()
 		if (fi.Mode() & os.ModeCharDevice) != 0 {
 			h := ""
-			if hist {
-				fmt.Printf("(%s => %s)\n", weatherString(past), displayScore(historical))
+			if hist && past != nil {
+				h = fmt.Sprintf("\n%s => %s\n", weatherString(past), displayScore(historical))
 			}
 			fmt.Printf("%s => %s\n%s", weatherString(c), displayScore(baseline), h)
 		} else {
-			s := climb.Segment
-			fmt.Printf("-rho=%.4f -vs=%.3f -dw=%.2f -db=%.2f -d=%.2f -e=%.2f -h=%.2f\n",
+			fmt.Printf("-rho=%.4f -vw=%.3f -dw=%.2f -db=%.2f -d=%.2f -e=%.2f\n",
 				c.AirDensity, c.WindSpeed, c.WindBearing, s.AverageDirection, s.Distance, s.TotalElevationGain, s.MedianElevation)
 		}
 	} else if ll != nil {
@@ -146,10 +145,11 @@ func main() {
 			exit(err)
 		}
 
+		//TODO: must remove -h!
 		// NOTE: must specify -db!
 		fmt.Printf("-rho=%.4f -vs=%.3f -dw=%2.f %s\n", c.AirDensity, c.WindSpeed, c.WindBearing, extra)
 	} else {
-		exit(fmt.Errorf("latlng or climb required"))
+		exit(fmt.Errorf("latlng or segment required"))
 	}
 }
 

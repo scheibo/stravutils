@@ -168,37 +168,37 @@ func Resource(name string) string {
 	}
 }
 
-func WNF(climb *Climb, current, past *weather.Conditions, loc *time.Location) (baseline, historical float64, err error) {
-	power := perf.CalcPowerM(500, climb.Segment.Distance, climb.Segment.AverageGrade, climb.Segment.MedianElevation)
+func WNF(s *Segment, current, past *weather.Conditions, loc *time.Location) (baseline, historical float64, err error) {
+	power := perf.CalcPowerM(500, s.Distance, s.AverageGrade, s.MedianElevation)
 
-	lles, err := geo.DecodeZPolyline(climb.Segment.Map)
+	lles, err := geo.DecodeZPolyline(s.Map)
 	if err != nil {
 		return
 	}
 	lls := geo.LatLngs(lles)
 
 	cda := wnf.CdaClimb
-	if climb.Segment.AverageGrade < CLIMB_THRESHOLD {
+	if s.AverageGrade < CLIMB_THRESHOLD {
 		cda = wnf.CdaTT
 	}
 
 	baseline = wnf.PowerLL(
 		power,
 		lls,
-		climb.Segment.Distance,
-		climb.Segment.MedianElevation,
+		s.Distance,
+		s.MedianElevation,
 		current.AirDensity,
 		cda,
 		current.WindSpeed,
 		current.WindBearing,
-		climb.Segment.AverageGrade,
+		s.AverageGrade,
 		wnf.Mt)
 
 	if past != nil {
 		historical = wnf.Power2LL(
 			power,
 			lls,
-			climb.Segment.Distance,
+			s.Distance,
 			past.AirDensity,
 			current.AirDensity,
 			cda,
@@ -206,7 +206,7 @@ func WNF(climb *Climb, current, past *weather.Conditions, loc *time.Location) (b
 			current.WindSpeed,
 			past.WindBearing,
 			current.WindBearing,
-			climb.Segment.AverageGrade,
+			s.AverageGrade,
 			wnf.Mt)
 	}
 

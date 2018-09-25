@@ -41,6 +41,7 @@ func NewWeatherClient(key, cache string, qps int, loc *time.Location, offline bo
 }
 
 func (w *Weather) Historical(ll geo.LatLng, t time.Time) (*weather.Forecast, error) {
+	t = time.Date(t.Year(), t.Month(), t.Day(), 12, 0, 0, 0, t.Location())
 	cache := filepath.Join(
 		w.cache,
 		fmt.Sprintf("%s,%s", geo.Coordinate(ll.Lat), geo.Coordinate(ll.Lng)),
@@ -166,12 +167,12 @@ func GetHistoricalAverages(files ...string) (HistoricalClimbAverages, error) {
 	return historical, nil
 }
 
-func (avgs *HistoricalClimbAverages) Get(c *Climb, t time.Time, loc *time.Location) *weather.Conditions {
+func (avgs *HistoricalClimbAverages) Get(s *Segment, t time.Time, loc *time.Location) *weather.Conditions {
 	t = t.In(loc)
 	_, month, _ := t.Date()
 	hour, _, _ := t.Clock()
 
-	monthly, ok := (*avgs)[c.Segment.ID]
+	monthly, ok := (*avgs)[s.ID]
 	if !ok {
 		return nil
 	}

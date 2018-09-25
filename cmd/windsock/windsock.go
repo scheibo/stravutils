@@ -99,7 +99,7 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 		return result, nil
 	}
 
-	current, err := score(c, f.Hourly[0], h.Get(c, f.Hourly[0].Time, loc), loc)
+	current, err := score(c, f.Hourly[0], h.Get(&c.Segment, f.Hourly[0].Time, loc), loc)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 			continue
 		}
 
-		s, err := score(c, w, h.Get(c, w.Time, loc), loc)
+		s, err := score(c, w, h.Get(&c.Segment, w.Time, loc), loc)
 		if err != nil {
 			return nil, err
 		}
@@ -185,7 +185,7 @@ func pad(days *[]*DayForecast, expected int) {
 }
 
 func score(climb *Climb, current *weather.Conditions, past *weather.Conditions, loc *time.Location) (*ScoredConditions, error) {
-	baseline, historical, err := WNF(climb, current, past, loc)
+	baseline, historical, err := WNF(&climb.Segment, current, past, loc)
 	if err != nil {
 		return nil, err
 	}
