@@ -160,8 +160,15 @@ func executeTemplateClimb(m *minify.M, t *template.Template, data *ClimbTmpl, pa
 func aliases(as []string, orig string, historical bool) error {
 	dir := filepath.Dir(orig)
 	base := filepath.Base(orig)
-	for _, a := range as {
-		a := slugify(a)
+
+	done := make(map[string]bool)
+	for _, a := range genAliases(base, as) {
+		_, ok := done[a]
+		if ok {
+			continue
+		}
+		done[a] = true
+
 		path := filepath.Join(dir, a)
 		err := os.MkdirAll(path, 0755)
 		if err != nil {
@@ -197,6 +204,15 @@ func aliases(as []string, orig string, historical bool) error {
 		}
 	}
 	return nil
+}
+
+func genAliases(name string, aliases []string) []string {
+	var gen []string
+	gen = append(gen, superSlugify(name)...)
+	for _, a := range aliases {
+		gen = append(gen, superSlugify(a)...)
+	}
+	return gen
 }
 
 func index(dir string, historical bool) error {

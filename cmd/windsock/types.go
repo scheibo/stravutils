@@ -233,6 +233,14 @@ func slugify(s string) string {
 	return strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(s, "-"), "-"))
 }
 
+func superSlugify(s string) []string {
+	slugs := make([]string, 3)
+	slugs[0] = strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(s, "-"), "-"))
+	slugs[1] = strings.ToLower(strings.Trim(SLUG_REGEXP.ReplaceAllString(s, "_"), "_"))
+	slugs[2] = strings.ToLower(SLUG_REGEXP.ReplaceAllString(s, ""))
+	return slugs
+}
+
 func displayScore(s float64) string {
 	return fmt.Sprintf("%.2f%%", (s-1)*100)
 }
