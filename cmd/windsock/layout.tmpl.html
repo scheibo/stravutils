@@ -172,7 +172,7 @@
 </head>
 <body>
   <header>
-		<h1><a href="{{.Path}}">Bay Area<br />Windsock</a></h1>
+		<h1><a href="{{.RootedPath "/"}}">Bay Area<br />Windsock</a></h1>
     <nav id="main-nav">
       {{if .Default}}
         <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="{{.Path}}/baseline">Baseline</a> /
