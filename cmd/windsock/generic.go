@@ -162,6 +162,7 @@ func aliases(as []string, orig string, historical bool) error {
 	base := filepath.Base(orig)
 
 	done := make(map[string]bool)
+	done[base] = true
 	for _, a := range genAliases(base, as) {
 		_, ok := done[a]
 		if ok {
