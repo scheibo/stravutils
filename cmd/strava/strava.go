@@ -47,9 +47,7 @@ func main() {
 		fmt.Println(string(j))
 	} else {
 		fmt.Printf("-d=%.2f -e=%.2f -h=%.2f\n",
-			s.Distance,
-			s.ElevationHigh-s.ElevationLow,
-			(s.ElevationLow+s.ElevationHigh)/2)
+			s.Distance, s.TotalElevationGain, s.MedianElevation)
 	}
 }
 

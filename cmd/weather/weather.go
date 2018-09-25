@@ -1,12 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strings"
-	"io/ioutil"
-	"encoding/json"
 	"time"
 
 	"github.com/araddon/dateparse"
@@ -56,15 +56,19 @@ func (ll *LatLngFlag) Set(v string) error {
 // output: if piped, params (no historical params? calc will choke), otherwise condtions + score
 
 func main() {
-	var hist bool
-	var key, tz string
+	var hist, offline bool
+	var key, cache, tz string
+	var qps int
 	var tf TimeFlag
 	var llf LatLngFlag
 	var t time.Time
 	var ll *geo.LatLng
 
 	flag.BoolVar(&hist, "historical", false, "include historical average weather conditions")
-	flag.StringVar(&key, "key", "", "DarkySky API Key")
+	flag.StringVar(&key, "key", os.Getenv("DARKSKY_API_KEY"), "DarkySky API Key")
+	flag.StringVar(&cache, "cache", "", "cache directory for historical queries")
+	flag.IntVar(&qps, "qps", 100, "maximum queries per second against darksky")
+	flag.BoolVar(&offline, "offline", false, "whether or not to run in offline mode")
 	flag.StringVar(&tz, "tz", "America/Los_Angeles", "timezone to use")
 	flag.Var(&llf, "latlng", "latitude and longitude to query weather information for")
 	flag.Var(&tf, "time", "time to query weather information for")
@@ -82,17 +86,17 @@ func main() {
 		exit(err)
 	}
 
-	var c *Climb
+	var climb *Climb
 	var extra string
 
 	fi, _ := os.Stdin.Stat()
-	if (fi.Mode()&os.ModeCharDevice) == 0 {
+	if (fi.Mode() & os.ModeCharDevice) == 0 {
 		bytes, err := ioutil.ReadAll(os.Stdin)
 		if err != nil {
 			exit(err)
 		}
 
-		err = json.Unmarshal(bytes, c)
+		err = json.Unmarshal(bytes, climb)
 		if err != nil {
 			extra = string(bytes)
 		}
@@ -102,14 +106,66 @@ func main() {
 		ll = llf.LatLng
 	}
 
-	if c != nil {
-		fmt.Printf("%v %s %v\n", t, loc, *c)
+	w := NewWeatherClient(key, cache, qps, loc, offline)
+	if climb != nil {
+		c := HistoricalConditions(w, ll, t, loc)
+
+		var past *weather.Conditions
+		if hist {
+			avgs, err := GetHistoricalAverages()
+			if err != nil {
+				exit(err)
+			}
+			past := avgs.Get(climb, t, loc)
+		}
+
+		baseline, historical, err := WNF(climb, current, past, loc)
+		if err != nil {
+			exit(err)
+		}
+
+		fi, _ := os.Stdout.Stat()
+		if (fi.Mode() & os.ModeCharDevice) != 0 {
+			h := ""
+			if hist {
+				fmt.Printf("(%s => %s)\n", weatherString(past), displayScore(historical))
+			}
+			fmt.Printf("%s => %s\n%s", weatherString(c), displayScore(baseline), h)
+		} else {
+			s := climb.Segment
+			fmt.Printf("-rho=%.4f -vs=%.3f -dw=%.2f -db=%.2f -d=%.2f -e=%.2f -h=%.2f\n",
+				c.AirDensity, c.WindSpeed, c.WindBearing, s.AverageDirection, s.Distance, s.TotalElevationGain, s.MedianElevation)
+		}
 	} else if ll != nil {
-		// TODO include extra
-		fmt.Printf("%v %s %s %s\n", t, loc, ll.String(), extra)
+		c := HistoricalConditions(w, ll, t, loc)
+		// NOTE: must specify -db!
+		fmt.Printf("-rho=%.4f -vs=%.3f -dw=%2.f %s\n", c.AirDensity, c.WindSpeed, c.WindBearing, extra)
 	} else {
 		exit(fmt.Errorf("latlng or climb required"))
 	}
+}
+
+func HistoricalConditions(w *Weather, ll geo.LatLng, t time.Time, loc *time.Location) (*weather.Condtions, error) {
+	f := w.Historical(ll, t)
+	if len(f.Hourly) != 24 {
+		return nil, fmt.Errorf("forecast is wrong size: want 24, got %d", len(f.Hourly))
+	}
+
+	t = t.In(loc)
+	hour, _, _ := t.Clock()
+	return f.Hourly[hour], nil
+}
+
+func displayScore(s float64) string {
+	return fmt.Sprintf("%.2f%%", (s-1)*100)
+}
+
+func weatherString(c *weather.Conditions) string {
+	precip := ""
+	if c.PrecipProbability > 0.1 {
+		precip = fmt.Sprintf("\n%s", c.Precip())
+	}
+	return fmt.Sprintf("%.1f°C (%.3f kg/m³)%s\n%s", c.Temperature, c.AirDensity, precip, c.Wind())
 }
 
 func exit(err error) {
