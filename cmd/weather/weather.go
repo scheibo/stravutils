@@ -99,7 +99,7 @@ func main() {
 
 		err = json.Unmarshal(bytes, &s)
 		if err != nil {
-			extra = string(bytes)
+			extra = strings.TrimSpace(string(bytes))
 		}
 	}
 
@@ -137,7 +137,7 @@ func main() {
 			fmt.Printf("%s => %s\n%s", weatherString(c), displayScore(baseline), h)
 		} else {
 			fmt.Printf("-rho=%.4f -vw=%.3f -dw=%.2f -db=%.2f -d=%.2f -e=%.2f\n",
-				c.AirDensity, c.WindSpeed, c.WindBearing, s.AverageDirection, s.Distance, s.TotalElevationGain, s.MedianElevation)
+				c.AirDensity, c.WindSpeed, c.WindBearing, s.AverageDirection, s.Distance, s.TotalElevationGain)
 		}
 	} else if ll != nil {
 		c, err := HistoricalConditions(w, *ll, t, loc)
@@ -145,9 +145,13 @@ func main() {
 			exit(err)
 		}
 
-		//TODO: must remove -h!
+		// Remove -h=... from the end of extra so that it doesn't conflict with rho
+		h := strings.LastIndex(extra, " ")
+		if h > 0 {
+			extra = extra[:h]
+		}
 		// NOTE: must specify -db!
-		fmt.Printf("-rho=%.4f -vs=%.3f -dw=%2.f %s\n", c.AirDensity, c.WindSpeed, c.WindBearing, extra)
+		fmt.Printf("-rho=%.4f -vw=%.3f -dw=%2.f %s\n", c.AirDensity, c.WindSpeed, c.WindBearing, extra)
 	} else {
 		exit(fmt.Errorf("latlng or segment required"))
 	}
