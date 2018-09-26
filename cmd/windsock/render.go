@@ -61,6 +61,11 @@ func (r *Renderer) render(templates map[string]*template.Template) error {
 		return err
 	}
 
+	err = copyScript(r.m, resource("script.js"), filepath.Join(r.dir, "script.js"))
+	if err != nil {
+		return err
+	}
+
 	tmpl, _ := templates["root"]
 	err = r.renderRoot(tmpl)
 	if err != nil {
@@ -266,6 +271,34 @@ func copyFile(src, dst string) error {
 
 	_, err = io.Copy(out, in)
 	if err != nil {
+		return err
+	}
+	return out.Close()
+}
+
+func copyScript(m *minify.M, src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	out, err := create(dst)
+	if err != nil {
+		return err
+	}
+
+	w := m.Writer("application/javascript", out)
+	_, err = io.Copy(w, in)
+	if err != nil {
+		w.Close()
+		out.Close()
+		return err
+	}
+
+	err = w.Close()
+	if err != nil {
+		out.Close()
 		return err
 	}
 	return out.Close()
