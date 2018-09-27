@@ -191,33 +191,32 @@
   <div id="generation-time">{{.GenTime}}</div>
   <script>
     // Toggle reloading the page every 15 minutes when '@' is pressed.
+    var interval = 15 * 60 * 1000;
     document.addEventListener("keydown", function(e) {
       if ((e.which || e.keyCode) == 50) {
         if (window.reload) {
-            window.location.replace("#");
-            clearTimeout(window.reload);
-            window.reload = null;
+          window.location.replace("#");
+          clearTimeout(window.reload);
+          window.reload = null;
         } else {
           window.location.replace("#reload");
           window.reload = setTimeout(function() {
             window.location.reload();
-          }, 15*60*1000);
+          }, interval);
         }
       }
     });
 
     window.onload = function() {
-      if (window.location.hash== "#reload") {
-          window.reload = setTimeout(function() {
-            window.location.reload();
-          }, 15*60*1000);
+      if (window.location.hash == "#reload") {
+        window.reload = setTimeout(function() {
+          window.location.reload();
+        }, interval);
       }
     };
 
     function maybeIncludeReload(s) {
-      if (window.reload) {
-        return s + "#reload";
-      }
+      return window.reload ? s + "#reload" : s;
     }
 
     document.addEventListener("DOMContentLoaded", function(){
