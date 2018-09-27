@@ -97,6 +97,16 @@ func (r *Renderer) renderDayTimes(t *template.Template) error {
 
 	for i := 0; i < r.hidden; i++ {
 		cf := r.forecasts[i]
+
+		path := filepath.Join(r.dir, CURRENT_SLUG)
+		current, ok := dayTimes[path]
+		if !ok {
+			data := r.dayTimeTmpl(cf.Forecast.Current, CURRENT_SLUG, &cf.Climb.Segment)
+			dayTimes[path] = &data
+			current = &data
+		}
+		current.Conditions = append(current.Conditions, &ClimbConditions{Climb: cf.Climb, Conditions: cf.Forecast.Current})
+
 		for j := 0; j < len(cf.Forecast.Days); j++ {
 			df := cf.Forecast.Days[j]
 			for k := 0; k < len(df.Conditions); k++ {
@@ -106,30 +116,19 @@ func (r *Renderer) renderDayTimes(t *template.Template) error {
 					continue
 				}
 
-				slug := c.DayTimeSlug()
+				// We deal with current seperately above (to handle the case where
+				// its not within [min, max] and thus gets trimmed from Days). However,
+				// if it *is* within Days, fill in the Navigation.
 				if *c == *cf.Forecast.Current {
-					slug = CURRENT_SLUG
+					r.fillDayTimeNavigation(cf, current, j, k)
+					continue
 				}
 
-				path := filepath.Join(r.dir, slug)
+				path = filepath.Join(r.dir, c.DayTimeSlug())
 				existing, ok := dayTimes[path]
 				if !ok {
-					data := DayTimeTmpl{}
-					data.GenerationTime = r.now
-					data.Default = !r.historical
-					data.AbsoluteURL = r.absoluteURL
-					data.LocalTime = c.LocalTime
-					data.Title = "Windsock - Bay Area - " + data.DayTime()
-					data.CanonicalPath = slug + "/"
-					data.historical = r.havgs.Get(&cf.Climb.Segment, c.LocalTime, r.loc)
-
-					days := cf.Forecast.Days
-					cur := cf.Forecast.Current
-					data.Up = dayTimeUp(days, cur, j, k)
-					data.Down = dayTimeDown(days, cur, j, k)
-					data.Left = dayTimeLeft(days, cur, j, k)
-					data.Right = dayTimeRight(days, cur, j, k)
-
+					data := r.dayTimeTmpl(c, c.DayTimeSlug(), &cf.Climb.Segment)
+					r.fillDayTimeNavigation(cf, &data, j, k)
 					dayTimes[path] = &data
 					existing = &data
 				}
@@ -147,6 +146,28 @@ func (r *Renderer) renderDayTimes(t *template.Template) error {
 	}
 
 	return nil
+}
+
+func (r *Renderer) dayTimeTmpl(c *ScoredConditions, slug string, segment *Segment) DayTimeTmpl {
+	data := DayTimeTmpl{}
+	data.GenerationTime = r.now
+	data.Default = !r.historical
+	data.AbsoluteURL = r.absoluteURL
+	data.LocalTime = c.LocalTime
+	data.Title = "Windsock - Bay Area - " + data.DayTime()
+	data.CanonicalPath = slug + "/"
+	data.historical = r.havgs.Get(segment, c.LocalTime, r.loc)
+	return data
+}
+
+func (r *Renderer) fillDayTimeNavigation(cf *ClimbForecast, data *DayTimeTmpl, j, k int) {
+	days := cf.Forecast.Days
+	cur := cf.Forecast.Current
+
+	data.Up = dayTimeUp(days, cur, j, k)
+	data.Down = dayTimeDown(days, cur, j, k)
+	data.Left = dayTimeLeft(days, cur, j, k)
+	data.Right = dayTimeRight(days, cur, j, k)
 }
 
 func (r *Renderer) renderClimbs(t *template.Template) error {
