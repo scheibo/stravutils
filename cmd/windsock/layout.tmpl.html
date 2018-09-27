@@ -172,7 +172,7 @@
 </head>
 <body>
   <header>
-		<h1><a href="{{.RootedPath "/"}}">Bay Area<br />Windsock</a></h1>
+    <h1><a href="{{.RootedPath "/"}}">Bay Area<br />Windsock</a></h1>
     <nav id="main-nav">
       {{if .Default}}
         <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="{{.Path}}/baseline">Baseline</a> /
@@ -189,5 +189,47 @@
   </div>
   {{template "script" .}}
   <div id="generation-time">{{.GenTime}}</div>
+  <script>
+    // Toggle reloading the page every 15 minutes when '@' is pressed.
+    document.addEventListener("keydown", function(e) {
+      if ((e.which || e.keyCode) == 50) {
+        if (window.reload) {
+            window.location.replace("#");
+            clearTimeout(window.reload);
+            window.reload = null;
+        } else {
+          window.location.replace("#reload");
+          window.reload = setTimeout(function() {
+            window.location.reload();
+          }, 15*60*1000);
+        }
+      }
+    });
+
+    window.onload = function() {
+      if (window.location.hash== "#reload") {
+          window.reload = setTimeout(function() {
+            window.location.reload();
+          }, 15*60*1000);
+      }
+    };
+
+    function maybeIncludeReload(s) {
+      if (window.reload) {
+        return s + "#reload";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      var anchors = document.getElementsByTagName('a');
+      for (var i = 0, len = anchors.length; i < len; i++) {
+        anchors[i].addEventListener("click", function(e) {
+          target = (e.target || e.srcElement);
+          target.href = maybeIncludeReload(target.href);
+          return true;
+        });
+      }
+    });
+  </script>
 </body>
 </html>
