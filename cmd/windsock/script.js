@@ -7,13 +7,13 @@ document.addEventListener("DOMContentLoaded", function(){
     var key = e.which || e.keyCode;
     switch(key) {
       case 37:
-        if (nav.up) {
-          window.location = maybeIncludeReload(nav.up)
+        if (nav.left) {
+          window.location = maybeIncludeReload(nav.left);
         }
         break;
       case 38:
-        if (nav.left) {
-          window.location = maybeIncludeReload(nav.left);
+        if (nav.up) {
+          window.location = maybeIncludeReload(nav.up)
         }
         break;
       case 39:
@@ -125,14 +125,14 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }(window, document));
 
-  if (nav.down) {
-    document.addEventListener("swiped-up", function(e) {
-      window.location = maybeIncludeReload(nav.down);
-    });
-  }
   if (nav.right) {
     document.addEventListener("swiped-left", function(e) {
       window.location = maybeIncludeReload(nav.right);
+    });
+  }
+  if (nav.down) {
+    document.addEventListener("swiped-up", function(e) {
+      window.location = maybeIncludeReload(nav.down);
     });
   }
   if (nav.left) {
