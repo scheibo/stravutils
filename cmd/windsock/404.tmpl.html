@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="{{.RootedPath "/favicon.ico"}}">
+  <title>{{.Title}}</title>
+  <style>
+   body {
+      font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    }
+
+    header, #content {
+      text-align: center;
+    }
+
+    h1, h2, h3 {
+      text-transform: uppercase;
+      font-weight: 900;
+      margin-bottom: 0.33em;
+    }
+
+    #container {
+      padding-top: 0.5em;
+      margin: 0px auto;
+      max-width: 800px;
+    }
+
+    a, a:hover, a:visited, a:focus, a:active  {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    #main-nav, #page-nav {
+      padding-bottom: 0.5em;
+    }
+
+    /* Mobile - Small */
+    h1 { font-size: 24px; }
+
+    /* Mobile - Medium */
+    @media(min-width: 375px) {
+      h1 { font-size: 32px; }
+      #container { max-width: 400px; }
+    }
+
+    /* Mobile - Large */
+    @media(min-width: 425px) {
+      h1 { font-size: 36px; }
+      #container { max-width: 500px; }
+    }
+
+    /* Tablet */
+    @media(min-width: 768px) {
+      h1 { font-size: 40px; }
+      #container { max-width: 600px; }
+    }
+
+    /* Laptop */
+    @media(min-width: 1024px) {
+      h1 { font-size: 44px; }
+      #container { max-width: 700px; }
+    }
+
+
+    #generation-time {
+      display: none;
+    }
+  </style>
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-15415096-5', 'auto');
+    ga('set', 'anonymizeIp', true);
+    ga('set', 'transport', 'beacon');
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+</head>
+<body>
+  <header>
+    <h1><a href="{{.RootedPath "/"}}">Bay Area<br />Windsock</a></h1>
+  </header>
+  <div id="content">
+    <h2>404</h2>
+    <h3>Not Found</h3>
+  </div>
+  <div id="generation-time">{{.GenTime}}</div>
+</body>
+</html>
