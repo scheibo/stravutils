@@ -125,14 +125,18 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }(window, document));
 
-  if (nav.right) {
+	// swiped-up/swiped-down conflicts with PDTR and scrolling. Instead, convert
+	// L/R to U/D - for climbs U/D == L/R anyway, but for times U/D is more
+	// important because it at least will allow for paging through the whole dataset.
+	// NOTE: swiped-left = means go in the R direction, which then gets mapped to D.
+  if (nav.down) {
     document.addEventListener("swiped-left", function(e) {
-      window.location = maybeIncludeReload(nav.right);
+      window.location = maybeIncludeReload(nav.down);
     });
   }
-  if (nav.left) {
+  if (nav.up) {
     document.addEventListener("swiped-right", function(e) {
-      window.location = maybeIncludeReload(nav.left);
+      window.location = maybeIncludeReload(nav.up);
     });
   }
 });
