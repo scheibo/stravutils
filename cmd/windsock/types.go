@@ -79,9 +79,9 @@ func (c *ScoredConditions) Weather() string {
 func weatherString(c *weather.Conditions) string {
 	precip := ""
 	if c.PrecipProbability > 0.1 {
-		precip = fmt.Sprintf("\n%s", c.Precip())
+		precip = c.Precip()
 	}
-	return fmt.Sprintf("%.1f°C (%.3f kg/m³)%s\n%s", c.Temperature, c.AirDensity, precip, c.Wind())
+	return fmt.Sprintf("%.1f°C (%.3f kg/m³)\n%s%s", c.Temperature, c.AirDensity, precip, c.Wind())
 }
 
 func (c *ScoredConditions) disambiguatedDay() string {
