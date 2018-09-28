@@ -183,7 +183,7 @@ func pad(days *[]*DayForecast, expected int) {
 }
 
 func score(climb *Climb, current *weather.Conditions, past *weather.Conditions, loc *time.Location) (*ScoredConditions, error) {
-	baseline, historical, err := WNF(&climb.Segment, current, past, loc)
+	baseline, historical, err := WNF(&climb.Segment, current, past)
 	if err != nil {
 		return nil, err
 	}

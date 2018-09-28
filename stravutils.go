@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"time"
 
 	"github.com/scheibo/geo"
 	"github.com/scheibo/perf"
@@ -168,7 +167,7 @@ func Resource(name string) string {
 	}
 }
 
-func WNF(s *Segment, current, past *weather.Conditions, loc *time.Location) (baseline, historical float64, err error) {
+func WNF(s *Segment, current, past *weather.Conditions) (baseline, historical float64, err error) {
 	power := perf.CalcPowerM(500, s.Distance, s.AverageGrade, s.MedianElevation)
 
 	lles, err := geo.DecodeZPolyline(s.Map)
