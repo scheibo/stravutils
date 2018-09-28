@@ -130,19 +130,9 @@ document.addEventListener("DOMContentLoaded", function(){
       window.location = maybeIncludeReload(nav.right);
     });
   }
-  if (nav.down) {
-    document.addEventListener("swiped-up", function(e) {
-      window.location = maybeIncludeReload(nav.down);
-    });
-  }
   if (nav.left) {
     document.addEventListener("swiped-right", function(e) {
       window.location = maybeIncludeReload(nav.left);
-    });
-  }
-  if (nav.up) {
-    document.addEventListener("swiped-down", function(e) {
-      window.location = maybeIncludeReload(nav.up);
     });
   }
 });
