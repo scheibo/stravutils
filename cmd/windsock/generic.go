@@ -95,7 +95,7 @@ func executeTemplateRoot(m *minify.M, t *template.Template, data *RootTmpl, path
 	}
 
 	w := m.Writer("text/html", f)
-	err = t.ExecuteTemplate(w, TEMPLATE, data)
+	err = t.ExecuteTemplate(w, TEMPLATE_LAYOUT, data)
 	if err != nil {
 		w.Close()
 		f.Close()
@@ -118,7 +118,7 @@ func executeTemplateDayTime(m *minify.M, t *template.Template, data *DayTimeTmpl
 	}
 
 	w := m.Writer("text/html", f)
-	err = t.ExecuteTemplate(w, TEMPLATE, data)
+	err = t.ExecuteTemplate(w, TEMPLATE_LAYOUT, data)
 	if err != nil {
 		w.Close()
 		f.Close()
@@ -141,7 +141,30 @@ func executeTemplateClimb(m *minify.M, t *template.Template, data *ClimbTmpl, pa
 	}
 
 	w := m.Writer("text/html", f)
-	err = t.ExecuteTemplate(w, TEMPLATE, data)
+	err = t.ExecuteTemplate(w, TEMPLATE_LAYOUT, data)
+	if err != nil {
+		w.Close()
+		f.Close()
+		return err
+	}
+
+	err = w.Close()
+	if err != nil {
+		f.Close()
+		return err
+	}
+
+	return f.Close()
+}
+
+func executeTemplate404(m *minify.M, t *template.Template, data *LayoutTmpl, path string) error {
+	f, err := create(path)
+	if err != nil {
+		return err
+	}
+
+	w := m.Writer("text/html", f)
+	err = t.ExecuteTemplate(w, TEMPLATE_404, data)
 	if err != nil {
 		w.Close()
 		f.Close()

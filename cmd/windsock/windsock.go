@@ -14,8 +14,6 @@ import (
 
 const msToKmh = 3600.0 / 1000.0
 
-const TEMPLATE = "layout.tmpl.html"
-
 const minHour = 6
 const maxHour = 18
 

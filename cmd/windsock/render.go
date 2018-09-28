@@ -16,16 +16,20 @@ import (
 	"github.com/tdewolff/minify/svg"
 )
 
+const TEMPLATE_LAYOUT = "layout.tmpl.html"
+const TEMPLATE_404 = "404.tmpl.html"
+
 const CURRENT_SLUG = "current"
 
 func getTemplates() map[string]*template.Template {
 	templates := make(map[string]*template.Template)
 
-	layout := resource(TEMPLATE)
+	layout := resource(TEMPLATE_LAYOUT)
 	script := resource("script.tmpl.html")
 	templates["root"] = template.Must(template.ParseFiles(layout, resource("root.tmpl.html")))
 	templates["time"] = template.Must(template.ParseFiles(layout, resource("time.tmpl.html"), script))
 	templates["climb"] = template.Must(template.ParseFiles(layout, resource("climb.tmpl.html"), script))
+	templates["404"] = template.Must(template.ParseFiles(resource(TEMPLATE_404)))
 	return templates
 }
 
@@ -66,7 +70,13 @@ func (r *Renderer) render(templates map[string]*template.Template) error {
 		return err
 	}
 
-	tmpl, _ := templates["root"]
+	tmpl, _ := templates["404"]
+	err = r.render404(tmpl)
+	if err != nil {
+		return err
+	}
+
+	tmpl, _ = templates["root"]
 	err = r.renderRoot(tmpl)
 	if err != nil {
 		return err
@@ -85,6 +95,11 @@ func (r *Renderer) render(templates map[string]*template.Template) error {
 		return err
 	}
 	return nil
+}
+
+func (r *Renderer) render404(t *template.Template) error {
+	data := LayoutTmpl{GenerationTime: r.now, AbsoluteURL: r.absoluteURL, Title: "Windsock - Bay Area - 404"}
+	return executeTemplate404(r.m, t, &data, filepath.Join(r.dir, "404.html"))
 }
 
 func (r *Renderer) renderRoot(t *template.Template) error {
