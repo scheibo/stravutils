@@ -93,7 +93,8 @@ func main() {
 	flag.Float64Var(&mr, "mr", wnf.Mr, "total mass of the rider in kg")
 	flag.Float64Var(&mb, "mb", wnf.Mb, "total mass of the bicycle in kg")
 
-	flag.DurationVar(&refresh, "refresh", 12*time.Hour, "minimum refresh interval for GoalProgress.Forecast")
+	flag.DurationVar(&refresh, "refresh", 12*time.Hour,
+		"minimum refresh interval for GoalProgress.Forecast")
 
 	flag.Parse()
 
@@ -166,13 +167,15 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 			date = p.Date
 		}
 
-		bestAttempt, numAttempts, err := c.getBestAttemptAfter(fromEpochMillis(date), goal, efforts, segment, p.BestAttempt)
+		bestAttempt, numAttempts, err := c.getBestAttemptAfter(
+			fromEpochMillis(date), goal, efforts, segment, p.BestAttempt)
 		if err != nil {
 			return nil, err
 		}
 		bestEffort, numEfforts := p.BestEffort, p.NumEfforts
 		if bestEffort == nil {
-			best, numEffortsBefore, err := c.getBestEffortBefore(fromEpochMillis(goal.Date), goal, efforts, segment)
+			best, numEffortsBefore, err := c.getBestEffortBefore(
+				fromEpochMillis(goal.Date), goal, efforts, segment)
 			if err != nil {
 				return nil, err
 			}
@@ -210,15 +213,36 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 	return progress, nil
 }
 
-func (c *C) getBestEffortBefore(date time.Time, goal SegmentGoal, efforts []*strava.SegmentEffortSummary, segment *Segment) (*Effort, int, error) {
-	return c.getBestEffort(func(ed, gd time.Time) bool { return ed.Before(gd) }, date, goal, efforts, segment, nil)
+func (c *C) getBestEffortBefore(
+	date time.Time,
+	goal SegmentGoal,
+	efforts []*strava.SegmentEffortSummary,
+	segment *Segment) (*Effort, int, error) {
+
+	return c.getBestEffort(func(ed, gd time.Time) bool {
+		return ed.Before(gd)
+	}, date, goal, efforts, segment, nil)
 }
 
-func (c *C) getBestAttemptAfter(date time.Time, goal SegmentGoal, efforts []*strava.SegmentEffortSummary, segment *Segment, prev *Effort) (*Effort, int, error) {
-	return c.getBestEffort(func(ed, gd time.Time) bool { return ed.After(gd) }, date, goal, efforts, segment, prev)
+func (c *C) getBestAttemptAfter(
+	date time.Time,
+	goal SegmentGoal,
+	efforts []*strava.SegmentEffortSummary,
+	segment *Segment,
+	prev *Effort) (*Effort, int, error) {
+
+	return c.getBestEffort(func(ed, gd time.Time) bool {
+		return ed.After(gd)
+	}, date, goal, efforts, segment, prev)
 }
 
-func (c *C) getBestEffort(fun func(ed, gd time.Time) bool, date time.Time, goal SegmentGoal, efforts []*strava.SegmentEffortSummary, segment *Segment, prev *Effort) (*Effort, int, error) {
+func (c *C) getBestEffort(
+	fun func(ed, gd time.Time) bool,
+	date time.Time,
+	goal SegmentGoal,
+	efforts []*strava.SegmentEffortSummary,
+	segment *Segment, prev *Effort) (*Effort, int, error) {
+
 	if prev != nil {
 		date = fromEpochMillis(prev.Date)
 	}
@@ -253,7 +277,8 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 	e.Date = int(s.StartDate.Unix() * int64(time.Millisecond))
 	e.Time = s.ElapsedTime
 	e.Watts = s.AveragePower
-	e.PERF = perf.CalcM(float64(s.ElapsedTime), segment.Distance, segment.AverageGrade, segment.MedianElevation)
+	e.PERF = perf.CalcM(
+		float64(s.ElapsedTime), segment.Distance, segment.AverageGrade, segment.MedianElevation)
 	e.PWatts = c.calcPower(s.ElapsedTime, segment)
 
 	w, err := c.w.History(segment.AverageLocation, s.StartDate)
@@ -274,7 +299,9 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 
 func (c *C) calcPower(t int, segment *Segment) float64 {
 	vg := segment.Distance / float64(t)
-	return calc.Psimp(calc.Rho(segment.MedianElevation, calc.G), c.cda, calc.Crr, vg, vg, segment.AverageGrade, c.mt, calc.G, calc.Ec, calc.Fw)
+	return calc.Psimp(
+		calc.Rho(segment.MedianElevation, calc.G),
+		c.cda, calc.Crr, vg, vg, segment.AverageGrade, c.mt, calc.G, calc.Ec, calc.Fw)
 }
 
 // TODO(kjs): average forecasts around 10am isntead of returning CURRENT
@@ -316,7 +343,8 @@ func (p GoalProgressList) Swap(i, j int) {
 func (p GoalProgressList) Less(i, j int) bool {
 	if p[i].NumAttempts == 0 {
 		if p[j].NumAttempts == 0 {
-			return (float64(p[i].Goal.Time) / float64(p[i].BestEffort.Time)) > (float64(p[j].Goal.Time) / float64(p[j].BestEffort.Time))
+			return (float64(p[i].Goal.Time) / float64(p[i].BestEffort.Time)) >
+				(float64(p[j].Goal.Time) / float64(p[j].BestEffort.Time))
 		} else {
 			return false
 		}
@@ -325,5 +353,6 @@ func (p GoalProgressList) Less(i, j int) bool {
 		return true
 	}
 
-	return (float64(p[i].Goal.Time) / float64(p[i].BestAttempt.Time)) > (float64(p[j].Goal.Time) / float64(p[j].BestAttempt.Time))
+	return (float64(p[i].Goal.Time) / float64(p[i].BestAttempt.Time)) >
+		(float64(p[j].Goal.Time) / float64(p[j].BestAttempt.Time))
 }
