@@ -4,11 +4,9 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"math"
 	"os"
 	"time"
 
-	"github.com/scheibo/geo"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
 )
@@ -86,7 +84,7 @@ func main() {
 			hma.Monthly[month] = &hha
 			hha.Hourly = make([]*weather.Conditions, 24)
 			for hour := 0; hour < 24; hour++ {
-				hma.Monthly[month].Hourly[hour] = average(&c, fs[month][hour])
+				hma.Monthly[month].Hourly[hour] = weather.Average(fs[month][hour])
 			}
 		}
 
@@ -98,73 +96,6 @@ func main() {
 		exit(err)
 	}
 	fmt.Println(string(j))
-}
-
-func average(climb *Climb, cs []*weather.Conditions) *weather.Conditions {
-	n := len(cs)
-	if n == 0 {
-		return nil
-	}
-
-	t0 := time.Time{}
-
-	avg := cs[0]
-	avg.Icon = ""
-	avg.Time = t0
-	avg.PrecipType = ""
-	avg.SunriseTime = t0
-	avg.SunsetTime = t0
-
-	var nsws, ewws, nswg, ewwg, wb float64
-
-	for i := 1; i < n; i++ {
-		c := cs[i]
-		avg.Temperature += c.Temperature
-		avg.Humidity += c.Humidity
-		avg.ApparentTemperature += c.ApparentTemperature
-		avg.PrecipProbability += c.PrecipProbability
-		avg.PrecipIntensity += c.PrecipIntensity
-		avg.AirPressure += c.AirPressure
-		avg.AirDensity += c.AirDensity
-		avg.CloudCover += c.CloudCover
-		avg.UVIndex += c.UVIndex
-
-		wb = c.WindBearing * geo.DEGREES_TO_RADIANS
-		ewws += c.WindSpeed * math.Sin(wb)
-		nsws += c.WindSpeed * math.Cos(wb)
-		ewwg += c.WindGust * math.Sin(wb)
-		nswg += c.WindGust * math.Cos(wb)
-	}
-
-	f := float64(n)
-	avg.Temperature /= f
-	avg.Humidity /= f
-	avg.ApparentTemperature /= f
-	avg.PrecipProbability /= f
-	avg.PrecipIntensity /= f
-	avg.AirPressure /= f
-	avg.AirDensity /= f
-	avg.CloudCover /= f
-	avg.UVIndex /= n
-
-	ewws /= f
-	nsws /= f
-	ewwg /= f
-	nswg /= f
-
-	avg.WindSpeed = math.Sqrt(nsws*nsws + ewws*ewws)
-	avg.WindGust = math.Sqrt(nswg*nswg + ewwg*ewwg)
-	wb = math.Atan2(ewws, nsws)
-	if nsws < 0 {
-		wb += math.Pi
-	}
-	avg.WindBearing = normalizeBearing(wb * geo.RADIANS_TO_DEGREES)
-
-	return avg
-}
-
-func normalizeBearing(b float64) float64 {
-	return b + math.Ceil(-b/360)*360
 }
 
 func exit(err error) {
