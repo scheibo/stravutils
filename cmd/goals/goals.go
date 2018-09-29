@@ -1,4 +1,3 @@
-// > go run goals.go -token=$STRAVA_ACCESS_TOKEN -goals=goals.json
 package main
 
 import (
@@ -6,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"math"
 
 	"os"
 	"sort"
@@ -30,6 +30,18 @@ type SegmentGoal struct {
 	Date int `json:"date"`
 }
 
+func (s *SegmentGoal) SegmentURL() string {
+	return fmt.Sprintf("https://www.strava.com/segments/%d", s.SegmentID)
+}
+
+func (s *SegmentGoal) Duration() string {
+	return duration(s.Time)
+}
+
+func (s *SegmentGoal) Day() string {
+	return day(s.Date)
+}
+
 type GoalProgress struct {
 	// Milliseconds since the epoch the data for this struct was calculated.
 	Date int `json:"date"`
@@ -50,25 +62,83 @@ type GoalProgress struct {
 	ForecastWNF float64 `json:"wnf"`
 }
 
+func (p *GoalProgress) Day() string {
+	return day(p.Date)
+}
+
+func (p *GoalProgress) Weather() string {
+	return weatherString(p.Forecast)
+}
+
+func (p *GoalProgress) Score() string {
+	return score(p.ForecastWNF)
+}
+
+func (p *GoalProgress) Rank() int {
+	return rank(p.ForecastWNF)
+}
+
 type Effort struct {
+	// ID of the activity the effort took place in.
+	ActivityID int64 `json:"activityId"`
 	// ID of the effort.
-	ID int64 `json:"id"`
+	EffortID int64 `json:"effortId"`
 	// Millisseconds since the epoch the effort occurred at.
 	Date int `json:"date"`
 	// The time of the effort in seconds.
 	Time int `json:"time"`
 	// The average watts measured for the effort.
-	Watts float64 `json:"watts"`
+	watts float64 `json:"watts"`
 	// The PERF score for the effort.
 	PERF float64 `json:"perf"`
 	// The predicted average watts for the effort according to PERF.
-	PWatts float64 `json:"pwatts"`
+	pwatts float64 `json:"pwatts"`
 	// The baseline WNF score for the effort (given Conditions).
 	WNF float64 `json:"wnf"`
 	// The predicted average watts for the effort according to PERF, given Conditions.
-	WWatts float64 `json:"wwatts"`
+	wwatts float64 `json:"wwatts"`
 	// The weather conditions for the effort.
 	Conditions *weather.Conditions `json:"weather,omitempty"`
+}
+
+func (e *Effort) URL() string {
+	return fmt.Sprintf("https://www.strava.com/activities/%d/segments/%d", e.ActivityID, e.EffortID)
+}
+
+func (e *Effort) Day() string {
+	return day(e.Date)
+}
+
+func (e *Effort) Duration() string {
+	return duration(e.Time)
+}
+
+func (e *Effort) Perf() string {
+	return fmt.Sprintf("%.2f", e.PERF)
+}
+
+func (e *Effort) Watts() string {
+	return watts(e.watts)
+}
+
+func (e *Effort) PWatts() string {
+	return watts(e.pwatts)
+}
+
+func (e *Effort) WWatts() string {
+	return watts(e.wwatts)
+}
+
+func (e *Effort) Score() string {
+	return score(e.WNF)
+}
+
+func (e *Effort) Rank() int {
+	return rank(e.WNF)
+}
+
+func (e *Effort) Weather() string {
+	return weatherString(e.Conditions)
 }
 
 type C struct {
@@ -80,10 +150,11 @@ type C struct {
 }
 
 func main() {
-	var key, token, goalsFile, climbsFile string
+	var tz, key, token, goalsFile, climbsFile string
 	var cda, mr, mb float64
 	var refresh time.Duration
 
+	flag.StringVar(&tz, "tz", "America/Los_Angeles", "timezone to use")
 	flag.StringVar(&key, "key", os.Getenv("DARKSKY_API_KEY"), "DarkySky API Key")
 	flag.StringVar(&token, "token", "", "Access Token")
 	flag.StringVar(&goalsFile, "goals", "", "Goals")
@@ -101,6 +172,11 @@ func main() {
 	verify("cda", cda)
 	verify("mr", mr)
 	verify("mb", mb)
+
+	loc, err := time.LoadLocation(tz)
+	if err != nil {
+		exit(err)
+	}
 
 	climbs, err := GetClimbs(climbsFile)
 	if err != nil {
@@ -122,7 +198,7 @@ func main() {
 		mt:      mr + mb,
 		token:   token,
 		climbs:  &climbs,
-		w:       weather.NewClient(weather.DarkSky(key)),
+		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
 		refresh: refresh,
 	}
 
@@ -273,13 +349,14 @@ func (c *C) getBestEffort(
 
 func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort, error) {
 	e := Effort{}
-	e.ID = s.Id
+	e.ActivityID = s.Activity.Id
+	e.EffortID = s.Id
 	e.Date = int(s.StartDate.Unix() * int64(time.Millisecond))
 	e.Time = s.ElapsedTime
-	e.Watts = s.AveragePower
+	e.watts = s.AveragePower
 	e.PERF = perf.CalcM(
 		float64(s.ElapsedTime), segment.Distance, segment.AverageGrade, segment.MedianElevation)
-	e.PWatts = c.calcPower(s.ElapsedTime, segment)
+	e.pwatts = c.calcPower(s.ElapsedTime, segment)
 
 	w, err := c.w.History(segment.AverageLocation, s.StartDate)
 	if err != nil {
@@ -292,7 +369,7 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 		return nil, err
 	}
 	e.WNF = baseline
-	e.WWatts = baseline * e.PWatts
+	e.wwatts = baseline * e.pwatts
 
 	return &e, nil
 }
@@ -304,13 +381,83 @@ func (c *C) calcPower(t int, segment *Segment) float64 {
 		c.cda, calc.Crr, vg, vg, segment.AverageGrade, c.mt, calc.G, calc.Ec, calc.Fw)
 }
 
-// TODO(kjs): average forecasts around 10am isntead of returning CURRENT
+// BUG: This won't be accurate if the script is run on Saturday between 8 and 12.
 func (c *C) getForecast(segment *Segment, now time.Time) (*weather.Conditions, error) {
-	return c.w.Current(segment.AverageLocation)
+	f, err := c.w.Forecast(segment.AverageLocation)
+	if err != nil {
+		return nil, err
+	}
+	var cs []*weather.Conditions
+	for _, h := range f.Hourly {
+		if h.Time.Weekday() == time.Saturday &&
+			h.Time.Hour() >= 8 && h.Time.Hour() <= 11 {
+			cs = append(cs, h)
+		}
+	}
+	return weather.Average(cs), nil
 }
 
 func fromEpochMillis(millis int) time.Time {
 	return time.Unix(0, int64(millis)*(int64(time.Millisecond)/int64(time.Nanosecond)))
+}
+
+func duration(t int) string {
+	d := time.Duration(t) * time.Second
+
+	d = d.Round(time.Second)
+	h := d / time.Hour
+	d -= h * time.Hour
+	m := d / time.Minute
+	d -= m * time.Minute
+	s := d / time.Second
+	if h > 0 {
+		return fmt.Sprintf("%d:%02d:%02d", h, m, s)
+	}
+	return fmt.Sprintf("%d:%02d", m, s)
+}
+
+func day(t int) string {
+	return fromEpochMillis(t).Format("2 Jan 2006")
+}
+
+func score(s float64) string {
+	return fmt.Sprintf("%.2f%%", (s-1)*100)
+}
+
+func rank(s float64) int {
+	mod := 1
+	if s > 1.0 {
+		mod = -1
+	}
+
+	rank := int(math.Abs(s-1) * 100)
+	if rank < 1 {
+		rank = 0
+	} else if rank >= 1 && rank < 3 {
+		rank = 1
+	} else if rank >= 3 && rank < 6 {
+		rank = 2
+	} else if rank >= 6 && rank < 10 {
+		rank = 3
+	} else if rank >= 10 && rank < 15 {
+		rank = 4
+	} else {
+		rank = 5
+	}
+
+	return mod * rank
+}
+
+func watts(w float64) string {
+	return fmt.Sprintf("%.2f W", w)
+}
+
+func weatherString(c *weather.Conditions) string {
+	precip := ""
+	if c.PrecipProbability > 0.1 {
+		precip = c.Precip()
+	}
+	return fmt.Sprintf("%.1f°C (%.3f kg/m³)\n%s%s", c.Temperature, c.AirDensity, precip, c.Wind())
 }
 
 func verify(s string, x float64) {
