@@ -88,15 +88,15 @@ type Effort struct {
 	// The time of the effort in seconds.
 	Time int `json:"time"`
 	// The average watts measured for the effort.
-	watts float64 `json:"watts"`
+	Watts float64 `json:"watts"`
 	// The PERF score for the effort.
 	PERF float64 `json:"perf"`
 	// The predicted average watts for the effort according to PERF.
-	pwatts float64 `json:"pwatts"`
+	PWatts float64 `json:"pwatts"`
 	// The baseline WNF score for the effort (given Conditions).
 	WNF float64 `json:"wnf"`
 	// The predicted average watts for the effort according to PERF, given Conditions.
-	wwatts float64 `json:"wwatts"`
+	WWatts float64 `json:"wwatts"`
 	// The weather conditions for the effort.
 	Conditions *weather.Conditions `json:"weather,omitempty"`
 }
@@ -117,16 +117,16 @@ func (e *Effort) Perf() string {
 	return fmt.Sprintf("%.2f", e.PERF)
 }
 
-func (e *Effort) Watts() string {
-	return watts(e.watts)
+func (e *Effort) Watts2() string {
+	return watts(e.Watts)
 }
 
-func (e *Effort) PWatts() string {
-	return watts(e.pwatts)
+func (e *Effort) PWatts2() string {
+	return watts(e.PWatts)
 }
 
-func (e *Effort) WWatts() string {
-	return watts(e.wwatts)
+func (e *Effort) WWatts2() string {
+	return watts(e.WWatts)
 }
 
 func (e *Effort) Score() string {
@@ -353,10 +353,10 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 	e.EffortID = s.Id
 	e.Date = int(s.StartDate.Unix() * int64(time.Millisecond))
 	e.Time = s.ElapsedTime
-	e.watts = s.AveragePower
+	e.Watts = s.AveragePower
 	e.PERF = perf.CalcM(
 		float64(s.ElapsedTime), segment.Distance, segment.AverageGrade, segment.MedianElevation)
-	e.pwatts = c.calcPower(s.ElapsedTime, segment)
+	e.PWatts = c.calcPower(s.ElapsedTime, segment)
 
 	w, err := c.w.History(segment.AverageLocation, s.StartDate)
 	if err != nil {
@@ -369,7 +369,7 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 		return nil, err
 	}
 	e.WNF = baseline
-	e.wwatts = baseline * e.pwatts
+	e.WWatts = baseline * e.PWatts
 
 	return &e, nil
 }
