@@ -37,7 +37,7 @@ type GoalProgress struct {
 	Goal SegmentGoal `json:"goal"`
 	// The best effort for the segment before Goal.Date.
 	// ie. PR time when the goal was set.
-	BestEffort *Effort `json:"bestEffort"`
+	BestEffort *Effort `json:"bestEffort,omitempty"`
 	// The total number of efforts for the segment, irrespective of date.
 	NumEfforts int `json:"numEfforts"`
 	// The best effort for the segment after Goal.Date.
@@ -45,7 +45,7 @@ type GoalProgress struct {
 	// The total number of efforts for the segment after Goal.Date.
 	NumAttempts int `json:"numAttempts"` // total attempts after Goal.Date
 	// The forecasted weather conditions as of Date for the upcoming Saturday @ 10AM.
-	Forecast *weather.Conditions `json:"forecast"`
+	Forecast *weather.Conditions `json:"forecast,omitempty"`
 	// The baseline WNF score for the Forecast conditions.
 	ForecastWNF float64 `json:"wnf"`
 }
@@ -68,7 +68,7 @@ type Effort struct {
 	// The predicted average watts for the effort according to PERF, given Conditions.
 	WWatts float64 `json:"wwatts"`
 	// The weather conditions for the effort.
-	Conditions *weather.Conditions `json:"weather"`
+	Conditions *weather.Conditions `json:"weather,omitempty"`
 }
 
 type C struct {
@@ -126,13 +126,7 @@ func main() {
 	}
 
 	var goals []GoalProgress
-	//err = json.Unmarshal(f, &goals)
-	//if err != nil {
-	//exit(err)
-	//}
-
-	// TODO: just marshall directly (above) instead.
-	err = getGoalProgress(f, &goals)
+	err = json.Unmarshal(f, &goals)
 	if err != nil {
 		exit(err)
 	}
@@ -147,19 +141,6 @@ func main() {
 		exit(err)
 	}
 	fmt.Println(string(j))
-}
-
-func getGoalProgress(f []byte, progress *[]GoalProgress) error {
-	var goals []SegmentGoal
-	err := json.Unmarshal(f, &goals)
-	if err != nil {
-		return err
-	}
-	for _, goal := range goals {
-		p := GoalProgress{Goal: goal}
-		*progress = append(*progress, p)
-	}
-	return nil
 }
 
 func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
@@ -200,8 +181,8 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		}
 
 		forecast, forecastWNF := p.Forecast, p.ForecastWNF
-		if forecast == nil || fromEpochMillis(p.Date).Sub(now) > c.refresh {
-			forecast, err := c.getForecast(segment, now)
+		if forecast == nil || now.Sub(fromEpochMillis(p.Date)) > c.refresh {
+			forecast, err = c.getForecast(segment, now)
 			if err != nil {
 				return nil, err
 			}
@@ -217,7 +198,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 			BestEffort:  bestEffort,
 			NumEfforts:  numEfforts,
 			BestAttempt: bestAttempt,
-			NumAttempts: numAttempts,
+			NumAttempts: p.NumAttempts + numAttempts,
 			Forecast:    forecast,
 			ForecastWNF: forecastWNF,
 		}
@@ -254,7 +235,7 @@ func (c *C) getBestEffort(fun func(ed, gd time.Time) bool, date time.Time, goal 
 		}
 	}
 
-	if best == nil || !(best.ElapsedTime < prev.Time) {
+	if best == nil || (prev != nil && !(best.ElapsedTime < prev.Time)) {
 		return prev, num, nil
 	}
 
@@ -268,6 +249,7 @@ func (c *C) getBestEffort(fun func(ed, gd time.Time) bool, date time.Time, goal 
 
 func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort, error) {
 	e := Effort{}
+	e.ID = s.Id
 	e.Date = int(s.StartDate.Unix() * int64(time.Millisecond))
 	e.Time = s.ElapsedTime
 	e.Watts = s.AveragePower
@@ -338,7 +320,10 @@ func (p GoalProgressList) Less(i, j int) bool {
 		} else {
 			return false
 		}
-
 	}
+	if p[j].NumAttempts == 0 {
+		return true
+	}
+
 	return (float64(p[i].Goal.Time) / float64(p[i].BestAttempt.Time)) > (float64(p[j].Goal.Time) / float64(p[j].BestAttempt.Time))
 }
