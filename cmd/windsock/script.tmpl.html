@@ -3,16 +3,16 @@
   <script>
     var n = (window.NAVIGATION = {});
     {{if ne .Left ""}}
-      n.left = "{{.Path}}/{{.Left}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
+      n.left = "{{.Path}}/../{{.Left}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
     {{end}}
     {{if ne .Up ""}}
-      n.up = "{{.Path}}/{{.Up}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
+      n.up = "{{.Path}}/../{{.Up}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
     {{end}}
     {{if ne .Right ""}}
-      n.right = "{{.Path}}/{{.Right}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
+      n.right = "{{.Path}}/../{{.Right}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
     {{end}}
     {{if ne .Down ""}}
-      n.down = "{{.Path}}/{{.Down}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
+      n.down = "{{.Path}}/../{{.Down}}/{{if .Historical}}historical{{else}}baseline{{end}}/";
     {{end}}
   </script>
   <script src="{{.RootedPath "/script.js"}}"></script>
