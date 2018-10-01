@@ -1,8 +1,6 @@
 {{define "page-nav"}}
 <nav id="page-nav">
-  <h2 class="climb">
-    <a href="https://www.strava.com/segments/{{.Climb.Segment.ID}}"
-       title="{{.ClimbDirection}}">{{.Climb.Name}}</a></h2>
+  <h2 class="climb" title="{{.ClimbDirection}}">{{.Climb.Name}}</h2>
 </nav>
 {{end}}
 
@@ -34,13 +32,20 @@
               {{$c.Score $.Historical}}
             </td>
           {{else}}
-            <td class="cell absent"></td> <!-- TODO color? -->
+            <td class="cell absent"></td>
           {{end}}
         {{end}}
       </tr>
       {{end}}
     </tbody>
   </table>
-  <div id="attribution"><a href="https://darksky.net/poweredby/">Powered by Dark Sky</a></div>
+  <div id="attribution">
+    <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+    <nav id="links">
+      <li><a href="https://mywindsock.com/segment/{{.Climb.Segment.ID}}">myWindsock</a></li>
+      <li><a href="https://veloviewer.com/segments/{{.Climb.Segment.ID}}">VeloViewer</a></li>
+      <li><a href="https://www.strava.com/segments/{{.Climb.Segment.ID}}">Strava</a></li>
+    </nav>
+  </div>
 </div>
 {{end}}
