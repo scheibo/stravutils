@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function(){
         // if the user released on a different target, cancel!
         if (startEl !== e.target) return;
 
-        var swipeThreshold = parseInt(startEl.getAttribute('data-swipe-threshold') || '200', 10);
+        var swipeThreshold = parseInt(startEl.getAttribute('data-swipe-threshold') || '100', 10);
         var swipeTimeout = parseInt(startEl.getAttribute('data-swipe-timeout') || '500', 10);
         var timeDiff = Date.now() - timeDown;
         var eventType = '';
