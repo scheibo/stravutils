@@ -185,6 +185,29 @@ func (r *Renderer) fillDayTimeNavigation(cf *ClimbForecast, data *DayTimeTmpl, j
 	data.Right = dayTimeRight(days, cur, j, k)
 }
 
+func (r *Renderer) renderSegment(templates map[string]*template.Template) error {
+	if len(r.forecasts) != 1 {
+		return nil
+	}
+
+	cf := r.forecasts[0]
+
+	var names, short []string
+	for _, df := range cf.Forecast.Days {
+		names = append(names, df.Day)
+		short = append(short, df.Day[:3])
+	}
+
+	data := r.climbTmpl(cf, names, short)
+	data.SingleSegment = true
+	data.CanonicalPath = ""
+
+	t, _ := templates["climb"]
+	w := r.m.Writer("text/html", os.Stdout)
+	defer w.Close()
+	return t.ExecuteTemplate(w, TEMPLATE_LAYOUT, &data)
+}
+
 func (r *Renderer) renderClimbs(t *template.Template) error {
 	if len(r.forecasts) == 0 {
 		return nil
@@ -197,34 +220,7 @@ func (r *Renderer) renderClimbs(t *template.Template) error {
 	}
 
 	for k, cf := range r.forecasts {
-		days := cf.Forecast.Days
-
-		data := ClimbTmpl{}
-		data.Climb = cf.Climb
-
-		data.GenerationTime = r.now
-		data.Default = !r.historical
-		data.AbsoluteURL = r.absoluteURL
-		data.Title = "Windsock - Bay Area - " + cf.Climb.Name
-		data.CanonicalPath = data.Slug() + "/"
-		data.Days = names
-		data.ShortDays = short
-
-		hours := len(days[0].Conditions) // guaranteed to exist
-		data.Rows = make([]*ClimbTmplRow, hours)
-		for i := 0; i < hours; i++ {
-			data.Rows[i] = &ClimbTmplRow{}
-			data.Rows[i].Conditions = make([]*ScoredConditions, len(days))
-			for j := 0; j < len(days); j++ {
-				sc := days[j].Conditions[i]
-				if sc != nil && data.Rows[i].LocalTime.IsZero() {
-					data.Rows[i].LocalTime = sc.LocalTime
-					data.Rows[i].historical = r.havgs.Get(&cf.Climb.Segment, sc.LocalTime, r.loc)
-				}
-				data.Rows[i].Conditions[j] = sc
-			}
-		}
-
+		data := r.climbTmpl(cf, names, short)
 		if k < r.hidden {
 			data.Up = climbUp(r.forecasts, k)
 			data.Left = data.Up
@@ -239,6 +235,39 @@ func (r *Renderer) renderClimbs(t *template.Template) error {
 	}
 
 	return nil
+}
+
+func (r *Renderer) climbTmpl(cf *ClimbForecast, names, short []string) ClimbTmpl {
+	days := cf.Forecast.Days
+
+	data := ClimbTmpl{}
+	data.Climb = cf.Climb
+
+	data.GenerationTime = r.now
+	data.Default = !r.historical
+	data.AbsoluteURL = r.absoluteURL
+	data.Title = "Windsock - Bay Area - " + cf.Climb.Name
+	data.CanonicalPath = data.Slug() + "/"
+	data.Days = names
+	data.ShortDays = short
+
+	hours := len(days[0].Conditions) // guaranteed to exist
+	data.Rows = make([]*ClimbTmplRow, hours)
+	for i := 0; i < hours; i++ {
+		data.Rows[i] = &ClimbTmplRow{}
+		data.Rows[i].Conditions = make([]*ScoredConditions, len(days))
+		for j := 0; j < len(days); j++ {
+			sc := days[j].Conditions[i]
+			if sc != nil && data.Rows[i].LocalTime.IsZero() {
+				data.Rows[i].LocalTime = sc.LocalTime
+				if r.havgs != nil {
+					data.Rows[i].historical = r.havgs.Get(&cf.Climb.Segment, sc.LocalTime, r.loc)
+				}
+			}
+			data.Rows[i].Conditions[j] = sc
+		}
+	}
+	return data
 }
 
 func climbUp(cf []*ClimbForecast, k int) string {

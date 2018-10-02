@@ -111,6 +111,7 @@ type LayoutTmpl struct {
 	Title          string
 	Historical     bool
 	Default        bool
+	SingleSegment  bool
 }
 
 func (t *LayoutTmpl) RootedPath(p string) string {

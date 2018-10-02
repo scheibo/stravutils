@@ -18,12 +18,14 @@ const minHour = 6
 const maxHour = 18
 
 func main() {
+	var segmentID int64
 	var output, key, climbsFile, hiddenFile, absoluteURL string
 	var historical bool
 	var min, max int
 
+	flag.Int64Var(&segmentID, "segmentID", 0, "Render a specific segment's climb page to the current directory and then exit.")
 	flag.BoolVar(&historical, "historical", false, "Default to historical instead of baseline")
-	flag.StringVar(&absoluteURL, "absoluteURL", "https://wp.scheibo.com", "Absolute root URL of the site")
+	flag.StringVar(&absoluteURL, "absoluteURL", "https://bayarea.climberrankings.com/climbs/windsock", "Absolute root URL of the site")
 	flag.StringVar(&output, "output", "site", "Output directory")
 	flag.StringVar(&key, "key", "", "DarkySky API Key")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
@@ -39,9 +41,43 @@ func main() {
 		exit(fmt.Errorf("min and max must be in the range [0-23] with min < max but got min=%d max=%d", min, max))
 	}
 
+	loc, err := time.LoadLocation("America/Los_Angeles")
+	if err != nil {
+		exit(err)
+	}
+
 	climbs, err := GetClimbs(climbsFile)
 	if err != nil {
 		exit(err)
+	}
+
+	templates := getTemplates()
+	w := weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc))
+
+	if segmentID != 0 {
+		s, err := GetSegmentByID(segmentID, climbs)
+		if err != nil {
+			exit(err)
+		}
+		c := Climb{Name: s.Name, Segment: *s}
+		cf, err := getClimbForecast(&c, w, nil /* havgs */, min, max, loc)
+		if err != nil {
+			exit(err)
+		}
+		forecasts := []*ClimbForecast{cf}
+		err = NewRenderer(
+			false, /* historical */
+			absoluteURL,
+			"", /* output */
+			forecasts,
+			0,   /* hidden */
+			nil, /* havgs */
+			genTime,
+			loc).renderSegment(templates)
+		if err != nil {
+			exit(err)
+		}
+		return
 	}
 
 	hidden := len(climbs)
@@ -56,28 +92,16 @@ func main() {
 		}
 	}
 
-	loc, err := time.LoadLocation("America/Los_Angeles")
-	if err != nil {
-		exit(err)
-	}
-
 	// NOTE: we expect all days to be present and will segfault if there are any are null.
 	havgs, err := GetHistoricalAverages()
 	if err != nil {
 		exit(err)
 	}
 
-	templates := getTemplates()
-	w := weather.NewClient(weather.DarkSky(key))
-
 	var forecasts []*ClimbForecast
 	for _, climb := range climbs {
-		f, err := w.Forecast(climb.Segment.AverageLocation)
-		if err != nil {
-			exit(err)
-		}
 		c := climb
-		cf, err := trimAndScore(&havgs, &c, f, min, max, loc)
+		cf, err := getClimbForecast(&c, w, &havgs, min, max, loc)
 		if err != nil {
 			exit(err)
 		}
@@ -90,6 +114,18 @@ func main() {
 	}
 }
 
+func getClimbForecast(c *Climb, w *weather.Client, h *HistoricalClimbAverages, min, max int, loc *time.Location) (*ClimbForecast, error) {
+	f, err := w.Forecast(c.Segment.AverageLocation)
+	if err != nil {
+		return nil, err
+	}
+	cf, err := trimAndScore(h, c, f, min, max, loc)
+	if err != nil {
+		return nil, err
+	}
+	return cf, nil
+}
+
 func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min, max int, loc *time.Location) (*ClimbForecast, error) {
 	scored := ScoredForecast{}
 	result := &ClimbForecast{Climb: c, Forecast: &scored}
@@ -97,7 +133,12 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 		return result, nil
 	}
 
-	current, err := score(c, f.Hourly[0], h.Get(&c.Segment, f.Hourly[0].Time, loc), loc)
+	var past *weather.Conditions
+	if h != nil {
+		past = h.Get(&c.Segment, f.Hourly[0].Time, loc)
+	}
+
+	current, err := score(c, f.Hourly[0], past, loc)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +152,11 @@ func trimAndScore(h *HistoricalClimbAverages, c *Climb, f *weather.Forecast, min
 			continue
 		}
 
-		s, err := score(c, w, h.Get(&c.Segment, w.Time, loc), loc)
+		if h != nil {
+			past = h.Get(&c.Segment, w.Time, loc)
+		}
+
+		s, err := score(c, w, past, loc)
 		if err != nil {
 			return nil, err
 		}

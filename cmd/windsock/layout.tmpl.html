@@ -3,8 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="{{.RootedPath "/favicon.ico"}}">
-  <link rel="canonical" href="{{.AbsoluteURL}}/{{.CanonicalPath}}">
+  {{if .SingleSegment}}
+    <link rel="icon" href="{{.AbsoluteURL}}/favicon.ico">
+  {{else}}
+    <link rel="icon" href="{{.RootedPath "/favicon.ico"}}">
+    <link rel="canonical" href="{{.AbsoluteURL}}/{{.CanonicalPath}}">
+  {{end}}
   <title>{{.Title}}</title>
   <style>
     /* http://colorbrewer2.org/?type=diverging&scheme=RdYlGn&n=11 */
@@ -183,6 +187,7 @@
 <body>
   <header>
     <h1><a href="{{.RootedPath "/"}}">Bay Area<br />Windsock</a></h1>
+    {{if not .SingleSegment}}
     <nav id="main-nav">
       {{if .Default}}
         <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="{{.Path}}/baseline/">Baseline</a> /
@@ -192,6 +197,7 @@
         <a id="baseline" class="{{if not .Historical}}selected{{end}}" href="{{.Path}}/baseline/">Baseline</a>
       {{end}}
     </nav>
+    {{end}}
     {{template "page-nav" .}}
   </header>
   <div id="content">
@@ -199,46 +205,48 @@
   </div>
   {{template "script" .}}
   <div id="generation-time">{{.GenTime}}</div>
-  <script>
-    // Toggle reloading the page every 15 minutes when '@' is pressed.
-    var interval = 15 * 60 * 1000;
-    document.addEventListener("keydown", function(e) {
-      if ((e.which || e.keyCode) == 50) {
-        if (window.reload) {
-          window.location.replace("#");
-          clearTimeout(window.reload);
-          window.reload = null;
-        } else {
-          window.location.replace("#reload");
+  {{if not .SingleSegment}}
+    <script>
+      // Toggle reloading the page every 15 minutes when '@' is pressed.
+      var interval = 15 * 60 * 1000;
+      document.addEventListener("keydown", function(e) {
+        if ((e.which || e.keyCode) == 50) {
+          if (window.reload) {
+            window.location.replace("#");
+            clearTimeout(window.reload);
+            window.reload = null;
+          } else {
+            window.location.replace("#reload");
+            window.reload = setTimeout(function() {
+              window.location.reload();
+            }, interval);
+          }
+        }
+      });
+
+      window.onload = function() {
+        if (window.location.hash == "#reload") {
           window.reload = setTimeout(function() {
             window.location.reload();
           }, interval);
         }
-      }
-    });
+      };
 
-    window.onload = function() {
-      if (window.location.hash == "#reload") {
-        window.reload = setTimeout(function() {
-          window.location.reload();
-        }, interval);
+      function maybeIncludeReload(s) {
+        return window.reload ? s + "#reload" : s;
       }
-    };
 
-    function maybeIncludeReload(s) {
-      return window.reload ? s + "#reload" : s;
-    }
-
-    document.addEventListener("DOMContentLoaded", function(){
-      var anchors = document.getElementsByTagName('a');
-      for (var i = 0, len = anchors.length; i < len; i++) {
-        anchors[i].addEventListener("click", function(e) {
-          target = (e.target || e.srcElement);
-          target.href = maybeIncludeReload(target.href);
-          return true;
-        });
-      }
-    });
-  </script>
+      document.addEventListener("DOMContentLoaded", function(){
+        var anchors = document.getElementsByTagName('a');
+        for (var i = 0, len = anchors.length; i < len; i++) {
+          anchors[i].addEventListener("click", function(e) {
+            target = (e.target || e.srcElement);
+            target.href = maybeIncludeReload(target.href);
+            return true;
+          });
+        }
+      });
+    </script>
+  {{end}}
 </body>
 </html>
