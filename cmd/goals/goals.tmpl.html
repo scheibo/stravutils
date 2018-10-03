@@ -38,7 +38,7 @@
     h1 {
       text-transform: uppercase;
       font-weight: 900;
-      margin-bottom: 0.33em;
+      margin-bottom: 1em;
     }
 
     #container {
@@ -83,50 +83,49 @@
       padding-top: 0.7em;
     }
 
-    .absent {
-      background-color: #EEEEEE;
-    }
-
     #generation-time {
       display: none;
     }
 
     /* Mobile - Small */
-    table { font-size: 10px; }
-    h1 { font-size: 24px; }
-    #attribution { font-size: 6px; }
-
     /* Mobile - Medium */
-    @media(min-width: 375px) {
-      table { font-size: 12px; }
-      h1 { font-size: 32px; }
-      #attribution { font-size: 7px; }
-      #container { max-width: 400px; }
-    }
-
     /* Mobile - Large */
-    @media(min-width: 425px) {
-      table { font-size: 13px; }
-      h1 { font-size: 36px; }
-      #attribution { font-size: 8px; }
-      #container { max-width: 500px; }
-    }
+    table { font-size: 6px; }
+    h1 { font-size: 26px; }
+    #attribution { font-size: 5px; }
+    #container { max-width: 825px; }
 
     /* Tablet */
     @media(min-width: 768px) {
-      table { font-size: 15px; }
-      h1 { font-size: 40px; }
-      #attribution { font-size: 10px; }
-      #container { max-width: 600px; }
+      table { font-size: 10px; }
+      h1 { font-size: 30px; }
+      #attribution { font-size: 8px; }
+      #container { max-width: 1000px; }
     }
 
     /* Laptop */
     @media(min-width: 1024px) {
+      table { font-size: 13px; }
+      h1 { font-size: 36px; }
+      #attribution { font-size: 9px; }
+      #container { max-width: 1160px; }
+    }
+
+    /* Laptop */
+    @media(min-width: 1440px) {
       table { font-size: 16px; }
       h1 { font-size: 44px; }
       #attribution { font-size: 11px; }
-      #container { max-width: 700px; }
+      #container { max-width: 1160px; }
     }
+
+    .time { font-weight: bold; }
+    .effort { background-color: #EEE; }
+    th { background-color: #FFF; }
+    colgroup { border-left: 1px solid black; }
+    colgroup.forecast { border-right: 1px solid black; }
+    .absent { text-align: center; background-color: #dedede; }
+    .num {text-align: right;}
   </style>
 </head>
 <body>
@@ -134,80 +133,84 @@
     <h1>Goals</h1>
   </header>
   <div id="content">
-    <table id='data' class="climb">
-      <thead>
-        <tr class="table-header">
-          <th colspan="3">Goal</th>
-          <th colspan="6">Best Effort</th>
-          <th colspan="6">Best Attempt</th>
-          <th colspan="1">Upcoming</th>
-        </tr>
-        <tr>
-          <!-- Goal -->
-          <th class="name">Name</th>
-          <th>Time</th>
-          <th>Date</th>
-          <!-- Best Effort -->
-          <th>Time</th>
-          <th>Date</th>
-          <th>Power</th>
-          <th>PERF</th>
-          <th>WNF</th>
-          <th>Num</th>
-          <!-- Best Attempt -->
-          <th>Time</th>
-          <th>Date</th>
-          <th>Power</th>
-          <th>PERF</th>
-          <th>WNF</th>
-          <th>Num</th>
-          <!-- Forecast -->
-          <th>Forecast</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{range $g := .Goals}}
-        <tr>
-          <!-- Goal -->
-          <td class="name"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
-          <td>{{$g.Goal.Duration}}</td>
-          <td>{{$g.Goal.Day}}</td>
+    <div id='container'>
+      <table id='data' class="climb">
+        <colgroup span="2" class="goal"></colgroup>
+        <colgroup span="6" class="effort"></colgroup>
+        <colgroup span="6" class="attempt"></colgroup>
+        <colgroup span="1" class="forecast"></colgroup>
+        <thead>
+          <tr class="table-header">
+            <th colspan="2">Goal</th>
+            <th colspan="6">Best Effort</th>
+            <th colspan="6">Best Attempt</th>
+            <th colspan="1">Upcoming</th>
+          </tr>
+          <tr>
+            <!-- Goal -->
+            <th class="name">Name</th>
+            <th>Time</th>
+            <!-- Best Effort -->
+            <th>Time</th>
+            <th>Date</th>
+            <th>Power</th>
+            <th>PERF</th>
+            <th>WNF</th>
+            <th>Num</th>
+            <!-- Best Attempt -->
+            <th>Time</th>
+            <th>Date</th>
+            <th>Power</th>
+            <th>PERF</th>
+            <th>WNF</th>
+            <th>Num</th>
+            <!-- Forecast -->
+            <th>Forecast</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range $g := .Goals}}
+          <tr>
+            <!-- Goal -->
+            <td class="name"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
+            <td class="time">{{$g.Goal.Duration}}</td>
 
-          <!-- Best Effort -->
-          {{if not $g.BestEffort}}
-            <td class="absent"></td> <td class="absent"></td>
-            <td class="absent"></td> <td class="absent"></td>
-            <td class="absent"></td> <td class="absent">0</td>
-          {{else}}
-            <td><a href="{{$g.BestEffort.URL}}">{{$g.BestEffort.Duration}}</a></td>
-            <td>{{$g.BestEffort.Day}}</td>
-            <td>{{$g.BestEffort.Watts2}}</td>
-            <td title="{{$g.BestEffort.PWatts2}}">{{$g.BestEffort.Perf}}</td>
-            <td class="color{{$g.BestEffort.Rank}}" title="{{$g.BestEffort.Title}}">{{$g.BestEffort.Score}}</td>
-            <td>{{$g.NumEfforts}}</td>
+            <!-- Best Effort -->
+            {{if not $g.BestEffort}}
+              <td class="absent">-</td> <td class="absent">-</td>
+              <td class="absent">-</td> <td class="absent">-</td>
+              <td class="absent">-</td> <td class="num absent">0</td>
+            {{else}}
+              <td class="time"><a href="{{$g.BestEffort.URL}}">{{$g.BestEffort.Duration}}</a></td>
+              <td>{{$g.BestEffort.Day}}</td>
+              <td>{{$g.BestEffort.Watts2}}</td>
+              <td title="{{$g.BestEffort.PWatts2}}">{{$g.BestEffort.Perf}}</td>
+              <td class="color{{$g.BestEffort.Rank}}" title="{{$g.BestEffort.Title}}">{{$g.BestEffort.Score}}</td>
+              <td class="num">{{$g.NumEfforts}}</td>
+            {{end}}
+            <!-- Best Attempt -->
+            {{if not $g.BestAttempt}}
+              <td class="absent">-</td> <td class="absent">-</td>
+              <td class="absent">-</td> <td class="absent">-</td>
+              <td class="absent">-</td> <td class="num absent">0</td>
+            {{else}}
+              <td class="time"><a href="{{$g.BestAttempt.URL}}">{{$g.BestAttempt.Duration}}</a></td>
+              <td>{{$g.BestAttempt.Day}}</td>
+              <td>{{$g.BestAttempt.Watts2}}</td>
+              <td title="{{$g.BestAttempt.PWatts2}}">{{$g.BestAttempt.Perf}}</td>
+              <td class="color{{$g.BestAttempt.Rank}}" title="{{$g.BestAttempt.Title}}">{{$g.BestAttempt.Score}}</td>
+              <td class="num">{{$g.NumAttempts}}</td>
+            {{end}}
+            <!-- Forecast -->
+            <td class="color{{$g.Rank}}" title="{{$g.Weather}}">{{$g.Score}}</td>
+          </tr>
           {{end}}
-          <!-- Best Attempt -->
-          {{if not $g.BestAttempt}}
-            <td class="absent"></td> <td class="absent"></td>
-            <td class="absent"></td> <td class="absent"></td>
-            <td class="absent"></td> <td class="absent"></td>
-          {{else}}
-            <td><a href="{{$g.BestAttempt.URL}}">{{$g.BestAttempt.Duration}}</a></td>
-            <td>{{$g.BestAttempt.Day}}</td>
-            <td>{{$g.BestAttempt.Watts2}}</td>
-            <td title="{{$g.BestAttempt.PWatts2}}">{{$g.BestAttempt.Perf}}</td>
-            <td class="color{{$g.BestAttempt.Rank}}" title="{{$g.BestAttempt.Title}}">{{$g.BestAttempt.Score}}</td>
-            <td>{{$g.NumAttempts}}</td>
-          {{end}}
-          <!-- Forecast -->
-          <td class="color{{$g.Rank}}" title="{{$g.Weather}}">{{$g.Score}}</td>
-        </tr>
-        {{end}}
-      </tbody>
-    </table>
-  </div>
-  <div id="attribution">
-    <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+        </tbody>
+      </table>
+     <div id="attribution">
+      <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+    </div>
+    </div>
   </div>
   <div id="generation-time">{{.GenerationTime}}</div>
 </body>
