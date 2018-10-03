@@ -135,21 +135,22 @@
   <div id="content">
     <div id='container'>
       <table id='data' class="climb">
-        <colgroup span="2" class="goal"></colgroup>
+        <colgroup span="3" class="goal"></colgroup>
         <colgroup span="6" class="effort"></colgroup>
         <colgroup span="6" class="attempt"></colgroup>
         <colgroup span="1" class="forecast"></colgroup>
         <thead>
           <tr class="table-header">
-            <th colspan="2">Goal</th>
-            <th colspan="6">Best Effort</th>
-            <th colspan="6">Best Attempt</th>
+            <th colspan="3">Goal</th>
+            <th colspan="6">Before</th>
+            <th colspan="6">After</th>
             <th colspan="1">Upcoming</th>
           </tr>
           <tr>
             <!-- Goal -->
             <th class="name">Name</th>
             <th>Time</th>
+            <th>PERF</th>
             <!-- Best Effort -->
             <th>Time</th>
             <th>Date</th>
@@ -174,6 +175,7 @@
             <!-- Goal -->
             <td class="name"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
             <td class="time">{{$g.Goal.Duration}}</td>
+						<td title="{{$g.BestEffort.PWatts2}}">{{$g.BestEffort.Perf}}</td><!-- TODO -->
 
             <!-- Best Effort -->
             {{if not $g.BestEffort}}

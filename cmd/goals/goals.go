@@ -122,7 +122,7 @@ func (e *Effort) Duration() string {
 }
 
 func (e *Effort) Perf() string {
-	return fmt.Sprintf("%.2f", e.PERF)
+	return fmt.Sprintf("%.0f", math.Round(e.PERF))
 }
 
 func (e *Effort) Watts2() string {
@@ -440,7 +440,7 @@ func create(path string) (*os.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0644)
+	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 }
 
 func fromEpochMillis(millis int) time.Time {
@@ -576,11 +576,11 @@ func compileTemplates(filenames ...string) (*template.Template, error) {
 			return nil, err
 		}
 
-		//mb, err := m.Bytes("text/html", b)
-		//if err != nil {
-		//return nil, err
-		//}
-		_, err = tmpl.Parse(string(b)) // TODO mb
+		mb, err := m.Bytes("text/html", b)
+		if err != nil {
+		return nil, err
+		}
+		_, err = tmpl.Parse(string(mb))
 		if err != nil {
 			return nil, err
 		}
