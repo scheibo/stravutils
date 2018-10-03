@@ -36,6 +36,8 @@ type SegmentGoal struct {
 	Time int `json:"time"`
 	// Date after which attempts are tracked.
 	Date int `json:"date"`
+	// The actual segment.
+	segment *Segment
 }
 
 func (s *SegmentGoal) SegmentURL() string {
@@ -48,6 +50,22 @@ func (s *SegmentGoal) Duration() string {
 
 func (s *SegmentGoal) Day() string {
 	return day(s.Date)
+}
+
+func (s *SegmentGoal) Direction() string {
+	return weather.Direction(s.segment.AverageDirection)
+}
+
+func (s *SegmentGoal) PWatts() float64 {
+	return calcPower(s.Time, s.segment)
+}
+
+func (s *SegmentGoal) Perf() string {
+	return fmt.Sprintf("%.0f", math.Round(PERF(s.Time, s.segment)))
+}
+
+func (s *SegmentGoal) PWatts2() string {
+	return watts(s.PWatts())
 }
 
 type GoalProgress struct {
@@ -86,6 +104,14 @@ func (p *GoalProgress) Rank() int {
 	return rank(p.ForecastWNF)
 }
 
+func (p *GoalProgress) WWatts2() string {
+	return watts(p.ForecastWNF * p.Goal.PWatts())
+}
+
+func (p *GoalProgress) Title() string {
+	return fmt.Sprintf("%s\n%s", p.WWatts2(), p.Weather())
+}
+
 type Effort struct {
 	// ID of the activity the effort took place in.
 	ActivityID int64 `json:"activityId"`
@@ -107,6 +133,8 @@ type Effort struct {
 	WWatts float64 `json:"wwatts"`
 	// The weather conditions for the effort.
 	Conditions *weather.Conditions `json:"weather,omitempty"`
+	// Whether or not to highlight this effort as the best.
+	best bool
 }
 
 func (e *Effort) URL() string {
@@ -153,8 +181,18 @@ func (e *Effort) Title() string {
 	return fmt.Sprintf("%s\n%s", e.WWatts2(), e.Weather())
 }
 
+func (e *Effort) Progress(t int) string {
+	return fmt.Sprintf("%.2f%%", float64(t)/float64(e.Time)*100)
+}
+
+func (e *Effort) Best() string {
+	if e.best {
+		return "best"
+	}
+	return ""
+}
+
 type C struct {
-	cda, mt float64
 	token   string
 	climbs  *[]Climb
 	w       *weather.Client
@@ -166,7 +204,6 @@ func main() {
 	now := time.Now()
 
 	var tz, key, token, goalsFile, climbsFile string
-	var cda, mr, mb float64
 	var refresh time.Duration
 
 	flag.StringVar(&tz, "tz", "America/Los_Angeles", "timezone to use")
@@ -175,18 +212,10 @@ func main() {
 	flag.StringVar(&goalsFile, "goals", "", "Goals")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
 
-	flag.Float64Var(&cda, "cda", wnf.CdaClimb, "coefficient of drag area")
-	flag.Float64Var(&mr, "mr", wnf.Mr, "total mass of the rider in kg")
-	flag.Float64Var(&mb, "mb", wnf.Mb, "total mass of the bicycle in kg")
-
 	flag.DurationVar(&refresh, "refresh", 12*time.Hour,
 		"minimum refresh interval for GoalProgress.Forecast")
 
 	flag.Parse()
-
-	verify("cda", cda)
-	verify("mr", mr)
-	verify("mb", mb)
 
 	loc, err := time.LoadLocation(tz)
 	if err != nil {
@@ -209,8 +238,6 @@ func main() {
 	}
 
 	c := C{
-		cda:     cda,
-		mt:      mr + mb,
 		token:   token,
 		climbs:  &climbs,
 		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
@@ -235,7 +262,7 @@ func main() {
 	}
 	fmt.Println(string(j))
 
-	err = c.render(goals)
+	err = c.render(progress)
 	if err != nil {
 		exit(err)
 	}
@@ -245,7 +272,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 	var progress GoalProgressList
 
 	for _, p := range prev {
-		goal := p.Goal
+		goal := p.Goal //SegmentGoal{p.Goal.Name, p.Goal.SegmentID,  p.Goal.Time, p.Goal.Date, nil}
 		// Since Strava returns the efforts sorted by time, presumably one page
 		// is enough to find the best efforts before and after.
 		efforts, err := GetEfforts(goal.SegmentID, 1, c.token)
@@ -257,6 +284,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		if err != nil {
 			return nil, err
 		}
+		goal.segment = segment
 
 		date := goal.Date
 		if p.Date > date {
@@ -264,19 +292,31 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		}
 
 		bestAttempt, numAttempts, err := c.getBestAttemptAfter(
-			fromEpochMillis(date), goal, efforts, segment, p.BestAttempt)
+			fromEpochMillis(date), goal, efforts, p.BestAttempt)
 		if err != nil {
 			return nil, err
 		}
 		bestEffort, numEfforts := p.BestEffort, p.NumEfforts
 		if bestEffort == nil {
 			best, numEffortsBefore, err := c.getBestEffortBefore(
-				fromEpochMillis(goal.Date), goal, efforts, segment)
+				fromEpochMillis(goal.Date), goal, efforts)
 			if err != nil {
 				return nil, err
 			}
 			bestEffort = best
 			numEfforts = numEffortsBefore + numAttempts
+		}
+
+		if bestAttempt != nil {
+			if bestEffort != nil && bestEffort.Time < bestAttempt.Time {
+				bestEffort.best = true
+			} else {
+				bestAttempt.best = true
+			}
+		} else {
+			if bestEffort != nil {
+				bestEffort.best = true
+			}
 		}
 
 		forecast, forecastWNF := p.Forecast, p.ForecastWNF
@@ -312,24 +352,22 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 func (c *C) getBestEffortBefore(
 	date time.Time,
 	goal SegmentGoal,
-	efforts []*strava.SegmentEffortSummary,
-	segment *Segment) (*Effort, int, error) {
+	efforts []*strava.SegmentEffortSummary) (*Effort, int, error) {
 
 	return c.getBestEffort(func(ed, gd time.Time) bool {
 		return ed.Before(gd)
-	}, date, goal, efforts, segment, nil)
+	}, date, goal, efforts, nil)
 }
 
 func (c *C) getBestAttemptAfter(
 	date time.Time,
 	goal SegmentGoal,
 	efforts []*strava.SegmentEffortSummary,
-	segment *Segment,
 	prev *Effort) (*Effort, int, error) {
 
 	return c.getBestEffort(func(ed, gd time.Time) bool {
 		return ed.After(gd)
-	}, date, goal, efforts, segment, prev)
+	}, date, goal, efforts, prev)
 }
 
 func (c *C) getBestEffort(
@@ -337,7 +375,7 @@ func (c *C) getBestEffort(
 	date time.Time,
 	goal SegmentGoal,
 	efforts []*strava.SegmentEffortSummary,
-	segment *Segment, prev *Effort) (*Effort, int, error) {
+	prev *Effort) (*Effort, int, error) {
 
 	if prev != nil {
 		date = fromEpochMillis(prev.Date)
@@ -359,7 +397,7 @@ func (c *C) getBestEffort(
 		return prev, num, nil
 	}
 
-	e, err := c.toEffort(best, segment)
+	e, err := c.toEffort(best, goal.segment)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -374,11 +412,8 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 	e.Date = int(s.StartDate.Unix() * 1000)
 	e.Time = s.ElapsedTime
 	e.Watts = s.AveragePower
-	e.PERF = perf.CalcM(
-		float64(s.ElapsedTime), segment.Distance, segment.AverageGrade, segment.MedianElevation)
-	e.PWatts = c.calcPower(s.ElapsedTime, segment)
-
-	fmt.Fprintf(os.Stderr, "%s %s %d %s\n", s.StartDate, s.StartDateLocal, e.Date, fromEpochMillis(e.Date))
+	e.PERF = PERF(s.ElapsedTime, segment)
+	e.PWatts = calcPower(s.ElapsedTime, segment)
 
 	w, err := c.w.History(segment.AverageLocation, s.StartDate)
 	if err != nil {
@@ -394,13 +429,6 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 	e.WWatts = baseline * e.PWatts
 
 	return &e, nil
-}
-
-func (c *C) calcPower(t int, segment *Segment) float64 {
-	vg := segment.Distance / float64(t)
-	return calc.Psimp(
-		calc.Rho(segment.MedianElevation, calc.G),
-		c.cda, calc.Crr, vg, vg, segment.AverageGrade, c.mt, calc.G, calc.Ec, calc.Fw)
 }
 
 // BUG: This won't be accurate if the script is run on Saturday between 8 and 12.
@@ -494,6 +522,21 @@ func rank(s float64) int {
 	return mod * rank
 }
 
+func PERF(t int, segment *Segment) float64 {
+	return perf.CalcM(float64(t), segment.Distance, segment.AverageGrade, segment.MedianElevation)
+}
+
+func calcPower(t int, segment *Segment) float64 {
+	vg := segment.Distance / float64(t)
+	cda := wnf.CdaClimb
+	if segment.AverageGrade < CLIMB_THRESHOLD {
+		cda = wnf.CdaTT
+	}
+	return calc.Psimp(
+		calc.Rho(segment.MedianElevation, calc.G),
+		cda, calc.Crr, vg, vg, segment.AverageGrade, wnf.Mt, calc.G, calc.Ec, calc.Fw)
+}
+
 func watts(w float64) string {
 	return fmt.Sprintf("%.0fW", math.Round(w))
 }
@@ -504,12 +547,6 @@ func weatherString(c *weather.Conditions) string {
 		precip = c.Precip()
 	}
 	return fmt.Sprintf("%.1f°C (%.3f kg/m³)\n%s%s", c.Temperature, c.AirDensity, precip, c.Wind())
-}
-
-func verify(s string, x float64) {
-	if x < 0 {
-		exit(fmt.Errorf("%s must be non negative but was %f", s, x))
-	}
 }
 
 func resource(name string) string {
@@ -578,7 +615,7 @@ func compileTemplates(filenames ...string) (*template.Template, error) {
 
 		mb, err := m.Bytes("text/html", b)
 		if err != nil {
-		return nil, err
+			return nil, err
 		}
 		_, err = tmpl.Parse(string(mb))
 		if err != nil {
