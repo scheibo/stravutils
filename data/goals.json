@@ -1,6 +1,6 @@
 [
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Mt. Hamilton",
       "segmentId": 7447638,
@@ -10,7 +10,7 @@
     "bestEffort": {
       "activityId": 283563985,
       "effortId": 6649053269,
-      "date": 1428783207000000,
+      "date": 1428783207000,
       "time": 4995,
       "watts": 248.9,
       "perf": 444.64901823327625,
@@ -39,7 +39,7 @@
     "bestAttempt": {
       "activityId": 1843978598,
       "effortId": 46243372626,
-      "date": 1537030444000000,
+      "date": 1537030444000,
       "time": 4505,
       "watts": 285.3,
       "perf": 546.636632433106,
@@ -74,7 +74,7 @@
       "precipProbability": 0.005,
       "precipIntensity": 0.005075,
       "precipType": "",
-      "airPressure": 1012.5300000000001,
+      "airPressure": 1012.5300000001,
       "airDensity": 1.2305663884875948,
       "cloudCover": 0.21499999999999997,
       "uvIndex": 2,
@@ -87,7 +87,7 @@
     "wnf": 1.0322455590194908
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Kings Mountain",
       "segmentId": 611413,
@@ -97,7 +97,7 @@
     "bestEffort": {
       "activityId": 426546490,
       "effortId": 10264536019,
-      "date": 1446662515000000,
+      "date": 1446662515000,
       "time": 1389,
       "watts": 311.5,
       "perf": 546.9017922145102,
@@ -126,7 +126,7 @@
     "bestAttempt": {
       "activityId": 1812868297,
       "effortId": 45619203898,
-      "date": 1535823268000000,
+      "date": 1535823268000,
       "time": 1347,
       "watts": 323.9,
       "perf": 581.5387339112025,
@@ -174,7 +174,7 @@
     "wnf": 1.0047435559033056
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Old La Honda",
       "segmentId": 8109834,
@@ -184,7 +184,7 @@
     "bestEffort": {
       "activityId": 704197343,
       "effortId": 17271336775,
-      "date": 1473274690000000,
+      "date": 1473274690000,
       "time": 975,
       "watts": 337.9,
       "perf": 623.1958364651776,
@@ -212,7 +212,7 @@
     "bestAttempt": {
       "activityId": 846341021,
       "effortId": 20626486942,
-      "date": 1485556384000000,
+      "date": 1485556384000,
       "time": 974,
       "watts": 297.6,
       "perf": 624.4761562848743,
@@ -260,7 +260,7 @@
     "wnf": 0.9845923044204093
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "West Alpine",
       "segmentId": 4649440,
@@ -270,7 +270,7 @@
     "bestEffort": {
       "activityId": 430989848,
       "effortId": 10367312705,
-      "date": 1447269321000000,
+      "date": 1447269321000,
       "time": 1997,
       "watts": 294,
       "perf": 460.14061097457954,
@@ -298,7 +298,7 @@
     "bestAttempt": {
       "activityId": 1812872165,
       "effortId": 45487623780,
-      "date": 1535833456000000,
+      "date": 1535833456000,
       "time": 2101,
       "watts": 263.8,
       "perf": 415.71394185088576,
@@ -346,7 +346,7 @@
     "wnf": 1.0208751351416423
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Moody",
       "segmentId": 6445920,
@@ -356,7 +356,7 @@
     "bestEffort": {
       "activityId": 384031159,
       "effortId": 9176972229,
-      "date": 1441288806000000,
+      "date": 1441288806000,
       "time": 199,
       "watts": 375.4,
       "perf": 415.73342565079014,
@@ -384,7 +384,7 @@
     "bestAttempt": {
       "activityId": 991030613,
       "effortId": 24287920761,
-      "date": 1494980991000000,
+      "date": 1494980991000,
       "time": 200,
       "watts": 401,
       "perf": 411.58648472992354,
@@ -432,7 +432,7 @@
     "wnf": 1.0125420739417097
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Page Mill",
       "segmentId": 794318,
@@ -442,7 +442,7 @@
     "bestEffort": {
       "activityId": 410367954,
       "effortId": 9852281967,
-      "date": 1444497071000000,
+      "date": 1444497071000,
       "time": 2075,
       "watts": 291.7,
       "perf": 585.4592367272693,
@@ -471,7 +471,7 @@
     "bestAttempt": {
       "activityId": 923703211,
       "effortId": 22546023525,
-      "date": 1491058988000000,
+      "date": 1491058988000,
       "time": 2276,
       "watts": 290.4,
       "perf": 486.6182010290479,
@@ -505,7 +505,7 @@
       "precipProbability": 0.0175,
       "precipIntensity": 0.007625,
       "precipType": "",
-      "airPressure": 1012.5675000000001,
+      "airPressure": 1012.5675000001,
       "airDensity": 1.2227751097462378,
       "cloudCover": 0.47,
       "uvIndex": 2,
@@ -518,7 +518,7 @@
     "wnf": 0.9607433413427865
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Westridge",
       "segmentId": 359323,
@@ -528,7 +528,7 @@
     "bestEffort": {
       "activityId": 110500883,
       "effortId": 2417187294,
-      "date": 1391296079000000,
+      "date": 1391296079000,
       "time": 259,
       "watts": 381.9,
       "perf": 486.55054974450417,
@@ -557,7 +557,7 @@
     "bestAttempt": {
       "activityId": 917392217,
       "effortId": 22386568227,
-      "date": 1490659654000000,
+      "date": 1490659654000,
       "time": 273,
       "watts": 367.6,
       "perf": 437.92748362934014,
@@ -586,9 +586,9 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 15.170000000000002,
+      "temperature": 15.170000002,
       "humidity": 0.8074999999999999,
-      "apparentTemperature": 15.170000000000002,
+      "apparentTemperature": 15.170000002,
       "precipProbability": 0.0175,
       "precipIntensity": 0.007625,
       "precipType": "",
@@ -605,7 +605,7 @@
     "wnf": 0.9958125562077377
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Soda Springs",
       "segmentId": 2719563,
@@ -615,7 +615,7 @@
     "bestEffort": {
       "activityId": 315867360,
       "effortId": 7461340242,
-      "date": 1433097146000000,
+      "date": 1433097146000,
       "time": 2237,
       "watts": 276.8,
       "perf": 416.7600529898739,
@@ -644,7 +644,7 @@
     "bestAttempt": {
       "activityId": 1598101023,
       "effortId": 39986514073,
-      "date": 1527360241000000,
+      "date": 1527360241000,
       "time": 2219,
       "watts": 281.4,
       "perf": 423.5487928540223,
@@ -676,7 +676,7 @@
       "temperature": 12.0725,
       "humidity": 0.945,
       "apparentTemperature": 12.0725,
-      "precipProbability": 0.015000000000000001,
+      "precipProbability": 0.015000000001,
       "precipIntensity": 0.0089,
       "precipType": "",
       "airPressure": 1012.73,
@@ -692,7 +692,7 @@
     "wnf": 1.0005950013515459
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Highway 9",
       "segmentId": 6544581,
@@ -702,7 +702,7 @@
     "bestEffort": {
       "activityId": 738641762,
       "effortId": 18112892775,
-      "date": 1475946908000000,
+      "date": 1475946908000,
       "time": 1624,
       "watts": 291,
       "perf": 602.4816826702114,
@@ -731,7 +731,7 @@
     "bestAttempt": {
       "activityId": 1598101023,
       "effortId": 39986513550,
-      "date": 1527355305000000,
+      "date": 1527355305000,
       "time": 1842,
       "watts": 289.2,
       "perf": 468.313465841085,
@@ -781,7 +781,7 @@
     "wnf": 1.0104385200099977
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Bohlman",
       "segmentId": 384773,
@@ -791,7 +791,7 @@
     "bestEffort": {
       "activityId": 720628795,
       "effortId": 17681969257,
-      "date": 1474502717000000,
+      "date": 1474502717000,
       "time": 1677,
       "watts": 305.1,
       "perf": 479.1375624262223,
@@ -820,7 +820,7 @@
     "bestAttempt": {
       "activityId": 1749867603,
       "effortId": 43839309169,
-      "date": 1533401249000000,
+      "date": 1533401249000,
       "time": 1879,
       "watts": 288.8,
       "perf": 381.65660620849735,
@@ -868,7 +868,7 @@
     "wnf": 0.9853860404930107
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Montebello",
       "segmentId": 627158,
@@ -878,7 +878,7 @@
     "bestEffort": {
       "activityId": 731234129,
       "effortId": 17933139099,
-      "date": 1475342076000000,
+      "date": 1475342076000,
       "time": 1596,
       "watts": 318.7,
       "perf": 612.0849113383714,
@@ -907,7 +907,7 @@
     "bestAttempt": {
       "activityId": 903128795,
       "effortId": 22015041624,
-      "date": 1489703401000000,
+      "date": 1489703401000,
       "time": 1822,
       "watts": 303.6,
       "perf": 469.65689490917845,
@@ -955,7 +955,7 @@
     "wnf": 1.0124783813917877
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Redwood Gulch",
       "segmentId": 806794,
@@ -965,7 +965,7 @@
     "bestEffort": {
       "activityId": 778512508,
       "effortId": 19041038106,
-      "date": 1479425638000000,
+      "date": 1479425638000,
       "time": 519,
       "watts": 358.8,
       "perf": 476.0945446369133,
@@ -993,7 +993,7 @@
     "bestAttempt": {
       "activityId": 1321458782,
       "effortId": 32713232807,
-      "date": 1513815204000000,
+      "date": 1513815204000,
       "time": 598,
       "watts": 313.3,
       "perf": 358.61260678835686,
@@ -1040,7 +1040,7 @@
     "wnf": 0.9908679884629805
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Montevina",
       "segmentId": 744314,
@@ -1050,7 +1050,7 @@
     "bestEffort": {
       "activityId": 668237915,
       "effortId": 16369925596,
-      "date": 1470593612000000,
+      "date": 1470593612000,
       "time": 1559,
       "watts": 253.8,
       "perf": 366.5275790497989,
@@ -1079,7 +1079,7 @@
     "bestAttempt": {
       "activityId": 1118964651,
       "effortId": 27563400364,
-      "date": 1501949353000000,
+      "date": 1501949353000,
       "time": 1573,
       "watts": 288.8,
       "perf": 360.03228222945864,
@@ -1127,7 +1127,7 @@
     "wnf": 1.0151101983180488
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Tunitas Creek",
       "segmentId": 226705,
@@ -1137,7 +1137,7 @@
     "bestEffort": {
       "activityId": 411156373,
       "effortId": 9875668767,
-      "date": 1444587492000000,
+      "date": 1444587492000,
       "time": 1738,
       "watts": 279.7,
       "perf": 470.1374719758978,
@@ -1166,7 +1166,7 @@
     "bestAttempt": {
       "activityId": 1240991360,
       "effortId": 30654341778,
-      "date": 1508612604000000,
+      "date": 1508612604000,
       "time": 1911,
       "watts": 266,
       "perf": 388.86874439484427,
@@ -1195,13 +1195,13 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.040000000000001,
+      "temperature": 13.040000001,
       "humidity": 0.9425,
-      "apparentTemperature": 13.040000000000001,
-      "precipProbability": 0.022500000000000003,
+      "apparentTemperature": 13.040000001,
+      "precipProbability": 0.022500000003,
       "precipIntensity": 0.007,
       "precipType": "",
-      "airPressure": 1012.4975000000001,
+      "airPressure": 1012.4975000001,
       "airDensity": 1.225983472873928,
       "cloudCover": 0.5375,
       "uvIndex": 2,
@@ -1214,7 +1214,7 @@
     "wnf": 1.0414340509021016
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "West Old la Honda",
       "segmentId": 622755,
@@ -1224,7 +1224,7 @@
     "bestEffort": {
       "activityId": 756616084,
       "effortId": 18532900150,
-      "date": 1477493061000000,
+      "date": 1477493061000,
       "time": 607,
       "watts": 311.2,
       "perf": 502.7487000230213,
@@ -1252,7 +1252,7 @@
     "bestAttempt": {
       "activityId": 980779697,
       "effortId": 24040598817,
-      "date": 1494465247000000,
+      "date": 1494465247000,
       "time": 713,
       "watts": 258.4,
       "perf": 364.3755928760057,
@@ -1285,7 +1285,7 @@
       "humidity": 0.9199999999999999,
       "apparentTemperature": 13.302499999999998,
       "precipProbability": 0.0175,
-      "precipIntensity": 0.008275000000000001,
+      "precipIntensity": 0.008275000000001,
       "precipType": "",
       "airPressure": 1012.5525,
       "airDensity": 1.2250075086973804,
@@ -1300,7 +1300,7 @@
     "wnf": 1.053083850473708
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Mt. Diablo - South",
       "segmentId": 6479369,
@@ -1310,7 +1310,7 @@
     "bestEffort": {
       "activityId": 699538867,
       "effortId": 17154779486,
-      "date": 1472931625000000,
+      "date": 1472931625000,
       "time": 3906,
       "watts": 223.6,
       "perf": 363.88880507065835,
@@ -1339,7 +1339,7 @@
     "bestAttempt": {
       "activityId": 1141996509,
       "effortId": 28134027729,
-      "date": 1503159587000000,
+      "date": 1503159587000,
       "time": 3825,
       "watts": 240.4,
       "perf": 379.46374958000797,
@@ -1368,9 +1368,9 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 12.107500000000002,
-      "humidity": 0.9500000000000001,
-      "apparentTemperature": 12.107500000000002,
+      "temperature": 12.107500000002,
+      "humidity": 0.9500000001,
+      "apparentTemperature": 12.107500000002,
       "precipProbability": 0.005,
       "precipIntensity": 0.00445,
       "precipType": "",
@@ -1387,7 +1387,7 @@
     "wnf": 1.041295513539779
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Mt. Diablo TT - North",
       "segmentId": 662492,
@@ -1397,7 +1397,7 @@
     "bestEffort": {
       "activityId": 620847206,
       "effortId": 15150305196,
-      "date": 1466874545000000,
+      "date": 1466874545000,
       "time": 1586,
       "watts": 310.7,
       "perf": 617.097230703117,
@@ -1425,7 +1425,7 @@
     "bestAttempt": {
       "activityId": 1141996509,
       "effortId": 28134028388,
-      "date": 1503165028000000,
+      "date": 1503165028000,
       "time": 2144,
       "watts": 224,
       "perf": 337.68393610633666,
@@ -1473,7 +1473,7 @@
     "wnf": 1.0149629300782526
   },
   {
-    "date": 1538192751000000,
+    "date": 1538192751000,
     "goal": {
       "name": "Bolhman - On Orbit - Bohlman",
       "segmentId": 637762,
@@ -1483,7 +1483,7 @@
     "bestEffort": {
       "activityId": 750158144,
       "effortId": 18383400742,
-      "date": 1476922595000000,
+      "date": 1476922595000,
       "time": 1650,
       "watts": 315.1,
       "perf": 506.9994052779698,

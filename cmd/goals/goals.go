@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"math"
+	"path/filepath"
+	"runtime"
 
 	"os"
 	"sort"
@@ -17,6 +20,11 @@ import (
 	"github.com/scheibo/weather"
 	"github.com/scheibo/wnf"
 	"github.com/strava/go.strava"
+	"github.com/tdewolff/minify"
+	"github.com/tdewolff/minify/css"
+	"github.com/tdewolff/minify/html"
+	"github.com/tdewolff/minify/js"
+	"github.com/tdewolff/minify/svg"
 )
 
 type SegmentGoal struct {
@@ -141,15 +149,22 @@ func (e *Effort) Weather() string {
 	return weatherString(e.Conditions)
 }
 
+func (e *Effort) Title() string {
+	return fmt.Sprintf("%s\n%s", e.WWatts2(), e.Weather())
+}
+
 type C struct {
 	cda, mt float64
 	token   string
 	climbs  *[]Climb
 	w       *weather.Client
 	refresh time.Duration
+	now     time.Time
 }
 
 func main() {
+	now := time.Now()
+
 	var tz, key, token, goalsFile, climbsFile string
 	var cda, mr, mb float64
 	var refresh time.Duration
@@ -200,6 +215,7 @@ func main() {
 		climbs:  &climbs,
 		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
 		refresh: refresh,
+		now:     now,
 	}
 
 	var goals []GoalProgress
@@ -218,12 +234,16 @@ func main() {
 		exit(err)
 	}
 	fmt.Println(string(j))
+
+	err = c.render(goals)
+	if err != nil {
+		exit(err)
+	}
 }
 
 func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 	var progress GoalProgressList
 
-	now := time.Now()
 	for _, p := range prev {
 		goal := p.Goal
 		// Since Strava returns the efforts sorted by time, presumably one page
@@ -260,8 +280,8 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		}
 
 		forecast, forecastWNF := p.Forecast, p.ForecastWNF
-		if forecast == nil || now.Sub(fromEpochMillis(p.Date)) > c.refresh {
-			forecast, err = c.getForecast(segment, now)
+		if forecast == nil || c.now.Sub(fromEpochMillis(p.Date)) > c.refresh {
+			forecast, err = c.getForecast(segment)
 			if err != nil {
 				return nil, err
 			}
@@ -272,7 +292,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		}
 
 		u := GoalProgress{
-			Date:        int(now.Unix() * int64(time.Millisecond)),
+			Date:        int(c.now.Unix() * 1000),
 			Goal:        goal,
 			BestEffort:  bestEffort,
 			NumEfforts:  numEfforts,
@@ -351,12 +371,14 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 	e := Effort{}
 	e.ActivityID = s.Activity.Id
 	e.EffortID = s.Id
-	e.Date = int(s.StartDate.Unix() * int64(time.Millisecond))
+	e.Date = int(s.StartDate.Unix() * 1000)
 	e.Time = s.ElapsedTime
 	e.Watts = s.AveragePower
 	e.PERF = perf.CalcM(
 		float64(s.ElapsedTime), segment.Distance, segment.AverageGrade, segment.MedianElevation)
 	e.PWatts = c.calcPower(s.ElapsedTime, segment)
+
+	fmt.Fprintf(os.Stderr, "%s %s %d %s\n", s.StartDate, s.StartDateLocal, e.Date, fromEpochMillis(e.Date))
 
 	w, err := c.w.History(segment.AverageLocation, s.StartDate)
 	if err != nil {
@@ -382,7 +404,7 @@ func (c *C) calcPower(t int, segment *Segment) float64 {
 }
 
 // BUG: This won't be accurate if the script is run on Saturday between 8 and 12.
-func (c *C) getForecast(segment *Segment, now time.Time) (*weather.Conditions, error) {
+func (c *C) getForecast(segment *Segment) (*weather.Conditions, error) {
 	f, err := c.w.Forecast(segment.AverageLocation)
 	if err != nil {
 		return nil, err
@@ -395,6 +417,30 @@ func (c *C) getForecast(segment *Segment, now time.Time) (*weather.Conditions, e
 		}
 	}
 	return weather.Average(cs), nil
+}
+
+func (c *C) render(goals []GoalProgress) error {
+	f, err := create("goals.html")
+	if err != nil {
+		return err
+	}
+
+	t := template.Must(compileTemplates(resource("goals.tmpl.html")))
+	return t.Execute(f, struct {
+		GenerationTime string
+		Goals          []GoalProgress
+	}{
+		c.now.Format(time.Stamp),
+		goals,
+	})
+}
+
+func create(path string) (*os.File, error) {
+	err := os.MkdirAll(filepath.Dir(path), 0755)
+	if err != nil {
+		return nil, err
+	}
+	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0644)
 }
 
 func fromEpochMillis(millis int) time.Time {
@@ -449,7 +495,7 @@ func rank(s float64) int {
 }
 
 func watts(w float64) string {
-	return fmt.Sprintf("%.2f W", w)
+	return fmt.Sprintf("%.0fW", math.Round(w))
 }
 
 func weatherString(c *weather.Conditions) string {
@@ -464,6 +510,11 @@ func verify(s string, x float64) {
 	if x < 0 {
 		exit(fmt.Errorf("%s must be non negative but was %f", s, x))
 	}
+}
+
+func resource(name string) string {
+	_, src, _, _ := runtime.Caller(0)
+	return filepath.Join(filepath.Dir(src), name)
 }
 
 func exit(err error) {
@@ -502,4 +553,37 @@ func (p GoalProgressList) Less(i, j int) bool {
 
 	return (float64(p[i].Goal.Time) / float64(p[i].BestAttempt.Time)) >
 		(float64(p[j].Goal.Time) / float64(p[j].BestAttempt.Time))
+}
+
+func compileTemplates(filenames ...string) (*template.Template, error) {
+	m := minify.New()
+	m.AddFunc("text/css", css.Minify)
+	m.AddFunc("text/html", html.Minify)
+	m.AddFunc("text/javascript", js.Minify)
+	m.AddFunc("image/svg+xml", svg.Minify)
+
+	var tmpl *template.Template
+	for _, filename := range filenames {
+		name := filepath.Base(filename)
+		if tmpl == nil {
+			tmpl = template.New(name)
+		} else {
+			tmpl = tmpl.New(name)
+		}
+
+		b, err := ioutil.ReadFile(filename)
+		if err != nil {
+			return nil, err
+		}
+
+		//mb, err := m.Bytes("text/html", b)
+		//if err != nil {
+		//return nil, err
+		//}
+		_, err = tmpl.Parse(string(b)) // TODO mb
+		if err != nil {
+			return nil, err
+		}
+	}
+	return tmpl, nil
 }
