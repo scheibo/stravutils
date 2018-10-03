@@ -193,6 +193,7 @@ func (e *Effort) Best() string {
 }
 
 type C struct {
+	reload  bool
 	token   string
 	climbs  *[]Climb
 	w       *weather.Client
@@ -203,9 +204,11 @@ type C struct {
 func main() {
 	now := time.Now()
 
+	var reload bool
 	var tz, key, token, goalsFile, climbsFile string
 	var refresh time.Duration
 
+	flag.BoolVar(&reload, "reload", false, "Perform a full reload instead of update.")
 	flag.StringVar(&tz, "tz", "America/Los_Angeles", "timezone to use")
 	flag.StringVar(&key, "key", os.Getenv("DARKSKY_API_KEY"), "DarkySky API Key")
 	flag.StringVar(&token, "token", "", "Access Token")
@@ -238,6 +241,7 @@ func main() {
 	}
 
 	c := C{
+		reload:  reload,
 		token:   token,
 		climbs:  &climbs,
 		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
@@ -272,10 +276,8 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 	var progress GoalProgressList
 
 	for _, p := range prev {
-		goal := p.Goal //SegmentGoal{p.Goal.Name, p.Goal.SegmentID,  p.Goal.Time, p.Goal.Date, nil}
-		// Since Strava returns the efforts sorted by time, presumably one page
-		// is enough to find the best efforts before and after.
-		efforts, err := GetEfforts(goal.SegmentID, 1, c.token)
+		goal := p.Goal
+		efforts, err := GetEfforts(goal.SegmentID, 0, c.token)
 		if err != nil {
 			return nil, err
 		}
@@ -287,17 +289,25 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		goal.segment = segment
 
 		date := goal.Date
-		if p.Date > date {
+		if !c.reload && p.Date > date {
 			date = p.Date
 		}
 
+		best := p.BestAttempt
+		attempts := p.NumAttempts
+		if c.reload {
+			best = nil
+			attempts = 0
+		}
 		bestAttempt, numAttempts, err := c.getBestAttemptAfter(
-			fromEpochMillis(date), goal, efforts, p.BestAttempt)
+			fromEpochMillis(date), goal, efforts, best)
 		if err != nil {
 			return nil, err
 		}
+		numAttempts += attempts
+
 		bestEffort, numEfforts := p.BestEffort, p.NumEfforts
-		if bestEffort == nil {
+		if c.reload || bestEffort == nil {
 			best, numEffortsBefore, err := c.getBestEffortBefore(
 				fromEpochMillis(goal.Date), goal, efforts)
 			if err != nil {
@@ -320,7 +330,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		}
 
 		forecast, forecastWNF := p.Forecast, p.ForecastWNF
-		if forecast == nil || c.now.Sub(fromEpochMillis(p.Date)) > c.refresh {
+		if c.reload || forecast == nil || c.now.Sub(fromEpochMillis(p.Date)) > c.refresh {
 			forecast, err = c.getForecast(segment)
 			if err != nil {
 				return nil, err
@@ -337,7 +347,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 			BestEffort:  bestEffort,
 			NumEfforts:  numEfforts,
 			BestAttempt: bestAttempt,
-			NumAttempts: p.NumAttempts + numAttempts,
+			NumAttempts: numAttempts,
 			Forecast:    forecast,
 			ForecastWNF: forecastWNF,
 		}
@@ -376,10 +386,6 @@ func (c *C) getBestEffort(
 	goal SegmentGoal,
 	efforts []*strava.SegmentEffortSummary,
 	prev *Effort) (*Effort, int, error) {
-
-	if prev != nil {
-		date = fromEpochMillis(prev.Date)
-	}
 
 	var best *strava.SegmentEffortSummary
 	num := 0

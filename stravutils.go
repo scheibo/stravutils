@@ -134,11 +134,14 @@ func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]*strava.Segm
 			return nil, err
 		}
 
-		if len(es) == 0 {
+		efforts = append(efforts, es...)
+
+		// maxPages == 0 -> heuristically terminate if we get less than a full page.
+		// BUG: This heuristic is *not* guaranteed to return all efforts, use
+		// maxPages < 0 to ensure we exhaust all pages with one extra request.
+		if len(es) == 0 || (maxPages == 0 && len(es) < MAX_PER_PAGE) {
 			break
 		}
-
-		efforts = append(efforts, es...)
 	}
 
 	return efforts, nil

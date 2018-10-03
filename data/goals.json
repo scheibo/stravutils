@@ -1,6 +1,6 @@
 [
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Mt. Hamilton",
       "segmentId": 7447638,
@@ -68,24 +68,26 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.7425,
-      "humidity": 0.7324999999999999,
-      "apparentTemperature": 13.7425,
+      "temperature": 13.4625,
+      "humidity": 0.7575,
+      "apparentTemperature": 13.4625,
+      "precipProbability": 0.005,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1014.9525,
-      "airDensity": 1.2273053453257066,
-      "cloudCover": 0.18250000000000002,
+      "airPressure": 1014.7275000000001,
+      "airDensity": 1.2281450311156286,
+      "cloudCover": 0.165,
       "uvIndex": 2,
-      "windSpeed": 1.7335217409146344,
-      "windGust": 2.4878664185441868,
-      "windBearing": 313.7906137469396,
+      "windSpeed": 1.7135963574594735,
+      "windGust": 2.486124846660212,
+      "windBearing": 308.06536643533406,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9683543257326589
+    "wnf": 0.9664824172303427
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Kings Mountain",
       "segmentId": 611413,
@@ -120,7 +122,7 @@
         "sunsetTime": "2015-11-04T17:09:35-08:00"
       }
     },
-    "numEfforts": 37,
+    "numEfforts": 38,
     "bestAttempt": {
       "activityId": 1812868297,
       "effortId": 45619203898,
@@ -129,8 +131,8 @@
       "watts": 323.9,
       "perf": 581.5387339112025,
       "pwatts": 315.2285336126809,
-      "wnf": 1.0222572671319452,
-      "wwatts": 322.2446592929097,
+      "wnf": 0.9986355882500306,
+      "wwatts": 314.7984320974941,
       "weather": {
         "icon": "partly-cloudy-day",
         "time": "2018-09-01T10:34:28-07:00",
@@ -140,39 +142,39 @@
         "precipType": "",
         "airPressure": 1013.52,
         "airDensity": 1.2147702227943808,
-        "cloudCover": 0.31,
+        "cloudCover": 0.28,
         "uvIndex": 5,
-        "windSpeed": 1.16,
-        "windGust": 2.65,
-        "windBearing": 284,
+        "windSpeed": 0.52,
+        "windGust": 2.49,
+        "windBearing": 20,
         "sunriseTime": "2018-09-01T06:41:21-07:00",
         "sunsetTime": "2018-09-01T19:39:49-07:00"
       }
     },
-    "numAttempts": 34,
+    "numAttempts": 18,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 15.232500000000002,
-      "humidity": 0.8500000000000001,
-      "apparentTemperature": 15.232500000000002,
-      "precipProbability": 0.0025,
+      "temperature": 15.1725,
+      "humidity": 0.8600000000000001,
+      "apparentTemperature": 15.1725,
+      "precipProbability": 0.0075,
       "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3525,
-      "airDensity": 1.219874132079338,
-      "cloudCover": 0.53,
+      "airPressure": 1015.155,
+      "airDensity": 1.2198463234653465,
+      "cloudCover": 0.5575,
       "uvIndex": 1,
-      "windSpeed": 2.5596520814758863,
-      "windGust": 4.20944348876429,
-      "windBearing": 314.32815473340236,
+      "windSpeed": 2.5730552230778865,
+      "windGust": 4.08109324630583,
+      "windBearing": 315.0297018822348,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.038957343004206
+    "wnf": 1.038791649851808
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Old La Honda",
       "segmentId": 8109834,
@@ -235,30 +237,30 @@
         "sunsetTime": "2017-01-27T17:29:15-08:00"
       }
     },
-    "numAttempts": 487,
+    "numAttempts": 28,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 15.3275,
-      "humidity": 0.835,
-      "apparentTemperature": 15.3275,
-      "precipProbability": 0.005,
-      "precipIntensity": 0.00445,
+      "temperature": 15.2425,
+      "humidity": 0.845,
+      "apparentTemperature": 15.2425,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3475000000001,
-      "airDensity": 1.2195358121042634,
-      "cloudCover": 0.5825,
+      "airPressure": 1015.1425,
+      "airDensity": 1.219596332166307,
+      "cloudCover": 0.5925,
       "uvIndex": 1,
-      "windSpeed": 2.2399232768209245,
-      "windGust": 3.9323697181377177,
-      "windBearing": 315.65848576180616,
+      "windSpeed": 2.2361546654483093,
+      "windGust": 3.846311130828792,
+      "windBearing": 316.3996199101493,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9919685872711834
+    "wnf": 0.9916916804175656
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Highway 9",
       "segmentId": 6544581,
@@ -293,7 +295,7 @@
         "sunsetTime": "2016-10-08T18:41:52-07:00"
       }
     },
-    "numEfforts": 23,
+    "numEfforts": 24,
     "bestAttempt": {
       "activityId": 1873825431,
       "effortId": 47111204162,
@@ -326,26 +328,26 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.735,
-      "humidity": 0.8825000000000001,
-      "apparentTemperature": 13.735,
-      "precipProbability": 0.005,
-      "precipIntensity": 0.0038250000000000003,
+      "temperature": 13.7375,
+      "humidity": 0.8975,
+      "apparentTemperature": 13.7375,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3475000000001,
-      "airDensity": 1.2266403442053488,
-      "cloudCover": 0.5775,
+      "airPressure": 1015.1075000000001,
+      "airDensity": 1.226239422094754,
+      "cloudCover": 0.58,
       "uvIndex": 1,
-      "windSpeed": 1.9949299156379239,
-      "windGust": 3.5573796348601503,
-      "windBearing": 322.63910100214383,
+      "windSpeed": 2.0394915643809584,
+      "windGust": 3.741633819390201,
+      "windBearing": 320.60297044175746,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0432383784195893
+    "wnf": 1.0455491917042627
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "West Alpine",
       "segmentId": 4649440,
@@ -388,22 +390,22 @@
       "watts": 263.8,
       "perf": 415.71394185088576,
       "pwatts": 247.43354280844883,
-      "wnf": 0.9776862354412186,
-      "wwatts": 241.91236899027595,
+      "wnf": 1.0306842709627813,
+      "wwatts": 255.02586068126422,
       "weather": {
         "icon": "clear-day",
         "time": "2018-09-01T13:24:16-07:00",
-        "temperature": 21.37,
-        "humidity": 0.56,
-        "apparentTemperature": 21.37,
+        "temperature": 21.97,
+        "humidity": 0.55,
+        "apparentTemperature": 21.97,
         "precipType": "",
         "airPressure": 1012.28,
-        "airDensity": 1.190943686610434,
-        "cloudCover": 0.11,
+        "airDensity": 1.1884121637648273,
+        "cloudCover": 0.14,
         "uvIndex": 8,
-        "windSpeed": 1.99,
-        "windGust": 3.78,
-        "windBearing": 304,
+        "windSpeed": 1.79,
+        "windGust": 3.41,
+        "windBearing": 17,
         "sunriseTime": "2018-09-01T06:41:11-07:00",
         "sunsetTime": "2018-09-01T19:39:24-07:00"
       }
@@ -412,26 +414,26 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.520000000000001,
-      "humidity": 0.8700000000000001,
-      "apparentTemperature": 14.520000000000001,
-      "precipProbability": 0.01,
-      "precipIntensity": 0.00635,
+      "temperature": 14.41,
+      "humidity": 0.885,
+      "apparentTemperature": 14.41,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3875,
-      "airDensity": 1.2230835668885212,
-      "cloudCover": 0.6425,
+      "airPressure": 1015.1725,
+      "airDensity": 1.2232211935799946,
+      "cloudCover": 0.645,
       "uvIndex": 1,
-      "windSpeed": 2.3396764195637645,
-      "windGust": 4.251932645193022,
-      "windBearing": 323.3034467788837,
+      "windSpeed": 2.330817013500711,
+      "windGust": 4.290070191923875,
+      "windBearing": 321.3051306565596,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9935985276685619
+    "wnf": 0.9918160102358407
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Moody",
       "segmentId": 6445920,
@@ -494,30 +496,30 @@
         "sunsetTime": "2017-05-16T20:13:02-07:00"
       }
     },
-    "numAttempts": 1235,
+    "numAttempts": 79,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 15.125,
-      "humidity": 0.825,
-      "apparentTemperature": 15.125,
-      "precipProbability": 0.005,
-      "precipIntensity": 0.0038250000000000003,
+      "temperature": 15.07,
+      "humidity": 0.835,
+      "apparentTemperature": 15.07,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3125,
-      "airDensity": 1.2205432833237593,
-      "cloudCover": 0.545,
+      "airPressure": 1015.0975,
+      "airDensity": 1.2204456665792645,
+      "cloudCover": 0.5525,
       "uvIndex": 1,
-      "windSpeed": 2.021882442515351,
-      "windGust": 3.5489225253376504,
-      "windBearing": 315.00484357029467,
+      "windSpeed": 2.0146084072287542,
+      "windGust": 3.534305979833772,
+      "windBearing": 315.3357015351459,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0290668164639378
+    "wnf": 1.0289094023784928
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Page Mill",
       "segmentId": 794318,
@@ -580,30 +582,30 @@
         "sunsetTime": "2017-04-01T19:32:30-07:00"
       }
     },
-    "numAttempts": 146,
+    "numAttempts": 10,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.6125,
-      "humidity": 0.8525,
-      "apparentTemperature": 14.6125,
-      "precipProbability": 0.005,
-      "precipIntensity": 0.00445,
+      "temperature": 14.565,
+      "humidity": 0.8625,
+      "apparentTemperature": 14.565,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.325,
-      "airDensity": 1.2227117829219019,
-      "cloudCover": 0.5599999999999999,
+      "airPressure": 1015.1075000000001,
+      "airDensity": 1.2225800269512832,
+      "cloudCover": 0.5675,
       "uvIndex": 1,
-      "windSpeed": 2.069719255585898,
-      "windGust": 3.6570067198315006,
-      "windBearing": 316.66905220098556,
+      "windSpeed": 2.0652229838239253,
+      "windGust": 3.656633128099625,
+      "windBearing": 316.9089207261971,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9782973827924579
+    "wnf": 0.9780858178891615
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Westridge",
       "segmentId": 359323,
@@ -667,30 +669,30 @@
         "sunsetTime": "2017-03-27T19:28:11-07:00"
       }
     },
-    "numAttempts": 74,
+    "numAttempts": 6,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 15.622499999999999,
-      "humidity": 0.805,
-      "apparentTemperature": 15.622499999999999,
-      "precipProbability": 0.005,
-      "precipIntensity": 0.003175,
+      "temperature": 15.56,
+      "humidity": 0.8175000000000001,
+      "apparentTemperature": 15.56,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3125,
-      "airDensity": 1.2183739661417874,
-      "cloudCover": 0.54,
+      "airPressure": 1015.0999999999999,
+      "airDensity": 1.2183226375024632,
+      "cloudCover": 0.5475,
       "uvIndex": 1,
-      "windSpeed": 2.0568736786534543,
-      "windGust": 3.566418743626354,
-      "windBearing": 312.9986831859687,
+      "windSpeed": 2.044024732462229,
+      "windGust": 3.4873003445470485,
+      "windBearing": 313.9816114708283,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.028961361654007
+    "wnf": 1.0281353210456323
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Soda Springs",
       "segmentId": 2719563,
@@ -754,30 +756,30 @@
         "sunsetTime": "2018-05-26T20:19:36-07:00"
       }
     },
-    "numAttempts": 20,
+    "numAttempts": 3,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.2025,
-      "humidity": 0.8775,
-      "apparentTemperature": 13.2025,
+      "temperature": 13.187500000000002,
+      "humidity": 0.895,
+      "apparentTemperature": 13.187500000000002,
       "precipProbability": 0.005,
       "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.2075,
-      "airDensity": 1.2290164539513069,
-      "cloudCover": 0.4775,
+      "airPressure": 1014.9699999999999,
+      "airDensity": 1.2286754565515925,
+      "cloudCover": 0.46249999999999997,
       "uvIndex": 1,
-      "windSpeed": 1.8077597657843552,
-      "windGust": 2.799035688053795,
-      "windBearing": 321.1212097447375,
+      "windSpeed": 1.8445208493536664,
+      "windGust": 3.0300696306892916,
+      "windBearing": 318.71289465481306,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9881548036509855
+    "wnf": 0.9874973498285606
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Bohlman",
       "segmentId": 384773,
@@ -845,24 +847,26 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 12.405,
+      "temperature": 13.0375,
       "humidity": 0.925,
-      "apparentTemperature": 12.149999999999999,
+      "apparentTemperature": 13.0375,
+      "precipProbability": 0.005,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3175,
-      "airDensity": 1.2325671211010367,
+      "airPressure": 1015.0725,
+      "airDensity": 1.2292483199300495,
       "cloudCover": 0.54,
       "uvIndex": 1,
-      "windSpeed": 1.8523126578771771,
-      "windGust": 3.2171733640990117,
-      "windBearing": 320.9365689921907,
+      "windSpeed": 1.9195373881808429,
+      "windGust": 3.4491868036182622,
+      "windBearing": 319.56252479457504,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9871071358494157
+    "wnf": 0.9870344676601506
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Montebello",
       "segmentId": 627158,
@@ -926,30 +930,30 @@
         "sunsetTime": "2017-03-16T19:17:58-07:00"
       }
     },
-    "numAttempts": 164,
+    "numAttempts": 11,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.117500000000001,
-      "humidity": 0.8600000000000001,
-      "apparentTemperature": 14.117500000000001,
-      "precipProbability": 0.005,
-      "precipIntensity": 0.003175,
+      "temperature": 14.112499999999999,
+      "humidity": 0.875,
+      "apparentTemperature": 14.112499999999999,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3249999999999,
-      "airDensity": 1.2249516656445123,
-      "cloudCover": 0.5525,
+      "airPressure": 1015.0925,
+      "airDensity": 1.2246017439186658,
+      "cloudCover": 0.5575,
       "uvIndex": 1,
-      "windSpeed": 1.9347370303313574,
-      "windGust": 3.4320361542014837,
-      "windBearing": 318.6718048891452,
+      "windSpeed": 1.9620428408778683,
+      "windGust": 3.5602504103853647,
+      "windBearing": 318.0735989073683,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0366819997455277
+    "wnf": 1.0374178872994877
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Redwood Gulch",
       "segmentId": 806794,
@@ -964,8 +968,8 @@
       "watts": 358.8,
       "perf": 476.0945446369133,
       "pwatts": 322.57698877419296,
-      "wnf": 0.9992486064248604,
-      "wwatts": 322.33460649734013,
+      "wnf": 0.9992524121411124,
+      "wwatts": 322.3358341338288,
       "weather": {
         "icon": "clear-day",
         "time": "2016-11-17T15:33:58-08:00",
@@ -992,8 +996,8 @@
       "watts": 313.3,
       "perf": 358.61260678835686,
       "pwatts": 277.76846020779976,
-      "wnf": 1.0002109255063298,
-      "wwatts": 277.82704866091154,
+      "wnf": 1.0002194211126378,
+      "wwatts": 277.8294084723943,
       "weather": {
         "icon": "clear-day",
         "time": "2017-12-20T16:13:24-08:00",
@@ -1011,30 +1015,30 @@
         "sunsetTime": "2017-12-20T16:55:22-08:00"
       }
     },
-    "numAttempts": 39,
+    "numAttempts": 5,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.282499999999999,
-      "humidity": 0.855,
-      "apparentTemperature": 14.282499999999999,
-      "precipProbability": 0.005,
-      "precipIntensity": 0.003175,
+      "temperature": 14.2725,
+      "humidity": 0.8675,
+      "apparentTemperature": 14.2725,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3425,
-      "airDensity": 1.2242960403714471,
-      "cloudCover": 0.575,
+      "airPressure": 1015.105,
+      "airDensity": 1.2239525544618728,
+      "cloudCover": 0.5775,
       "uvIndex": 1,
-      "windSpeed": 1.9799303197887155,
-      "windGust": 3.5323805658689023,
-      "windBearing": 321.6376294916366,
+      "windSpeed": 2.0241362455131306,
+      "windGust": 3.7060260026825946,
+      "windBearing": 319.9357881027388,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9956808455524393
+    "wnf": 0.9960800762597402
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Tunitas Creek",
       "segmentId": 226705,
@@ -1069,7 +1073,7 @@
         "sunsetTime": "2015-10-11T18:39:31-07:00"
       }
     },
-    "numEfforts": 16,
+    "numEfforts": 17,
     "bestAttempt": {
       "activityId": 1876581831,
       "effortId": 47202998902,
@@ -1098,30 +1102,30 @@
         "sunsetTime": "2018-09-30T18:55:26-07:00"
       }
     },
-    "numAttempts": 10,
+    "numAttempts": 6,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.627500000000001,
-      "humidity": 0.895,
-      "apparentTemperature": 14.627500000000001,
-      "precipProbability": 0.0025,
-      "precipIntensity": 0.0019,
+      "temperature": 14.525,
+      "humidity": 0.9025,
+      "apparentTemperature": 14.525,
+      "precipProbability": 0.0075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3924999999999,
-      "airDensity": 1.2224164222601193,
-      "cloudCover": 0.5275000000000001,
+      "airPressure": 1015.195,
+      "airDensity": 1.2225728052168354,
+      "cloudCover": 0.5725,
       "uvIndex": 1,
-      "windSpeed": 3.017091150106571,
-      "windGust": 4.839359221512314,
-      "windBearing": 318.33225867993525,
+      "windSpeed": 3.049639102316707,
+      "windGust": 4.73404382925106,
+      "windBearing": 318.3377468664605,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0121194678491021
+    "wnf": 1.0124394126662661
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Montevina",
       "segmentId": 744314,
@@ -1189,24 +1193,26 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.87,
-      "humidity": 0.8574999999999999,
-      "apparentTemperature": 13.87,
+      "temperature": 13.965,
+      "humidity": 0.8674999999999999,
+      "apparentTemperature": 13.965,
+      "precipProbability": 0.005,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.2774999999999,
-      "airDensity": 1.2261008827541695,
-      "cloudCover": 0.52,
+      "airPressure": 1015.0324999999999,
+      "airDensity": 1.2252842754406066,
+      "cloudCover": 0.515,
       "uvIndex": 1,
-      "windSpeed": 1.7945674606588997,
-      "windGust": 2.9842877553569,
-      "windBearing": 321.5696635606264,
+      "windSpeed": 1.8592484272314616,
+      "windGust": 3.2386813097284013,
+      "windBearing": 319.86287552656233,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.030533977771939
+    "wnf": 1.0319624704294041
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "West Old La Honda",
       "segmentId": 622755,
@@ -1269,30 +1275,30 @@
         "sunsetTime": "2017-05-10T20:08:09-07:00"
       }
     },
-    "numAttempts": 56,
+    "numAttempts": 5,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.425,
-      "humidity": 0.89,
-      "apparentTemperature": 14.425,
+      "temperature": 14.317499999999999,
+      "humidity": 0.9,
+      "apparentTemperature": 14.317499999999999,
       "precipProbability": 0.0075,
-      "precipIntensity": 0.005075,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3675000000001,
-      "airDensity": 1.2233785987469334,
-      "cloudCover": 0.595,
+      "airPressure": 1015.1575,
+      "airDensity": 1.223526422711652,
+      "cloudCover": 0.6100000000000001,
       "uvIndex": 1,
-      "windSpeed": 2.347178235356217,
-      "windGust": 4.134451450119798,
-      "windBearing": 318.3163228359542,
+      "windSpeed": 2.345391274029253,
+      "windGust": 4.079665252393761,
+      "windBearing": 318.0365115489683,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0342580141908437
+    "wnf": 1.0339347512231833
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Mt. Diablo - South",
       "segmentId": 6479369,
@@ -1356,28 +1362,30 @@
         "sunsetTime": "2017-08-19T19:56:49-07:00"
       }
     },
-    "numAttempts": 19,
+    "numAttempts": 2,
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.5275,
-      "humidity": 0.8125,
-      "apparentTemperature": 13.5275,
+      "temperature": 13.587499999999999,
+      "humidity": 0.8099999999999999,
+      "apparentTemperature": 13.587499999999999,
+      "precipProbability": 0.005,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1014.795,
-      "airDensity": 1.2275223284415788,
-      "cloudCover": 0.2,
+      "airPressure": 1014.55,
+      "airDensity": 1.2269467555387614,
+      "cloudCover": 0.13,
       "uvIndex": 1,
-      "windSpeed": 1.3597904452860068,
-      "windGust": 1.754829199158924,
-      "windBearing": 288.6071852292492,
+      "windSpeed": 1.0624040797177254,
+      "windGust": 1.3600596526961135,
+      "windBearing": 293.6501020864719,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.007016963302611
+    "wnf": 1.0077591010379603
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Mt. Diablo TT - North",
       "segmentId": 662492,
@@ -1444,24 +1452,26 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.467500000000001,
-      "humidity": 0.7675,
-      "apparentTemperature": 14.467500000000001,
+      "temperature": 14.53,
+      "humidity": 0.77,
+      "apparentTemperature": 14.53,
+      "precipProbability": 0.005,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1014.805,
-      "airDensity": 1.2235065055102106,
-      "cloudCover": 0.17500000000000002,
+      "airPressure": 1014.5575,
+      "airDensity": 1.2229231586453215,
+      "cloudCover": 0.11249999999999999,
       "uvIndex": 1,
-      "windSpeed": 1.3256760632216549,
-      "windGust": 1.6732644924341071,
-      "windBearing": 287.8758321455724,
+      "windSpeed": 1.0201348231468625,
+      "windGust": 1.2686458144005044,
+      "windBearing": 293.1509064398642,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9710773963403359
+    "wnf": 0.9772639176432758
   },
   {
-    "date": 1538597186000,
+    "date": 1538602462000,
     "goal": {
       "name": "Bolhman - On Orbit - Bohlman",
       "segmentId": 637762,
@@ -1500,20 +1510,22 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 12.5875,
-      "humidity": 0.9175,
-      "apparentTemperature": 12.342500000000001,
+      "temperature": 13.2375,
+      "humidity": 0.9099999999999999,
+      "apparentTemperature": 13.2375,
+      "precipProbability": 0.005,
+      "precipIntensity": 0.001275,
       "precipType": "",
-      "airPressure": 1015.3175,
-      "airDensity": 1.231763220746464,
+      "airPressure": 1015.0725,
+      "airDensity": 1.2283926797125715,
       "cloudCover": 0.54,
       "uvIndex": 1,
-      "windSpeed": 1.84981265941128,
-      "windGust": 3.2171733640990117,
-      "windBearing": 320.93648326594905,
+      "windSpeed": 1.9195373881808429,
+      "windGust": 3.4491868036182622,
+      "windBearing": 319.56252479457504,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9888106372946219
+    "wnf": 0.9887493226645646
   }
 ]
