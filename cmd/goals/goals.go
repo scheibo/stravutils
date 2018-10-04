@@ -335,7 +335,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 			if err != nil {
 				return nil, err
 			}
-			forecastWNF, _, err = WNF(segment, forecast, nil /* past */)
+			forecastWNF, _, err = PowerWNF(goal.PWatts(), segment, forecast, nil /* past */)
 			if err != nil {
 				return nil, err
 			}
@@ -427,7 +427,8 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 	}
 	e.Conditions = w
 
-	baseline, _, err := WNF(segment, w, nil /* past */)
+	// NOTE: using PWatts for consistency as opposed to AveragePower
+	baseline, _, err := PowerWNF(e.PWatts, segment, w, nil /* past */)
 	if err != nil {
 		return nil, err
 	}

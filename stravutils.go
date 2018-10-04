@@ -172,7 +172,10 @@ func Resource(name string) string {
 
 func WNF(s *Segment, current, past *weather.Conditions) (baseline, historical float64, err error) {
 	power := perf.CalcPowerM(500, s.Distance, s.AverageGrade, s.MedianElevation)
+	return PowerWNF(power, s, current, past)
+}
 
+func PowerWNF(power float64, s *Segment, current, past *weather.Conditions) (baseline, historical float64, err error) {
 	lles, err := geo.DecodeZPolyline(s.Map)
 	if err != nil {
 		return
