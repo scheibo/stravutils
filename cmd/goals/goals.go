@@ -9,6 +9,8 @@ import (
 	"math"
 	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 
 	"os"
 	"sort"
@@ -253,6 +255,38 @@ func main() {
 	err = json.Unmarshal(f, &goals)
 	if err != nil {
 		exit(err)
+	}
+
+	fi, _ := os.Stdin.Stat()
+	if (fi.Mode() & os.ModeCharDevice) == 0 {
+		bytes, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			exit(err)
+		}
+
+		today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
+		for _, line := range strings.Split(strings.TrimSpace(string(bytes)), "\n") {
+			s := strings.Split(line, ",")
+
+			// TODO: change order from "id,time,name" to "name,id,time".
+			id, err := strconv.ParseInt(s[0], 0, 64)
+			if err != nil {
+				exit(err)
+			}
+
+			t, err := time.ParseDuration(s[1])
+			if err != nil {
+				exit(err)
+			}
+
+			goal := SegmentGoal{
+				Name:      s[2],
+				SegmentID: id,
+				Time:      int(t.Seconds()),
+				Date:      int(today.Unix() * 1000),
+			}
+			goals = append(goals, GoalProgress{Goal: goal})
+		}
 	}
 
 	progress, err := c.update(goals)
@@ -585,6 +619,19 @@ func (p GoalProgressList) Swap(i, j int) {
 func (p GoalProgressList) Less(i, j int) bool {
 	if p[i].NumAttempts == 0 {
 		if p[j].NumAttempts == 0 {
+
+			if p[i].NumEfforts == 0 {
+				if p[j].NumEfforts == 0 {
+					return p[i].Goal.SegmentID > p[j].Goal.SegmentID
+				} else {
+					return false
+				}
+			}
+
+			if p[j].NumEfforts == 0 {
+				return true
+			}
+
 			return (float64(p[i].Goal.Time) / float64(p[i].BestEffort.Time)) >
 				(float64(p[j].Goal.Time) / float64(p[j].BestEffort.Time))
 		} else {
