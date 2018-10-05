@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"html/template"
+	"io"
 	"io/ioutil"
 	"math"
 	"path/filepath"
@@ -220,19 +221,21 @@ type C struct {
 	w       *weather.Client
 	refresh time.Duration
 	now     time.Time
+	dir     string
 }
 
 func main() {
 	now := time.Now()
 
 	var reload bool
-	var tz, key, token, goalsFile, patchesFile, climbsFile string
+	var tz, key, token, output, goalsFile, patchesFile, climbsFile string
 	var refresh time.Duration
 
 	flag.BoolVar(&reload, "reload", false, "Perform a full reload instead of update.")
 	flag.StringVar(&tz, "tz", "America/Los_Angeles", "timezone to use")
 	flag.StringVar(&key, "key", os.Getenv("DARKSKY_API_KEY"), "DarkySky API Key")
 	flag.StringVar(&token, "token", "", "Access Token")
+	flag.StringVar(&output, "output", "site", "Output directory")
 	flag.StringVar(&goalsFile, "goals", "", "Goals")
 	flag.StringVar(&patchesFile, "patch", "", "Patch to Strava segment efforts which are incorrect.")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
@@ -329,9 +332,15 @@ func main() {
 		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
 		refresh: refresh,
 		now:     now,
+		dir:     output,
 	}
 
 	progress, err := c.update(goals)
+	if err != nil {
+		exit(err)
+	}
+
+	err = c.render(progress)
 	if err != nil {
 		exit(err)
 	}
@@ -340,9 +349,8 @@ func main() {
 	if err != nil {
 		exit(err)
 	}
-	fmt.Println(string(j))
 
-	err = c.render(progress)
+	err = ioutil.WriteFile(filepath.Join(c.dir, "goals.json"), j, 0644)
 	if err != nil {
 		exit(err)
 	}
@@ -553,7 +561,15 @@ func (c *C) getForecast(segment *Segment) (*weather.Conditions, error) {
 }
 
 func (c *C) render(goals []GoalProgress) error {
-	f, err := create("goals.html")
+	err := os.RemoveAll(c.dir)
+	if err != nil {
+		return err
+	}
+	err = copyFile(resource("favicon.ico"), filepath.Join(c.dir, "favicon.ico"))
+	if err != nil {
+		return err
+	}
+	f, err := create(filepath.Join(c.dir, "index.html"))
 	if err != nil {
 		return err
 	}
@@ -574,6 +590,26 @@ func create(path string) (*os.File, error) {
 		return nil, err
 	}
 	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+}
+
+func copyFile(src, dst string) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+
+	out, err := create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, in)
+	if err != nil {
+		return err
+	}
+	return out.Close()
 }
 
 func fromEpochMillis(millis int) time.Time {
