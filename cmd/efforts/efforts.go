@@ -9,13 +9,13 @@ import (
 
 	"github.com/scheibo/calc"
 	"github.com/scheibo/perf"
+	"github.com/scheibo/strava"
 	. "github.com/scheibo/stravutils"
-	"github.com/strava/go.strava"
 )
 
 type Effort struct {
 	climb  Climb
-	effort *strava.SegmentEffortSummary
+	effort strava.DetailedSegmentEffort
 	score  float64
 	power  float64
 }

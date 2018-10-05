@@ -182,7 +182,11 @@
             {{else}}
               <td class="{{$g.BestEffort.Best}} time" title="{{$g.BestEffort.Progress $g.Goal.Time}}"><a href="{{$g.BestEffort.URL}}">{{$g.BestEffort.Duration}}</a></td>
               <td>{{$g.BestEffort.Day}}</td>
-              <td>{{$g.BestEffort.Watts2}}</td>
+              {{if lt $g.BestEffort.Watts 0.0}}
+                <td class="absent">-</td>
+              {{else}}
+                <td>{{$g.BestEffort.Watts2}}</td>
+              {{end}}
               <td title="{{$g.BestEffort.PWatts2}}">{{$g.BestEffort.Perf}}</td>
               <td class="color{{$g.BestEffort.Rank}}" title="{{$g.BestEffort.Title}}">{{$g.BestEffort.Score}}</td>
               <td class="num">{{$g.NumEfforts}}</td>
@@ -195,7 +199,11 @@
             {{else}}
               <td class="{{$g.BestAttempt.Best}} time" title="{{$g.BestAttempt.Progress $g.Goal.Time}}"><a href="{{$g.BestAttempt.URL}}">{{$g.BestAttempt.Duration}}</a></td>
               <td>{{$g.BestAttempt.Day}}</td>
-              <td>{{$g.BestAttempt.Watts2}}</td>
+              {{if lt $g.BestAttempt.Watts 0.0}}
+                <td class="absent">-</td>
+              {{else}}
+                <td>{{$g.BestAttempt.Watts2}}</td>
+              {{end}}
               <td title="{{$g.BestAttempt.PWatts2}}">{{$g.BestAttempt.Perf}}</td>
               <td class="color{{$g.BestAttempt.Rank}}" title="{{$g.BestAttempt.Title}}">{{$g.BestAttempt.Score}}</td>
               <td class="num">{{$g.NumAttempts}}</td>

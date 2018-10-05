@@ -10,9 +10,11 @@ import (
 
 	"github.com/scheibo/geo"
 	"github.com/scheibo/perf"
+	"github.com/scheibo/strava"
 	"github.com/scheibo/weather"
 	"github.com/scheibo/wnf"
-	"github.com/strava/go.strava"
+
+	"golang.org/x/net/context"
 )
 
 const MAX_PER_PAGE = 200
@@ -68,23 +70,24 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 		}
 	}
 
-	service, err := GetSegmentsService(tokens...)
+	ctx, err := GetStravaContext(tokens...)
 	if err != nil {
 		return nil, err
 	}
-	s, err := service.Get(segmentID).Do()
+	client := strava.NewAPIClient(strava.NewConfiguration())
+	s, _, err := client.SegmentsApi.GetSegmentById(*ctx, segmentID)
 	if err != nil {
 		return nil, err
 	}
 
-	gain := s.ElevationHigh - s.ElevationLow
-	gr := gain / s.Distance
-	if s.AverageGrade < CLIMB_THRESHOLD {
-		gain = s.TotalElevationGain
-		gr = s.AverageGrade
+	gain := float64(s.ElevationHigh) - float64(s.ElevationLow)
+	gr := gain / float64(s.Distance)
+	if float64(s.AverageGrade) < CLIMB_THRESHOLD {
+		gain = float64(s.TotalElevationGain)
+		gr = float64(s.AverageGrade)
 	}
 
-	lls, err := geo.DecodePolyline(string(s.Map.Polyline))
+	lls, err := geo.DecodePolyline(s.Map_.Polyline)
 	if err != nil {
 		return nil, err
 	}
@@ -102,34 +105,35 @@ func GetSegmentByID(segmentID int64, climbs []Climb, tokens ...string) (*Segment
 	return &Segment{
 		ID:                 segmentID,
 		Name:               s.Name,
-		Distance:           s.Distance,
+		Distance:           float64(s.Distance),
 		AverageGrade:       gr,
-		ElevationLow:       s.ElevationLow,
-		ElevationHigh:      s.ElevationHigh,
+		ElevationLow:       float64(s.ElevationLow),
+		ElevationHigh:      float64(s.ElevationHigh),
 		TotalElevationGain: gain,
-		MedianElevation:    (s.ElevationHigh + s.ElevationLow) / 2,
-		StartLocation:      geo.LatLng{s.StartLocation[0], s.StartLocation[1]},
-		EndLocation:        geo.LatLng{s.EndLocation[0], s.EndLocation[1]},
+		MedianElevation:    (float64(s.ElevationHigh) + float64(s.ElevationLow)) / 2,
+		StartLocation:      geo.LatLng{s.StartLatlng[0], s.StartLatlng[1]},
+		EndLocation:        geo.LatLng{s.EndLatlng[0], s.EndLatlng[1]},
 		AverageLocation:    geo.Average(lls),
 		AverageDirection:   geo.AverageDirection(lls),
 		Map:                geo.EncodeZPolyline(lles),
 	}, nil
 }
 
-func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]*strava.SegmentEffortSummary, error) {
-	var efforts []*strava.SegmentEffortSummary
+func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]strava.DetailedSegmentEffort, error) {
+	var efforts []strava.DetailedSegmentEffort
 
-	service, err := GetSegmentsService(tokens...)
+	ctx, err := GetStravaContext(tokens...)
 	if err != nil {
 		return nil, err
 	}
+	client := strava.NewAPIClient(strava.NewConfiguration())
 
 	for page := 1; maxPages < 1 || page <= maxPages; page++ {
-		es, err := service.ListEfforts(segmentID).
-			PerPage(MAX_PER_PAGE).
-			Page(page).
-			Do()
-
+		es, _, err := client.SegmentEffortsApi.GetEffortsBySegmentId(
+			*ctx, int32(segmentID), map[string]interface{}{
+				"perPage": int32(MAX_PER_PAGE),
+				"page":    int32(page),
+			})
 		if err != nil {
 			return nil, err
 		}
@@ -147,7 +151,7 @@ func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]*strava.Segm
 	return efforts, nil
 }
 
-func GetSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
+func GetStravaContext(tokens ...string) (*context.Context, error) {
 	token := os.Getenv("STRAVA_ACCESS_TOKEN")
 	if len(tokens) > 0 && tokens[0] != "" {
 		token = tokens[0]
@@ -156,8 +160,8 @@ func GetSegmentsService(tokens ...string) (*strava.SegmentsService, error) {
 		return nil, fmt.Errorf("must provide a Strava access token")
 	}
 
-	client := strava.NewClient(token)
-	return strava.NewSegmentsService(client), nil
+	ctx := context.WithValue(context.Background(), strava.ContextAccessToken, token)
+	return &ctx, nil
 }
 
 func Resource(name string) string {

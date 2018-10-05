@@ -18,10 +18,10 @@ import (
 
 	"github.com/scheibo/calc"
 	"github.com/scheibo/perf"
+	"github.com/scheibo/strava"
 	. "github.com/scheibo/stravutils"
 	"github.com/scheibo/weather"
 	"github.com/scheibo/wnf"
-	"github.com/strava/go.strava"
 	"github.com/tdewolff/minify"
 	"github.com/tdewolff/minify/css"
 	"github.com/tdewolff/minify/html"
@@ -216,7 +216,7 @@ type C struct {
 	reload  bool
 	token   string
 	climbs  *[]Climb
-	patches map[int64]*strava.SegmentEffortSummary
+	patches map[int64]strava.DetailedSegmentEffort
 	w       *weather.Client
 	refresh time.Duration
 	now     time.Time
@@ -278,16 +278,15 @@ func main() {
 		exit(err)
 	}
 
-	var ps []strava.SegmentEffortSummary
+	var ps []strava.DetailedSegmentEffort
 	err = json.Unmarshal(f, &ps)
 	if err != nil {
 		exit(err)
 	}
 
-	patches := make(map[int64]*strava.SegmentEffortSummary)
+	patches := make(map[int64]strava.DetailedSegmentEffort)
 	for _, p := range ps {
-		x := p
-		patches[p.Id] = &x
+		patches[p.Id] = p
 	}
 
 	fi, _ := os.Stdin.Stat()
@@ -299,21 +298,21 @@ func main() {
 
 		today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
 		for _, line := range strings.Split(strings.TrimSpace(string(bytes)), "\n") {
+			// "name,id,time"
 			s := strings.Split(line, ",")
 
-			// TODO: change order from "id,time,name" to "name,id,time".
-			id, err := strconv.ParseInt(s[0], 0, 64)
+			id, err := strconv.ParseInt(s[1], 0, 64)
 			if err != nil {
 				exit(err)
 			}
 
-			t, err := time.ParseDuration(s[1])
+			t, err := time.ParseDuration(s[2])
 			if err != nil {
 				exit(err)
 			}
 
 			goal := SegmentGoal{
-				Name:      s[2],
+				Name:      s[0],
 				SegmentID: id,
 				Time:      int(t.Seconds()),
 				Date:      int(today.Unix() * 1000),
@@ -439,7 +438,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 func (c *C) getBestEffortBefore(
 	date time.Time,
 	goal SegmentGoal,
-	efforts []*strava.SegmentEffortSummary) (*Effort, int, error) {
+	efforts []strava.DetailedSegmentEffort) (*Effort, int, error) {
 
 	return c.getBestEffort(func(ed, gd time.Time) bool {
 		return ed.Before(gd)
@@ -449,7 +448,7 @@ func (c *C) getBestEffortBefore(
 func (c *C) getBestAttemptAfter(
 	date time.Time,
 	goal SegmentGoal,
-	efforts []*strava.SegmentEffortSummary,
+	efforts []strava.DetailedSegmentEffort,
 	prev *Effort) (*Effort, int, error) {
 
 	return c.getBestEffort(func(ed, gd time.Time) bool {
@@ -461,10 +460,10 @@ func (c *C) getBestEffort(
 	fun func(ed, gd time.Time) bool,
 	date time.Time,
 	goal SegmentGoal,
-	efforts []*strava.SegmentEffortSummary,
+	efforts []strava.DetailedSegmentEffort,
 	prev *Effort) (*Effort, int, error) {
 
-	var best *strava.SegmentEffortSummary
+	var best *strava.DetailedSegmentEffort
 	num := 0
 
 	for _, effort := range efforts {
@@ -476,12 +475,12 @@ func (c *C) getBestEffort(
 		if fun(e.StartDate, date) {
 			num++
 			if best == nil || e.ElapsedTime < best.ElapsedTime {
-				best = e
+				best = &e
 			}
 		}
 	}
 
-	if best == nil || (prev != nil && !(best.ElapsedTime < prev.Time)) {
+	if best == nil || (prev != nil && !(int(best.ElapsedTime) < prev.Time)) {
 		return prev, num, nil
 	}
 
@@ -493,15 +492,19 @@ func (c *C) getBestEffort(
 	return e, num, nil
 }
 
-func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort, error) {
+func (c *C) toEffort(s *strava.DetailedSegmentEffort, segment *Segment) (*Effort, error) {
 	e := Effort{}
 	e.ActivityID = s.Activity.Id
 	e.EffortID = s.Id
 	e.Date = int(s.StartDate.Unix() * 1000)
-	e.Time = s.ElapsedTime
-	e.Watts = s.AveragePower
-	e.PERF = PERF(s.ElapsedTime, segment)
-	e.PWatts = calcPower(s.ElapsedTime, segment)
+	e.Time = int(s.ElapsedTime)
+	if s.DeviceWatts {
+		e.Watts = float64(s.AverageWatts)
+	} else {
+		e.Watts = -1
+	}
+	e.PERF = PERF(e.Time, segment)
+	e.PWatts = calcPower(e.Time, segment)
 
 	w, err := c.w.History(segment.AverageLocation, s.StartDate)
 	if err != nil {

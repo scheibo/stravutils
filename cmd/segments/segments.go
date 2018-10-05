@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/scheibo/strava"
 	. "github.com/scheibo/stravutils"
-	"github.com/strava/go.strava"
 )
 
 func main() {
@@ -76,19 +76,21 @@ func main() {
 	fmt.Println(string(j))
 }
 
-func GetStarred(tokens ...string) ([]*strava.PersonalSegmentSummary, error) {
-	var segments []*strava.PersonalSegmentSummary
+func GetStarred(tokens ...string) ([]strava.SummarySegment, error) {
+	var segments []strava.SummarySegment
 
-	service, err := GetCurrentAthleteService(tokens...)
+	ctx, err := GetStravaContext(tokens...)
 	if err != nil {
 		return nil, err
 	}
+	client := strava.NewAPIClient(strava.NewConfiguration())
 
 	for page := 1; ; page++ {
-		s, err := service.ListStarredSegments().
-			PerPage(MAX_PER_PAGE).
-			Page(page).
-			Do()
+		s, _, err := client.SegmentsApi.GetLoggedInAthleteStarredSegments(
+			*ctx, map[string]interface{}{
+				"perPage": int32(MAX_PER_PAGE),
+				"page":    int32(page),
+			})
 
 		if err != nil {
 			return nil, err
@@ -102,19 +104,6 @@ func GetStarred(tokens ...string) ([]*strava.PersonalSegmentSummary, error) {
 	}
 
 	return segments, nil
-}
-
-func GetCurrentAthleteService(tokens ...string) (*strava.CurrentAthleteService, error) {
-	token := os.Getenv("STRAVA_ACCESS_TOKEN")
-	if len(tokens) > 0 && tokens[0] != "" {
-		token = tokens[0]
-	}
-	if token == "" {
-		return nil, fmt.Errorf("must provide a Strava access token")
-	}
-
-	client := strava.NewClient(token)
-	return strava.NewCurrentAthleteService(client), nil
 }
 
 func exit(err error) {
