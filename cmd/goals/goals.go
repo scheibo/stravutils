@@ -106,8 +106,12 @@ func (p *GoalProgress) Rank() int {
 	return rank(p.ForecastWNF)
 }
 
+func (p *GoalProgress) WWatts() float64 {
+	return p.ForecastWNF * p.Goal.PWatts()
+}
+
 func (p *GoalProgress) WWatts2() string {
-	return watts(p.ForecastWNF * p.Goal.PWatts())
+	return watts(p.WWatts())
 }
 
 func (p *GoalProgress) Title() string {
@@ -629,33 +633,8 @@ func (p GoalProgressList) Swap(i, j int) {
 }
 
 func (p GoalProgressList) Less(i, j int) bool {
-	if p[i].NumAttempts == 0 {
-		if p[j].NumAttempts == 0 {
+	return p[i].WWatts() > p[j].WWatts()
 
-			if p[i].NumEfforts == 0 {
-				if p[j].NumEfforts == 0 {
-					return p[i].Goal.SegmentID > p[j].Goal.SegmentID
-				} else {
-					return false
-				}
-			}
-
-			if p[j].NumEfforts == 0 {
-				return true
-			}
-
-			return (float64(p[i].Goal.Time) / float64(p[i].BestEffort.Time)) >
-				(float64(p[j].Goal.Time) / float64(p[j].BestEffort.Time))
-		} else {
-			return false
-		}
-	}
-	if p[j].NumAttempts == 0 {
-		return true
-	}
-
-	return (float64(p[i].Goal.Time) / float64(p[i].BestAttempt.Time)) >
-		(float64(p[j].Goal.Time) / float64(p[j].BestAttempt.Time))
 }
 
 func compileTemplates(filenames ...string) (*template.Template, error) {
