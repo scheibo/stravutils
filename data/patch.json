@@ -1,0 +1,26 @@
+[
+  {
+    "segment": {
+      "id": 8109834
+    },
+    "id": 20626486942,
+    "activity": {
+      "id": 846341021
+    },
+    "start_date": "2017-01-27T22:33:04Z",
+    "elapsed_time": 974,
+    "average_watts": 360
+  },
+  {
+    "segment": {
+      "id": 2719563
+    },
+    "id": 44730087843,
+    "activity": {
+      "id": 1781494471
+    },
+    "start_date": "2018-08-18T16:50:24Z",
+    "elapsed_time": 2031,
+    "average_watts": 302
+  }
+]
