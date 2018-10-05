@@ -62,8 +62,12 @@ func (s *SegmentGoal) PWatts() float64 {
 	return calcPower(s.Time, s.segment)
 }
 
+func (s *SegmentGoal) PERF() float64 {
+	return PERF(s.Time, s.segment)
+}
+
 func (s *SegmentGoal) Perf() string {
-	return fmt.Sprintf("%.0f", math.Round(PERF(s.Time, s.segment)))
+	return fmt.Sprintf("%.0f", math.Round(s.PERF()))
 }
 
 func (s *SegmentGoal) PWatts2() string {
@@ -114,8 +118,12 @@ func (p *GoalProgress) WWatts2() string {
 	return watts(p.WWatts())
 }
 
+func (p *GoalProgress) WPERF() float64 {
+	return WPERF(p.WWatts(), p.Goal.Time, p.Goal.segment)
+}
+
 func (p *GoalProgress) Title() string {
-	return fmt.Sprintf("%s\n%s", p.WWatts2(), p.Weather())
+	return fmt.Sprintf("%s (%.0f)\n%s", p.WWatts2(), math.Round(p.WPERF()), p.Weather())
 }
 
 type Effort struct {
@@ -128,7 +136,7 @@ type Effort struct {
 	// The time of the effort in seconds.
 	Time int `json:"time"`
 	// The average watts measured for the effort.
-	Watts float64 `json:"watts"`
+	Watts float64 `json:"watts,omitempty"`
 	// The PERF score for the effort.
 	PERF float64 `json:"perf"`
 	// The predicted average watts for the effort according to PERF.
@@ -578,6 +586,10 @@ func PERF(t int, segment *Segment) float64 {
 		perf.CpM)
 }
 
+func WPERF(p float64, t int, segment *Segment) float64 {
+	return perf.Score(p, calc.AltitudeAdjust(perf.CpM(float64(t)), segment.MedianElevation))
+}
+
 func calcPower(t int, segment *Segment) float64 {
 	vg := segment.Distance / float64(t)
 
@@ -633,7 +645,7 @@ func (p GoalProgressList) Swap(i, j int) {
 }
 
 func (p GoalProgressList) Less(i, j int) bool {
-	return p[i].WWatts() > p[j].WWatts()
+	return p[i].WPERF() < p[j].WPERF()
 
 }
 
