@@ -210,6 +210,7 @@ type C struct {
 	reload  bool
 	token   string
 	climbs  *[]Climb
+	patches map[int64]*strava.SegmentEffortSummary
 	w       *weather.Client
 	refresh time.Duration
 	now     time.Time
@@ -219,7 +220,7 @@ func main() {
 	now := time.Now()
 
 	var reload bool
-	var tz, key, token, goalsFile, climbsFile string
+	var tz, key, token, goalsFile, patchesFile, climbsFile string
 	var refresh time.Duration
 
 	flag.BoolVar(&reload, "reload", false, "Perform a full reload instead of update.")
@@ -227,6 +228,7 @@ func main() {
 	flag.StringVar(&key, "key", os.Getenv("DARKSKY_API_KEY"), "DarkySky API Key")
 	flag.StringVar(&token, "token", "", "Access Token")
 	flag.StringVar(&goalsFile, "goals", "", "Goals")
+	flag.StringVar(&patchesFile, "patch", "", "Patch to Strava segment efforts which are incorrect.")
 	flag.StringVar(&climbsFile, "climbs", "", "Climbs")
 
 	flag.DurationVar(&refresh, "refresh", 12*time.Hour,
@@ -254,19 +256,32 @@ func main() {
 		exit(err)
 	}
 
-	c := C{
-		reload:  reload,
-		token:   token,
-		climbs:  &climbs,
-		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
-		refresh: refresh,
-		now:     now,
-	}
-
 	var goals []GoalProgress
 	err = json.Unmarshal(f, &goals)
 	if err != nil {
 		exit(err)
+	}
+
+	file = Resource("patch")
+	if patchesFile != "" {
+		file = patchesFile
+	}
+
+	f, err = ioutil.ReadFile(file)
+	if err != nil {
+		exit(err)
+	}
+
+	var ps []strava.SegmentEffortSummary
+	err = json.Unmarshal(f, &ps)
+	if err != nil {
+		exit(err)
+	}
+
+	patches := make(map[int64]*strava.SegmentEffortSummary)
+	for _, p := range ps {
+		x := p
+		patches[p.Id] = &x
 	}
 
 	fi, _ := os.Stdin.Stat()
@@ -299,6 +314,16 @@ func main() {
 			}
 			goals = append(goals, GoalProgress{Goal: goal})
 		}
+	}
+
+	c := C{
+		reload:  reload,
+		token:   token,
+		climbs:  &climbs,
+		patches: patches,
+		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
+		refresh: refresh,
+		now:     now,
 	}
 
 	progress, err := c.update(goals)
@@ -437,10 +462,15 @@ func (c *C) getBestEffort(
 	num := 0
 
 	for _, effort := range efforts {
-		if fun(effort.StartDate, date) {
+		e := effort
+		if p, ok := c.patches[e.Id]; ok {
+			e = p
+		}
+
+		if fun(e.StartDate, date) {
 			num++
-			if best == nil || effort.ElapsedTime < best.ElapsedTime {
-				best = effort
+			if best == nil || e.ElapsedTime < best.ElapsedTime {
+				best = e
 			}
 		}
 	}

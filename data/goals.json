@@ -1,6 +1,6 @@
 [
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Alviso TT",
       "segmentId": 17091030,
@@ -58,7 +58,7 @@
     "wnf": 1.0042093644440788
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Old Santa Cruz",
       "segmentId": 6213316,
@@ -117,7 +117,7 @@
     "wnf": 0.9355431974849175
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Calaveras / Felter",
       "segmentId": 671251,
@@ -176,7 +176,7 @@
     "wnf": 0.9671054809526066
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Skyline (92 - MPROSD)",
       "segmentId": 787299,
@@ -235,7 +235,7 @@
     "wnf": 0.9091707888096516
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Mt. Hamilton",
       "segmentId": 6144714,
@@ -303,14 +303,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.18,
+      "temperature": 13.177500000000002,
       "humidity": 0.8775000000000001,
-      "apparentTemperature": 13.18,
+      "apparentTemperature": 13.177500000000002,
       "precipProbability": 0.022500000000000003,
       "precipIntensity": 0.010175,
       "precipType": "",
       "airPressure": 1014.47,
-      "airDensity": 1.2282373472831962,
+      "airDensity": 1.2282482416710394,
       "cloudCover": 0.6325000000000001,
       "uvIndex": 1,
       "windSpeed": 1.5281906155848948,
@@ -319,10 +319,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9678063440554603
+    "wnf": 0.9678078643380074
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "West Alpine",
       "segmentId": 4649440,
@@ -408,7 +408,7 @@
     "wnf": 0.9866006406735653
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Los Trancos (Full)",
       "segmentId": 620427,
@@ -467,7 +467,7 @@
     "wnf": 0.9500149057440705
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Page Mill (Moody)",
       "segmentId": 10029832,
@@ -526,7 +526,7 @@
     "wnf": 1.0285605277041752
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Alpine - Joaquin",
       "segmentId": 622318,
@@ -585,7 +585,7 @@
     "wnf": 0.9507814238020131
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Tunitas Creek",
       "segmentId": 11834517,
@@ -655,7 +655,7 @@
       "time": "0001-01-01T00:00:00Z",
       "temperature": 15.059999999999999,
       "humidity": 0.915,
-      "apparentTemperature": 15.067499999999999,
+      "apparentTemperature": 15.065000000000001,
       "precipProbability": 0.025,
       "precipIntensity": 0.011425,
       "precipType": "",
@@ -672,7 +672,7 @@
     "wnf": 1.0248615636364702
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "West Old La Honda",
       "segmentId": 622755,
@@ -758,7 +758,7 @@
     "wnf": 1.0358506204088036
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Highway 92 (East)",
       "segmentId": 921320,
@@ -817,7 +817,7 @@
     "wnf": 1.0263899648387858
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Bohlman",
       "segmentId": 384773,
@@ -904,7 +904,7 @@
     "wnf": 0.9872495796269561
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Soquel - San Jose",
       "segmentId": 6102185,
@@ -963,7 +963,7 @@
     "wnf": 1.0918092600760418
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Hicks / Mt. Umunhum",
       "segmentId": 611999,
@@ -994,7 +994,7 @@
     "wnf": 1.0014051459690088
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Bolhman - On Orbit - Bohlman",
       "segmentId": 637762,
@@ -1052,7 +1052,7 @@
     "wnf": 0.9888994686921472
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Page Mill",
       "segmentId": 794318,
@@ -1138,7 +1138,7 @@
     "wnf": 0.9785185551517728
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Mt. Diablo (South)",
       "segmentId": 6479369,
@@ -1223,7 +1223,7 @@
     "wnf": 1.006062010591212
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Mora",
       "segmentId": 617901,
@@ -1281,7 +1281,7 @@
     "wnf": 1.0408725879343246
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Highway 84 (East)",
       "segmentId": 283479,
@@ -1339,7 +1339,7 @@
     "wnf": 0.9870830384541888
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Soda Springs",
       "segmentId": 2719563,
@@ -1376,31 +1376,31 @@
     },
     "numEfforts": 5,
     "bestAttempt": {
-      "activityId": 1598101023,
-      "effortId": 39986514073,
-      "date": 1527360241000,
-      "time": 2219,
-      "watts": 281.4,
-      "perf": 428.7740948321521,
-      "pwatts": 265.710449469414,
-      "wnf": 0.9970842413328266,
-      "wwatts": 264.935701923415,
+      "activityId": 1781494471,
+      "effortId": 44730087843,
+      "date": 1534611024000,
+      "time": 2031,
+      "watts": 302,
+      "perf": 507.9460998706334,
+      "pwatts": 292.5936659414659,
+      "wnf": 0.9997314220080972,
+      "wwatts": 292.51508172222384,
       "weather": {
-        "icon": "cloudy",
-        "time": "2018-05-26T11:44:01-07:00",
-        "temperature": 11.87,
-        "humidity": 0.86,
-        "apparentTemperature": 11.87,
+        "icon": "clear-day",
+        "time": "2018-08-18T09:50:24-07:00",
+        "temperature": 20.92,
+        "humidity": 0.41,
+        "apparentTemperature": 20.92,
         "precipType": "",
-        "airPressure": 1018.91,
-        "airDensity": 1.2398238207867756,
-        "cloudCover": 1,
-        "uvIndex": 5,
-        "windSpeed": 0.5,
-        "windGust": 2.48,
-        "windBearing": 291,
-        "sunriseTime": "2018-05-26T05:53:12-07:00",
-        "sunsetTime": "2018-05-26T20:19:36-07:00"
+        "airPressure": 1018.09,
+        "airDensity": 1.2015323704868965,
+        "cloudCover": 0.03,
+        "uvIndex": 4,
+        "windSpeed": 0.2,
+        "windGust": 1.71,
+        "windBearing": 253,
+        "sunriseTime": "2018-08-18T06:28:36-07:00",
+        "sunsetTime": "2018-08-18T19:57:30-07:00"
       }
     },
     "numAttempts": 3,
@@ -1426,7 +1426,7 @@
     "wnf": 0.9843118635190631
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Montevina",
       "segmentId": 744314,
@@ -1513,7 +1513,7 @@
     "wnf": 1.0378452075384141
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Wayside",
       "segmentId": 3897,
@@ -1553,7 +1553,7 @@
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
       "temperature": 15.945,
-      "humidity": 0.855,
+      "humidity": 0.8600000000000001,
       "apparentTemperature": 15.945,
       "precipProbability": 0.0175,
       "precipIntensity": 0.007,
@@ -1571,7 +1571,7 @@
     "wnf": 1.0161059972394249
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Mt. Diablo TT (North)",
       "segmentId": 662492,
@@ -1643,7 +1643,7 @@
       "apparentTemperature": 14.2075,
       "precipType": "",
       "airPressure": 1014.205,
-      "airDensity": 1.223285567976251,
+      "airDensity": 1.2232859464496466,
       "cloudCover": 0.2575,
       "uvIndex": 1,
       "windSpeed": 1.0037842628878977,
@@ -1652,10 +1652,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.977340175916213
+    "wnf": 0.9773402212853426
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Black Road",
       "segmentId": 268865,
@@ -1695,14 +1695,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.067499999999999,
+      "temperature": 14.0625,
       "humidity": 0.935,
-      "apparentTemperature": 14.067499999999999,
+      "apparentTemperature": 14.0625,
       "precipProbability": 0.0325,
       "precipIntensity": 0.014625,
       "precipType": "",
       "airPressure": 1014.7149999999999,
-      "airDensity": 1.2239104550821085,
+      "airDensity": 1.2239330224937142,
       "cloudCover": 0.825,
       "uvIndex": 1,
       "windSpeed": 2.214467891574265,
@@ -1711,10 +1711,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0518495969611303
+    "wnf": 1.0518518718246166
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Patterson Pass (East)",
       "segmentId": 3983,
@@ -1771,7 +1771,7 @@
     "wnf": 1.0173494129433924
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Ascension - Anacapa",
       "segmentId": 376525,
@@ -1829,7 +1829,7 @@
     "wnf": 0.9925919097252979
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Cañada TT",
       "segmentId": 651803,
@@ -1888,7 +1888,7 @@
     "wnf": 1.055519052996794
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Liddicoat",
       "segmentId": 4200043,
@@ -1947,7 +1947,7 @@
     "wnf": 1.0936152566002784
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Redwood Gulch",
       "segmentId": 11710652,
@@ -2033,7 +2033,7 @@
     "wnf": 0.9970751548373399
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Metcalf",
       "segmentId": 800,
@@ -2092,7 +2092,7 @@
     "wnf": 0.982901190447479
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Jamison Creek",
       "segmentId": 699429,
@@ -2151,7 +2151,7 @@
     "wnf": 1.034715252651315
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Mt. Hamilton Backside",
       "segmentId": 302113,
@@ -2210,7 +2210,7 @@
     "wnf": 1.0245618148763378
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Quimby",
       "segmentId": 120709,
@@ -2269,7 +2269,7 @@
     "wnf": 0.9900891161307187
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Summit Spring",
       "segmentId": 5872720,
@@ -2328,7 +2328,7 @@
     "wnf": 1.0289118263597339
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Loyola",
       "segmentId": 632574,
@@ -2387,7 +2387,7 @@
     "wnf": 0.9955201856831198
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Crestview",
       "segmentId": 263045,
@@ -2444,7 +2444,7 @@
     "wnf": 1.0770935829424066
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Moody",
       "segmentId": 6445920,
@@ -2530,7 +2530,7 @@
     "wnf": 1.0372659064382346
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Kings Mountain",
       "segmentId": 611413,
@@ -2617,7 +2617,7 @@
     "wnf": 1.0530534167293055
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Old La Honda",
       "segmentId": 8109834,
@@ -2657,7 +2657,7 @@
       "effortId": 20626486942,
       "date": 1485556384000,
       "time": 974,
-      "watts": 297.6,
+      "watts": 360,
       "perf": 622.6266965992953,
       "pwatts": 340.7380061436366,
       "wnf": 0.9990715855564886,
@@ -2684,14 +2684,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 15.7475,
+      "temperature": 15.745000000000001,
       "humidity": 0.87,
-      "apparentTemperature": 15.7475,
+      "apparentTemperature": 15.745000000000001,
       "precipProbability": 0.0175,
       "precipIntensity": 0.007,
       "precipType": "",
       "airPressure": 1014.8299999999999,
-      "airDensity": 1.216702727264235,
+      "airDensity": 1.2167133093384883,
       "cloudCover": 0.8875000000000001,
       "uvIndex": 1,
       "windSpeed": 2.724635947321365,
@@ -2700,10 +2700,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.991457267110171
+    "wnf": 0.9914578451438282
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Viscaino (West)",
       "segmentId": 619616,
@@ -2762,7 +2762,7 @@
     "wnf": 0.9837511924790681
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Felton Empire",
       "segmentId": 648888,
@@ -2820,7 +2820,7 @@
     "wnf": 1.0654727937931032
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Highway 9",
       "segmentId": 6544581,
@@ -2907,7 +2907,7 @@
     "wnf": 1.061645723606988
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Melendy",
       "segmentId": 602399,
@@ -2964,7 +2964,7 @@
     "wnf": 1.0395290322434059
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Westridge",
       "segmentId": 359323,
@@ -3051,7 +3051,7 @@
     "wnf": 1.0414251255664444
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Montebello",
       "segmentId": 627158,
@@ -3138,7 +3138,7 @@
     "wnf": 1.05081606647639
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Jefferson (Highland)",
       "segmentId": 3573106,
@@ -3195,7 +3195,7 @@
     "wnf": 1.027882883441882
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Highway 84 (West)",
       "segmentId": 658330,
@@ -3253,7 +3253,7 @@
     "wnf": 1.1444004098746112
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Haskins (East)",
       "segmentId": 614445,
@@ -3312,7 +3312,7 @@
     "wnf": 1.0597542535381408
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Alba",
       "segmentId": 326187,
@@ -3371,7 +3371,7 @@
     "wnf": 1.0501879985317868
   },
   {
-    "date": 1538759879000,
+    "date": 1538760939000,
     "goal": {
       "name": "Golden Oak",
       "segmentId": 637861,
