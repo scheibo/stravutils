@@ -564,18 +564,30 @@ func rank(s float64) int {
 }
 
 func PERF(t int, segment *Segment) float64 {
-	return perf.CalcM(float64(t), segment.Distance, segment.AverageGrade, segment.MedianElevation)
+	return perf.Calc(
+		float64(t),
+		segment.Distance,
+		segment.AverageGrade,
+		segment.MedianElevation,
+		wnf.Mr,
+		cda(segment),
+		perf.CpM)
 }
 
 func calcPower(t int, segment *Segment) float64 {
 	vg := segment.Distance / float64(t)
+
+	return calc.Psimp(
+		calc.Rho(segment.MedianElevation, calc.G),
+		cda(segment), calc.Crr, vg, vg, segment.AverageGrade, wnf.Mt, calc.G, calc.Ec, calc.Fw)
+}
+
+func cda(segment *Segment) float64 {
 	cda := wnf.CdaClimb
 	if segment.AverageGrade < CLIMB_THRESHOLD {
 		cda = wnf.CdaTT
 	}
-	return calc.Psimp(
-		calc.Rho(segment.MedianElevation, calc.G),
-		cda, calc.Crr, vg, vg, segment.AverageGrade, wnf.Mt, calc.G, calc.Ec, calc.Fw)
+	return cda
 }
 
 func watts(w float64) string {
