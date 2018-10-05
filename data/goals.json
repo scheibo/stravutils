@@ -1,6 +1,6 @@
 [
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Alviso TT",
       "segmentId": 17091030,
@@ -58,7 +58,7 @@
     "wnf": 1.0042093644440788
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Old Santa Cruz",
       "segmentId": 6213316,
@@ -117,7 +117,7 @@
     "wnf": 0.9355431974849175
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Calaveras / Felter",
       "segmentId": 671251,
@@ -176,7 +176,7 @@
     "wnf": 0.9671054809526066
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Skyline (92 - MPROSD)",
       "segmentId": 787299,
@@ -216,14 +216,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.7075,
+      "temperature": 13.705,
       "humidity": 0.9674999999999999,
-      "apparentTemperature": 13.7075,
+      "apparentTemperature": 13.705,
       "precipProbability": 0.01,
       "precipIntensity": 0.0057,
       "precipType": "",
       "airPressure": 1014.87,
-      "airDensity": 1.2255433826029436,
+      "airDensity": 1.225555241085905,
       "cloudCover": 0.815,
       "uvIndex": 1,
       "windSpeed": 3.4446487027478008,
@@ -232,10 +232,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9091707888096516
+    "wnf": 0.9091713124701954
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Mt. Hamilton",
       "segmentId": 6144714,
@@ -322,7 +322,7 @@
     "wnf": 0.9678078643380074
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "West Alpine",
       "segmentId": 4649440,
@@ -408,7 +408,7 @@
     "wnf": 0.9866006406735653
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Los Trancos (Full)",
       "segmentId": 620427,
@@ -467,7 +467,7 @@
     "wnf": 0.9500149057440705
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Page Mill (Moody)",
       "segmentId": 10029832,
@@ -507,14 +507,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.82,
+      "temperature": 14.817499999999999,
       "humidity": 0.9099999999999999,
-      "apparentTemperature": 14.82,
+      "apparentTemperature": 14.817499999999999,
       "precipProbability": 0.0225,
       "precipIntensity": 0.010150000000000001,
       "precipType": "",
       "airPressure": 1014.7925,
-      "airDensity": 1.2206714602877957,
+      "airDensity": 1.2206821627475228,
       "cloudCover": 0.875,
       "uvIndex": 1,
       "windSpeed": 2.497161379920237,
@@ -523,10 +523,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0285605277041752
+    "wnf": 1.0285623955629284
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Alpine - Joaquin",
       "segmentId": 622318,
@@ -585,7 +585,7 @@
     "wnf": 0.9507814238020131
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Tunitas Creek",
       "segmentId": 11834517,
@@ -672,7 +672,7 @@
     "wnf": 1.0248615636364702
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "West Old La Honda",
       "segmentId": 622755,
@@ -758,7 +758,7 @@
     "wnf": 1.0358506204088036
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Highway 92 (East)",
       "segmentId": 921320,
@@ -798,14 +798,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 16.3475,
+      "temperature": 16.345000000000002,
       "humidity": 0.8499999999999999,
-      "apparentTemperature": 16.35,
+      "apparentTemperature": 16.3475,
       "precipProbability": 0.01,
       "precipIntensity": 0.0057,
       "precipType": "",
       "airPressure": 1014.8625,
-      "airDensity": 1.2141212434927005,
+      "airDensity": 1.2141316000768272,
       "cloudCover": 0.8,
       "uvIndex": 1,
       "windSpeed": 3.409652118544987,
@@ -814,10 +814,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0263899648387858
+    "wnf": 1.0263912107415385
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Bohlman",
       "segmentId": 384773,
@@ -904,7 +904,7 @@
     "wnf": 0.9872495796269561
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Soquel - San Jose",
       "segmentId": 6102185,
@@ -963,7 +963,7 @@
     "wnf": 1.0918092600760418
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Hicks / Mt. Umunhum",
       "segmentId": 611999,
@@ -994,7 +994,7 @@
     "wnf": 1.0014051459690088
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Bolhman - On Orbit - Bohlman",
       "segmentId": 637762,
@@ -1033,14 +1033,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.412500000000001,
+      "temperature": 13.41,
       "humidity": 0.97,
-      "apparentTemperature": 13.412500000000001,
+      "apparentTemperature": 13.41,
       "precipProbability": 0.0325,
       "precipIntensity": 0.015875,
       "precipType": "",
       "airPressure": 1014.74,
-      "airDensity": 1.2267509484762198,
+      "airDensity": 1.2267616576661655,
       "cloudCover": 0.8575,
       "uvIndex": 1,
       "windSpeed": 2.1794883788967057,
@@ -1049,10 +1049,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9888994686921472
+    "wnf": 0.9888997737060824
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Page Mill",
       "segmentId": 794318,
@@ -1119,15 +1119,15 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.98,
-      "humidity": 0.9,
-      "apparentTemperature": 14.98,
-      "precipProbability": 0.0225,
+      "temperature": 15.017499999999998,
+      "humidity": 0.9025,
+      "apparentTemperature": 15.017499999999998,
+      "precipProbability": 0.02,
       "precipIntensity": 0.010150000000000001,
       "precipType": "",
-      "airPressure": 1014.79,
-      "airDensity": 1.2199904267083186,
-      "cloudCover": 0.87,
+      "airPressure": 1014.7975,
+      "airDensity": 1.2198151183978534,
+      "cloudCover": 0.8725,
       "uvIndex": 1,
       "windSpeed": 2.497161379920237,
       "windGust": 5.411765063796686,
@@ -1135,10 +1135,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9785185551517728
+    "wnf": 0.9784941530120567
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Mt. Diablo (South)",
       "segmentId": 6479369,
@@ -1223,7 +1223,7 @@
     "wnf": 1.006062010591212
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Mora",
       "segmentId": 617901,
@@ -1281,7 +1281,7 @@
     "wnf": 1.0408725879343246
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Highway 84 (East)",
       "segmentId": 283479,
@@ -1339,7 +1339,7 @@
     "wnf": 0.9870830384541888
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Soda Springs",
       "segmentId": 2719563,
@@ -1426,7 +1426,7 @@
     "wnf": 0.9843118635190631
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Montevina",
       "segmentId": 744314,
@@ -1513,7 +1513,7 @@
     "wnf": 1.0378452075384141
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Wayside",
       "segmentId": 3897,
@@ -1571,7 +1571,7 @@
     "wnf": 1.0161059972394249
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Mt. Diablo TT (North)",
       "segmentId": 662492,
@@ -1655,7 +1655,7 @@
     "wnf": 0.9773402212853426
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Black Road",
       "segmentId": 268865,
@@ -1714,7 +1714,65 @@
     "wnf": 1.0518518718246166
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
+    "goal": {
+      "name": "Ascension - Anacapa",
+      "segmentId": 376525,
+      "time": 172,
+      "date": 1538636400000
+    },
+    "bestEffort": {
+      "activityId": 763244121,
+      "effortId": 18691644072,
+      "date": 1478045152000,
+      "time": 174,
+      "watts": 427.9,
+      "perf": 566.6838192512616,
+      "pwatts": 405.66317379000225,
+      "wnf": 0.9932834736440734,
+      "wwatts": 402.93852639161287,
+      "weather": {
+        "icon": "clear-day",
+        "time": "2016-11-01T17:05:52-07:00",
+        "temperature": 17.24,
+        "humidity": 0.6,
+        "apparentTemperature": 17.24,
+        "precipType": "",
+        "airPressure": 1019.13,
+        "airDensity": 1.2172511977786649,
+        "cloudCover": 0.08,
+        "windSpeed": 0.81,
+        "windGust": 2.19,
+        "windBearing": 319,
+        "sunriseTime": "2016-11-01T07:35:21-07:00",
+        "sunsetTime": "2016-11-01T18:11:23-07:00"
+      }
+    },
+    "numEfforts": 12,
+    "numAttempts": 0,
+    "forecast": {
+      "icon": "",
+      "time": "0001-01-01T00:00:00Z",
+      "temperature": 16.0925,
+      "humidity": 0.8375,
+      "apparentTemperature": 16.0925,
+      "precipProbability": 0.0175,
+      "precipIntensity": 0.007,
+      "precipType": "",
+      "airPressure": 1014.7375,
+      "airDensity": 1.215261210206007,
+      "cloudCover": 0.8275,
+      "uvIndex": 1,
+      "windSpeed": 2.346479621843348,
+      "windGust": 4.975325921133786,
+      "windBearing": 307.6920995946881,
+      "sunriseTime": "0001-01-01T00:00:00Z",
+      "sunsetTime": "0001-01-01T00:00:00Z"
+    },
+    "wnf": 0.9923303118216857
+  },
+  {
+    "date": 1538762389000,
     "goal": {
       "name": "Patterson Pass (East)",
       "segmentId": 3983,
@@ -1754,12 +1812,12 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.485,
+      "temperature": 14.4875,
       "humidity": 0.7999999999999999,
-      "apparentTemperature": 14.485,
+      "apparentTemperature": 14.4875,
       "precipType": "",
       "airPressure": 1014.0274999999999,
-      "airDensity": 1.2222528456665978,
+      "airDensity": 1.2222424668093732,
       "cloudCover": 0.3425,
       "uvIndex": 1,
       "windSpeed": 0.5892514497873643,
@@ -1768,68 +1826,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0173494129433924
+    "wnf": 1.0173480053883859
   },
   {
-    "date": 1538760939000,
-    "goal": {
-      "name": "Ascension - Anacapa",
-      "segmentId": 376525,
-      "time": 172,
-      "date": 1538636400000
-    },
-    "bestEffort": {
-      "activityId": 763244121,
-      "effortId": 18691644072,
-      "date": 1478045152000,
-      "time": 174,
-      "watts": 427.9,
-      "perf": 566.6838192512616,
-      "pwatts": 405.66317379000225,
-      "wnf": 0.9932834736440734,
-      "wwatts": 402.93852639161287,
-      "weather": {
-        "icon": "clear-day",
-        "time": "2016-11-01T17:05:52-07:00",
-        "temperature": 17.24,
-        "humidity": 0.6,
-        "apparentTemperature": 17.24,
-        "precipType": "",
-        "airPressure": 1019.13,
-        "airDensity": 1.2172511977786649,
-        "cloudCover": 0.08,
-        "windSpeed": 0.81,
-        "windGust": 2.19,
-        "windBearing": 319,
-        "sunriseTime": "2016-11-01T07:35:21-07:00",
-        "sunsetTime": "2016-11-01T18:11:23-07:00"
-      }
-    },
-    "numEfforts": 12,
-    "numAttempts": 0,
-    "forecast": {
-      "icon": "",
-      "time": "0001-01-01T00:00:00Z",
-      "temperature": 16.0575,
-      "humidity": 0.8375,
-      "apparentTemperature": 16.0575,
-      "precipProbability": 0.0175,
-      "precipIntensity": 0.007,
-      "precipType": "",
-      "airPressure": 1014.74,
-      "airDensity": 1.2154337095729957,
-      "cloudCover": 0.8275,
-      "uvIndex": 1,
-      "windSpeed": 2.333533362496836,
-      "windGust": 4.974341448860507,
-      "windBearing": 307.39070457959275,
-      "sunriseTime": "0001-01-01T00:00:00Z",
-      "sunsetTime": "0001-01-01T00:00:00Z"
-    },
-    "wnf": 0.9925919097252979
-  },
-  {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Cañada TT",
       "segmentId": 651803,
@@ -1888,7 +1888,7 @@
     "wnf": 1.055519052996794
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Liddicoat",
       "segmentId": 4200043,
@@ -1928,26 +1928,26 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 16.0775,
-      "humidity": 0.8400000000000001,
-      "apparentTemperature": 16.0775,
-      "precipProbability": 0.0175,
-      "precipIntensity": 0.007,
+      "temperature": 16.21,
+      "humidity": 0.8375,
+      "apparentTemperature": 16.21,
+      "precipProbability": 0.015,
+      "precipIntensity": 0.005725,
       "precipType": "",
-      "airPressure": 1014.7574999999999,
-      "airDensity": 1.2153369506559373,
-      "cloudCover": 0.835,
+      "airPressure": 1014.7650000000001,
+      "airDensity": 1.2147195933273638,
+      "cloudCover": 0.8325,
       "uvIndex": 1,
-      "windSpeed": 2.419436366368771,
-      "windGust": 5.091306833257752,
-      "windBearing": 308.3574031629839,
+      "windSpeed": 2.4524519691656117,
+      "windGust": 5.114670819531498,
+      "windBearing": 309.34973462158695,
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0936152566002784
+    "wnf": 1.0963222417308953
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Redwood Gulch",
       "segmentId": 11710652,
@@ -2033,7 +2033,7 @@
     "wnf": 0.9970751548373399
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Metcalf",
       "segmentId": 800,
@@ -2073,14 +2073,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.04,
+      "temperature": 14.0425,
       "humidity": 0.8474999999999999,
-      "apparentTemperature": 14.04,
+      "apparentTemperature": 14.0425,
       "precipProbability": 0.025,
       "precipIntensity": 0.011425000000000001,
       "precipType": "",
       "airPressure": 1014.495,
-      "airDensity": 1.2244535190541164,
+      "airDensity": 1.2244430798798138,
       "cloudCover": 0.6225,
       "uvIndex": 1,
       "windSpeed": 1.9011073540355952,
@@ -2089,10 +2089,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.982901190447479
+    "wnf": 0.9829009984205058
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Jamison Creek",
       "segmentId": 699429,
@@ -2151,7 +2151,7 @@
     "wnf": 1.034715252651315
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Mt. Hamilton Backside",
       "segmentId": 302113,
@@ -2193,7 +2193,7 @@
       "time": "0001-01-01T00:00:00Z",
       "temperature": 11.532499999999999,
       "humidity": 0.9400000000000001,
-      "apparentTemperature": 11.272499999999999,
+      "apparentTemperature": 11.27,
       "precipProbability": 0.015000000000000001,
       "precipIntensity": 0.00445,
       "precipType": "",
@@ -2210,7 +2210,7 @@
     "wnf": 1.0245618148763378
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Quimby",
       "segmentId": 120709,
@@ -2250,15 +2250,15 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 13.6375,
+      "temperature": 13.66,
       "humidity": 0.8674999999999999,
-      "apparentTemperature": 13.6375,
-      "precipProbability": 0.025,
+      "apparentTemperature": 13.66,
+      "precipProbability": 0.027500000000000004,
       "precipIntensity": 0.010825000000000001,
       "precipType": "",
-      "airPressure": 1014.535,
-      "airDensity": 1.2262557046751748,
-      "cloudCover": 0.6825,
+      "airPressure": 1014.5425,
+      "airDensity": 1.2261571588318667,
+      "cloudCover": 0.68,
       "uvIndex": 1,
       "windSpeed": 1.6068515217475678,
       "windGust": 3.0995316507313073,
@@ -2266,10 +2266,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 0.9900891161307187
+    "wnf": 0.9900867434939522
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Summit Spring",
       "segmentId": 5872720,
@@ -2328,7 +2328,7 @@
     "wnf": 1.0289118263597339
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Loyola",
       "segmentId": 632574,
@@ -2387,7 +2387,7 @@
     "wnf": 0.9955201856831198
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Crestview",
       "segmentId": 263045,
@@ -2444,7 +2444,7 @@
     "wnf": 1.0770935829424066
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Moody",
       "segmentId": 6445920,
@@ -2530,7 +2530,7 @@
     "wnf": 1.0372659064382346
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Kings Mountain",
       "segmentId": 611413,
@@ -2599,7 +2599,7 @@
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
       "temperature": 15.605,
-      "humidity": 0.8825000000000001,
+      "humidity": 0.885,
       "apparentTemperature": 15.6125,
       "precipProbability": 0.02,
       "precipIntensity": 0.0076,
@@ -2617,7 +2617,7 @@
     "wnf": 1.0530534167293055
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Old La Honda",
       "segmentId": 8109834,
@@ -2703,7 +2703,7 @@
     "wnf": 0.9914578451438282
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Viscaino (West)",
       "segmentId": 619616,
@@ -2762,7 +2762,7 @@
     "wnf": 0.9837511924790681
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Felton Empire",
       "segmentId": 648888,
@@ -2801,15 +2801,15 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.2,
+      "temperature": 14.232499999999998,
       "humidity": 0.9525,
-      "apparentTemperature": 14.204999999999998,
+      "apparentTemperature": 14.2375,
       "precipProbability": 0.015,
       "precipIntensity": 0.00445,
       "precipType": "",
-      "airPressure": 1014.7475,
-      "airDensity": 1.2231957562792515,
-      "cloudCover": 0.7925,
+      "airPressure": 1014.7549999999999,
+      "airDensity": 1.2230506970321238,
+      "cloudCover": 0.8075,
       "uvIndex": 1,
       "windSpeed": 3.1385928173786963,
       "windGust": 6.0573136566938235,
@@ -2817,10 +2817,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0654727937931032
+    "wnf": 1.0654566285809213
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Highway 9",
       "segmentId": 6544581,
@@ -2907,7 +2907,7 @@
     "wnf": 1.061645723606988
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Melendy",
       "segmentId": 602399,
@@ -2964,7 +2964,7 @@
     "wnf": 1.0395290322434059
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Westridge",
       "segmentId": 359323,
@@ -3051,7 +3051,7 @@
     "wnf": 1.0414251255664444
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Montebello",
       "segmentId": 627158,
@@ -3138,7 +3138,7 @@
     "wnf": 1.05081606647639
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Jefferson (Highland)",
       "segmentId": 3573106,
@@ -3195,7 +3195,7 @@
     "wnf": 1.027882883441882
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Highway 84 (West)",
       "segmentId": 658330,
@@ -3253,7 +3253,7 @@
     "wnf": 1.1444004098746112
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Haskins (East)",
       "segmentId": 614445,
@@ -3312,7 +3312,7 @@
     "wnf": 1.0597542535381408
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Alba",
       "segmentId": 326187,
@@ -3352,15 +3352,15 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 14.1825,
+      "temperature": 14.2125,
       "humidity": 0.9525,
-      "apparentTemperature": 14.1875,
+      "apparentTemperature": 14.2175,
       "precipProbability": 0.017499999999999998,
       "precipIntensity": 0.007,
       "precipType": "",
-      "airPressure": 1014.7774999999999,
-      "airDensity": 1.2233211156629054,
-      "cloudCover": 0.8275,
+      "airPressure": 1014.7875,
+      "airDensity": 1.22319095373663,
+      "cloudCover": 0.8425,
       "uvIndex": 1,
       "windSpeed": 3.1260990272316063,
       "windGust": 6.1697641477223915,
@@ -3368,10 +3368,10 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0501879985317868
+    "wnf": 1.0501785842892462
   },
   {
-    "date": 1538760939000,
+    "date": 1538762389000,
     "goal": {
       "name": "Golden Oak",
       "segmentId": 637861,
@@ -3410,14 +3410,14 @@
     "forecast": {
       "icon": "",
       "time": "0001-01-01T00:00:00Z",
-      "temperature": 15.995000000000001,
+      "temperature": 15.992500000000001,
       "humidity": 0.85,
-      "apparentTemperature": 15.995000000000001,
+      "apparentTemperature": 15.992500000000001,
       "precipProbability": 0.0175,
       "precipIntensity": 0.007,
       "precipType": "",
       "airPressure": 1014.785,
-      "airDensity": 1.2156775160211186,
+      "airDensity": 1.2156879888891177,
       "cloudCover": 0.855,
       "uvIndex": 1,
       "windSpeed": 2.5271573184740146,
@@ -3426,6 +3426,6 @@
       "sunriseTime": "0001-01-01T00:00:00Z",
       "sunsetTime": "0001-01-01T00:00:00Z"
     },
-    "wnf": 1.0541550038877303
+    "wnf": 1.0541558764242283
   }
 ]

@@ -29,6 +29,12 @@ import (
 	"github.com/tdewolff/minify/svg"
 )
 
+const WEEKDAY_BEGIN_HOUR = 7
+const WEEKDAY_END_HOUR = 8
+
+const WEEKEND_BEGIN_HOUR = 8
+const WEEKEND_END_HOUR = 11
+
 type SegmentGoal struct {
 	// Name of the segment.
 	Name string `json:"name"`
@@ -88,7 +94,7 @@ type GoalProgress struct {
 	BestAttempt *Effort `json:"bestAttempt,omitempty"`
 	// The total number of efforts for the segment after Goal.Date.
 	NumAttempts int `json:"numAttempts"` // total attempts after Goal.Date
-	// The forecasted weather conditions as of Date for the upcoming Saturday @ 10AM.
+	// The forecasted weather conditions as of Date for the upcoming 'morning'.
 	Forecast *weather.Conditions `json:"forecast,omitempty"`
 	// The baseline WNF score for the Forecast conditions.
 	ForecastWNF float64 `json:"wnf"`
@@ -514,16 +520,29 @@ func (c *C) toEffort(s *strava.SegmentEffortSummary, segment *Segment) (*Effort,
 	return &e, nil
 }
 
-// BUG: This won't be accurate if the script is run on Saturday between 8 and 12.
 func (c *C) getForecast(segment *Segment) (*weather.Conditions, error) {
 	f, err := c.w.Forecast(segment.AverageLocation)
 	if err != nil {
 		return nil, err
 	}
+
+	// The upcoming forecast is for the current day unless we're already past
+	// the end hour, in which case we use the conditions for tomorrow.
+	t := c.now
+	if t.Hour() > WEEKDAY_END_HOUR &&
+		!(weekend(t) && t.Hour() <= WEEKEND_END_HOUR) {
+		t = t.AddDate(0, 0, 1)
+	}
+
+	begin, end := WEEKDAY_BEGIN_HOUR, WEEKDAY_END_HOUR
+	if weekend(t) {
+		begin, end = WEEKEND_BEGIN_HOUR, WEEKEND_END_HOUR
+	}
+
 	var cs []*weather.Conditions
 	for _, h := range f.Hourly {
-		if h.Time.Weekday() == time.Saturday &&
-			h.Time.Hour() >= 8 && h.Time.Hour() <= 11 {
+		if h.Time.YearDay() == t.YearDay() &&
+			h.Time.Hour() >= begin && h.Time.Hour() <= end {
 			cs = append(cs, h)
 		}
 	}
@@ -556,6 +575,10 @@ func create(path string) (*os.File, error) {
 
 func fromEpochMillis(millis int) time.Time {
 	return time.Unix(0, int64(millis)*(int64(time.Millisecond)/int64(time.Nanosecond)))
+}
+
+func weekend(t time.Time) bool {
+	return t.Weekday() == time.Saturday || t.Weekday() == time.Sunday
 }
 
 func duration(t int) string {
