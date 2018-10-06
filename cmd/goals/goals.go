@@ -206,6 +206,10 @@ func (e *Effort) Progress(t int) string {
 	return fmt.Sprintf("%.2f%%", float64(t)/float64(e.Time)*100)
 }
 
+func (e *Effort) TimeTitle(t int) string {
+	return fmt.Sprintf("%s\n%s", e.Day(), e.Progress(t))
+}
+
 func (e *Effort) Best() string {
 	if e.best {
 		return "best"

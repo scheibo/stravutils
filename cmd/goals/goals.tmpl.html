@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="favicon.ico">
-  <title>Goals</title>
+  <title>GOALS</title>
   <style>
     /* http://colorbrewer2.org/?type=diverging&scheme=RdYlGn&n=11 */
     .color-5 { background-color: rgba(165,0,38, 0.85) }
@@ -38,7 +38,6 @@
     h1 {
       text-transform: uppercase;
       font-weight: 900;
-      margin-bottom: 1em;
     }
 
     #container {
@@ -91,7 +90,7 @@
     /* Mobile - Medium */
     /* Mobile - Large */
     table { font-size: 6px; }
-    h1 { font-size: 26px; }
+    h1 { font-size: 20px; }
     #attribution { font-size: 5px; }
 
     /* Tablet */
@@ -121,7 +120,10 @@
     .effort { background-color: #EEE; }
     th { background-color: #FFF; }
     colgroup { border-left: 1px solid black; }
-    colgroup.forecast { border-right: 1px solid black; }
+    colgroup.forecast {
+      border-right: 1px solid black;
+      width: 8%;
+    }
     .absent { text-align: center; background-color: #dedede; }
     .num {text-align: right;}
   </style>
@@ -134,14 +136,14 @@
     <div id='container'>
       <table id='data' class="climb">
         <colgroup span="3" class="goal"></colgroup>
-        <colgroup span="6" class="effort"></colgroup>
-        <colgroup span="6" class="attempt"></colgroup>
+        <colgroup span="5" class="effort"></colgroup>
+        <colgroup span="5" class="attempt"></colgroup>
         <colgroup span="1" class="forecast"></colgroup>
         <thead>
           <tr class="table-header">
             <th colspan="3">Goal</th>
-            <th colspan="6">Before</th>
-            <th colspan="6">After</th>
+            <th colspan="5">Before</th>
+            <th colspan="5">After</th>
             <th colspan="1">Upcoming</th>
           </tr>
           <tr>
@@ -151,14 +153,12 @@
             <th>PERF</th>
             <!-- Best Effort -->
             <th>Time</th>
-            <th>Date</th>
             <th>Power</th>
             <th>PERF</th>
             <th>WNF</th>
             <th>Num</th>
             <!-- Best Attempt -->
             <th>Time</th>
-            <th>Date</th>
             <th>Power</th>
             <th>PERF</th>
             <th>WNF</th>
@@ -172,16 +172,15 @@
           <tr>
             <!-- Goal -->
             <td class="name" title="{{$g.Goal.Direction}}"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
-            <td class="goal time">{{$g.Goal.Duration}}</td>
-	    <td title="{{$g.Goal.PWatts2}}">{{$g.Goal.Perf}}</td>
+            <td class="goal time" title="{{$g.Goal.Day}}">{{$g.Goal.Duration}}</td>
+            <td title="{{$g.Goal.PWatts2}}">{{$g.Goal.Perf}}</td>
             <!-- Best Effort -->
             {{if not $g.BestEffort}}
               <td class="absent">-</td> <td class="absent">-</td>
               <td class="absent">-</td> <td class="absent">-</td>
-              <td class="absent">-</td> <td class="num absent">0</td>
+              <td class="num absent">0</td>
             {{else}}
-              <td class="{{$g.BestEffort.Best}} time" title="{{$g.BestEffort.Progress $g.Goal.Time}}"><a href="{{$g.BestEffort.URL}}">{{$g.BestEffort.Duration}}</a></td>
-              <td>{{$g.BestEffort.Day}}</td>
+              <td class="{{$g.BestEffort.Best}} time" title="{{$g.BestEffort.TimeTitle $g.Goal.Time}}"><a href="{{$g.BestEffort.URL}}">{{$g.BestEffort.Duration}}</a></td>
               {{if lt $g.BestEffort.Watts 0.0}}
                 <td class="absent">-</td>
               {{else}}
@@ -195,10 +194,9 @@
             {{if not $g.BestAttempt}}
               <td class="absent">-</td> <td class="absent">-</td>
               <td class="absent">-</td> <td class="absent">-</td>
-              <td class="absent">-</td> <td class="num absent">0</td>
+              <td class="num absent">0</td>
             {{else}}
-              <td class="{{$g.BestAttempt.Best}} time" title="{{$g.BestAttempt.Progress $g.Goal.Time}}"><a href="{{$g.BestAttempt.URL}}">{{$g.BestAttempt.Duration}}</a></td>
-              <td>{{$g.BestAttempt.Day}}</td>
+              <td class="{{$g.BestAttempt.Best}} time" title="{{$g.BestAttempt.TimeTitle $g.Goal.Time}}"><a href="{{$g.BestAttempt.URL}}">{{$g.BestAttempt.Duration}}</a></td>
               {{if lt $g.BestAttempt.Watts 0.0}}
                 <td class="absent">-</td>
               {{else}}
