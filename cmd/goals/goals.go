@@ -378,23 +378,15 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 		}
 		goal.segment = segment
 
-		date := goal.Date
-		if !c.reload && p.Date > date {
-			date = p.Date
-		}
-
 		best := p.BestAttempt
-		attempts := p.NumAttempts
 		if c.reload {
 			best = nil
-			attempts = 0
 		}
 		bestAttempt, numAttempts, err := c.getBestAttemptAfter(
-			fromEpochMillis(date), goal, efforts, best)
+			fromEpochMillis(goal.Date), goal, efforts, best)
 		if err != nil {
 			return nil, err
 		}
-		numAttempts += attempts
 
 		bestEffort, numEfforts := p.BestEffort, p.NumEfforts
 		if c.reload || bestEffort == nil {
