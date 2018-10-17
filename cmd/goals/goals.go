@@ -220,14 +220,15 @@ func (e *Effort) Best() string {
 }
 
 type C struct {
-	reload  bool
-	token   string
-	climbs  *[]Climb
-	patches map[int64]strava.DetailedSegmentEffort
-	w       *weather.Client
-	refresh time.Duration
-	now     time.Time
-	dir     string
+	reload   bool
+	token    string
+	climbs   *[]Climb
+	patches  map[int64]strava.DetailedSegmentEffort
+	newGoals map[int64]SegmentGoal
+	w        *weather.Client
+	refresh  time.Duration
+	now      time.Time
+	dir      string
 }
 
 func main() {
@@ -298,6 +299,7 @@ func main() {
 		patches[p.Id] = p
 	}
 
+	newGoals := make(map[int64]SegmentGoal)
 	fi, _ := os.Stdin.Stat()
 	if (fi.Mode() & os.ModeCharDevice) == 0 {
 		bytes, err := ioutil.ReadAll(os.Stdin)
@@ -320,25 +322,25 @@ func main() {
 				exit(err)
 			}
 
-			goal := SegmentGoal{
+			newGoals[id] = SegmentGoal{
 				Name:      s[0],
 				SegmentID: id,
 				Time:      int(t.Seconds()),
 				Date:      int(today.Unix() * 1000),
 			}
-			goals = append(goals, GoalProgress{Goal: goal})
 		}
 	}
 
 	c := C{
-		reload:  reload,
-		token:   token,
-		climbs:  &climbs,
-		patches: patches,
-		w:       weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
-		refresh: refresh,
-		now:     now,
-		dir:     output,
+		reload:   reload,
+		token:    token,
+		climbs:   &climbs,
+		patches:  patches,
+		newGoals: newGoals,
+		w:        weather.NewClient(weather.DarkSky(key), weather.TimeZone(loc)),
+		refresh:  refresh,
+		now:      now,
+		dir:      output,
 	}
 
 	progress, err := c.update(goals)
@@ -366,89 +368,114 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 	var progress GoalProgressList
 
 	for _, p := range prev {
-		goal := p.Goal
-		efforts, err := GetEfforts(goal.SegmentID, 0, c.token)
+		if g, ok := c.newGoals[p.Goal.SegmentID]; ok {
+			p = GoalProgress{Goal: g}
+			delete(c.newGoals, p.Goal.SegmentID)
+		}
+
+		u, err := c.updateProgress(p)
 		if err != nil {
 			return nil, err
 		}
 
-		segment, err := GetSegmentByID(goal.SegmentID, *c.climbs, c.token)
-		if err != nil {
-			return nil, err
-		}
-		goal.segment = segment
+		progress = append(progress, *u)
+	}
 
-		best := p.BestAttempt
-		if c.reload {
-			best = nil
-		}
-		bestAttempt, numAttempts, err := c.getBestAttemptAfter(
-			fromEpochMillis(goal.Date), goal, efforts, best)
+	for _, g := range c.newGoals {
+		p := GoalProgress{Goal: g}
+
+		u, err := c.updateProgress(p)
 		if err != nil {
 			return nil, err
 		}
 
-		bestEffort, numEfforts := p.BestEffort, p.NumEfforts
-		if c.reload || bestEffort == nil {
-			best, numEffortsBefore, err := c.getBestEffortBefore(
-				fromEpochMillis(goal.Date), goal, efforts)
-			if err != nil {
-				return nil, err
-			}
-			bestEffort = best
-			numEfforts = numEffortsBefore + numAttempts
-		}
-
-		if bestAttempt != nil {
-			if bestEffort != nil && bestEffort.Time < bestAttempt.Time {
-				bestEffort.best = true
-			} else {
-				bestAttempt.best = true
-			}
-		} else {
-			if bestEffort != nil {
-				bestEffort.best = true
-			}
-		}
-
-		forecast, forecastWNF := p.Forecast, p.ForecastWNF
-		if c.reload || forecast == nil || c.now.Sub(fromEpochMillis(p.Date)) > c.refresh {
-			forecasts, err := c.getForecast(segment)
-			if err != nil {
-				return nil, err
-			}
-
-			forecast = weather.Average(forecasts)
-			// NOTE: The forecastWNF is not computed simply as the WNF of the average
-			// forecast - instead we compute the WNF for each forecast and average the
-			// result.
-			forecastWNF := 0.0
-			for _, f := range forecasts {
-				fWNF, _, err := PowerWNF(goal.PWatts(), segment, f, nil /* past */)
-				if err != nil {
-					return nil, err
-				}
-				forecastWNF += fWNF
-			}
-			forecastWNF /= float64(len(forecasts))
-		}
-
-		u := GoalProgress{
-			Date:        int(c.now.Unix() * 1000),
-			Goal:        goal,
-			BestEffort:  bestEffort,
-			NumEfforts:  numEfforts,
-			BestAttempt: bestAttempt,
-			NumAttempts: numAttempts,
-			Forecast:    forecast,
-			ForecastWNF: forecastWNF,
-		}
-
-		progress = append(progress, u)
+		progress = append(progress, *u)
 	}
 
 	progress = sortProgress(progress)
 	return progress, nil
+}
+
+func (c *C) updateProgress(p GoalProgress) (*GoalProgress, error) {
+	goal := p.Goal
+	efforts, err := GetEfforts(goal.SegmentID, 0, c.token)
+	if err != nil {
+		return nil, err
+	}
+
+	segment, err := GetSegmentByID(goal.SegmentID, *c.climbs, c.token)
+	if err != nil {
+		return nil, err
+	}
+	goal.segment = segment
+
+	best := p.BestAttempt
+	if c.reload {
+		best = nil
+	}
+	bestAttempt, numAttempts, err := c.getBestAttemptAfter(
+		fromEpochMillis(goal.Date), goal, efforts, best)
+	if err != nil {
+		return nil, err
+	}
+
+	bestEffort, numEfforts := p.BestEffort, p.NumEfforts
+	if c.reload || bestEffort == nil {
+		best, numEffortsBefore, err := c.getBestEffortBefore(
+			fromEpochMillis(goal.Date), goal, efforts)
+		if err != nil {
+			return nil, err
+		}
+		bestEffort = best
+		numEfforts = numEffortsBefore + numAttempts
+	}
+
+	if bestAttempt != nil {
+		if bestEffort != nil && bestEffort.Time < bestAttempt.Time {
+			bestEffort.best = true
+		} else {
+			bestAttempt.best = true
+		}
+	} else {
+		if bestEffort != nil {
+			bestEffort.best = true
+		}
+	}
+
+	forecast, forecastWNF := p.Forecast, p.ForecastWNF
+	if c.reload || forecast == nil || c.now.Sub(fromEpochMillis(p.Date)) > c.refresh {
+		forecasts, err := c.getForecast(segment)
+		if err != nil {
+			return nil, err
+		}
+
+		forecast = weather.Average(forecasts)
+		// NOTE: The forecastWNF is not computed simply as the WNF of the average
+		// forecast - instead we compute the WNF for each forecast and average the
+		// result.
+		forecastWNF = 0.0
+		for _, f := range forecasts {
+			fWNF, _, err := PowerWNF(goal.PWatts(), segment, f, nil /* past */)
+			if err != nil {
+				return nil, err
+			}
+			forecastWNF += fWNF
+		}
+		forecastWNF /= float64(len(forecasts))
+	}
+
+	u := GoalProgress{
+		Date:        int(c.now.Unix() * 1000),
+		Goal:        goal,
+		BestEffort:  bestEffort,
+		NumEfforts:  numEfforts,
+		BestAttempt: bestAttempt,
+		NumAttempts: numAttempts,
+		Forecast:    forecast,
+		ForecastWNF: forecastWNF,
+	}
+
+	return &u, nil
 }
 
 func (c *C) getBestEffortBefore(
