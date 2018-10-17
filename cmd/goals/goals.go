@@ -95,9 +95,11 @@ type GoalProgress struct {
 	BestAttempt *Effort `json:"bestAttempt,omitempty"`
 	// The total number of efforts for the segment after Goal.Date.
 	NumAttempts int `json:"numAttempts"` // total attempts after Goal.Date
-	// The forecasted weather conditions as of Date for the upcoming 'morning'.
+	// The average forecasted weather conditions as of Date for the upcoming 'morning'.
 	Forecast *weather.Conditions `json:"forecast,omitempty"`
-	// The baseline WNF score for the Forecast conditions.
+	// The averaged baseline WNF score for the forecasted conditions as of Date
+	// for the upcoming 'morning'.
+	// NOTE: This is *not* the same as the WNF for Forecast!
 	ForecastWNF float64 `json:"wnf"`
 }
 
@@ -419,14 +421,24 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 
 		forecast, forecastWNF := p.Forecast, p.ForecastWNF
 		if c.reload || forecast == nil || c.now.Sub(fromEpochMillis(p.Date)) > c.refresh {
-			forecast, err = c.getForecast(segment)
+			forecasts, err := c.getForecast(segment)
 			if err != nil {
 				return nil, err
 			}
-			forecastWNF, _, err = PowerWNF(goal.PWatts(), segment, forecast, nil /* past */)
-			if err != nil {
-				return nil, err
+
+			forecast = weather.Average(forecasts)
+			// NOTE: The forecastWNF is not computed simply as the WNF of the average
+			// forecast - instead we compute the WNF for each forecast and average the
+			// result.
+			forecastWNF := 0.0
+			for _, f := range forecasts {
+				fWNF, _, err := PowerWNF(goal.PWatts(), segment, f, nil /* past */)
+				if err != nil {
+					return nil, err
+				}
+				forecastWNF += fWNF
 			}
+			forecastWNF /= float64(len(forecasts))
 		}
 
 		u := GoalProgress{
@@ -535,7 +547,7 @@ func (c *C) toEffort(s *strava.DetailedSegmentEffort, segment *Segment) (*Effort
 	return &e, nil
 }
 
-func (c *C) getForecast(segment *Segment) (*weather.Conditions, error) {
+func (c *C) getForecast(segment *Segment) ([]*weather.Conditions, error) {
 	f, err := c.w.Forecast(segment.AverageLocation)
 	if err != nil {
 		return nil, err
@@ -561,7 +573,7 @@ func (c *C) getForecast(segment *Segment) (*weather.Conditions, error) {
 			cs = append(cs, h)
 		}
 	}
-	return weather.Average(cs), nil
+	return cs, nil
 }
 
 func (c *C) render(goals []GoalProgress) error {
