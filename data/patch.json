@@ -24,8 +24,9 @@
     "elapsed_time": 2031,
     "average_watts": 302,
     "device_watts": true
-  },
-   "segment": {
+  }, 
+  {
+    "segment": {
       "id": 671251
     },
     "id": 54079507754,
@@ -37,7 +38,8 @@
     "average_watts": 295,
     "device_watts": false
   },
-  "segment": {
+  {
+    "segment": {
       "id": 789267
     },
     "id": 53734998513,
@@ -49,7 +51,8 @@
     "average_watts": 312,
     "device_watts": false
   },
-  "segment": {
+  {
+    "segment": {
       "id": 263045
     },
     "id": 53901402499,
