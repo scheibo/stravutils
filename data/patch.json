@@ -24,5 +24,41 @@
     "elapsed_time": 2031,
     "average_watts": 302,
     "device_watts": true
+  },
+   "segment": {
+      "id": 671251
+    },
+    "id": 54079507754,
+    "activity": {
+      "id": 2142083165
+    },
+    "start_date": "2019-02-12T11:54:13-08:00",
+    "elapsed_time": 2314,
+    "average_watts": 295,
+    "device_watts": false
+  },
+  "segment": {
+      "id": 789267
+    },
+    "id": 53734998513,
+    "activity": {
+      "id": 2129022999
+    },
+    "start_date": "2019-02-06T12:01:59-08:00",
+    "elapsed_time": 1492,
+    "average_watts": 312,
+    "device_watts": false
+  },
+  "segment": {
+      "id": 263045
+    },
+    "id": 53901402499,
+    "activity": {
+      "id": 2135382917
+    },
+    "start_date": "2019-02-09T12:12:20-08:00",
+    "elapsed_time": 578,
+    "average_watts": 298,
+    "device_watts": false
   }
 ]
