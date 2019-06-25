@@ -373,7 +373,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 			delete(c.newGoals, p.Goal.SegmentID)
 		}
 
-		u, err := c.updateProgress(p)
+		u, err := c.updateProgress(&p)
 		if err != nil {
 			return nil, err
 		}
@@ -384,7 +384,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 	for _, g := range c.newGoals {
 		p := GoalProgress{Goal: g}
 
-		u, err := c.updateProgress(p)
+		u, err := c.updateProgress(&p)
 		if err != nil {
 			return nil, err
 		}
@@ -396,7 +396,7 @@ func (c *C) update(prev []GoalProgress) ([]GoalProgress, error) {
 	return progress, nil
 }
 
-func (c *C) updateProgress(p GoalProgress) (*GoalProgress, error) {
+func (c *C) updateProgress(p *GoalProgress) (*GoalProgress, error) {
 	goal := p.Goal
 	efforts, err := GetEfforts(goal.SegmentID, 0, c.token)
 	if err != nil {
@@ -417,6 +417,13 @@ func (c *C) updateProgress(p GoalProgress) (*GoalProgress, error) {
 		fromEpochMillis(goal.Date), goal, efforts, best)
 	if err != nil {
 		return nil, err
+	}
+
+	// Update the goal if it has already been met.
+	if bestAttempt != nil && bestAttempt.Time < goal.Time {
+    p.Goal.Date = int(fromEpochMillis(bestAttempt.Date).AddDate(0, 0, 1).Unix() * 1000)
+		p.Goal.Time = bestAttempt.Time - 1
+		return c.updateProgress(p)
 	}
 
 	bestEffort, numEfforts := p.BestEffort, p.NumEfforts
