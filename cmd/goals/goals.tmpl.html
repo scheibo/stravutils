@@ -50,7 +50,11 @@
       border-bottom: 1px solid black;
     }
 
-    td {
+    tr.effort, .top {
+      border-top: 1px solid black;
+    }
+
+    .attempt td {
       border-top: 1px solid #CDCDCD;
     }
 
@@ -104,7 +108,7 @@
     }
 
     .best, .goal { font-weight: bold; }
-    .effort { background-color: #EEE; }
+    td.effort { background-color: #EEE; }
     th { background-color: #FFF; }
     colgroup { border-left: 1px solid black; }
     colgroup.forecast {
@@ -162,11 +166,11 @@
         </thead>
         <tbody>
           {{range $g := .Goals}}
-          <tr>
+          <tr class="effort">
             <!-- Goal -->
-            <td rowspan="2" class="name" title="{{$g.Goal.Direction}}"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
-            <td rowspan="2" class="goal time" title="{{$g.Goal.Day}}">{{$g.Goal.Duration}}</td>
-            <td rowspan="2" title="{{$g.Goal.PWatts2}}">{{$g.Goal.Perf}}</td>
+            <td rowspan="2" class="name top" title="{{$g.Goal.Direction}}"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
+            <td rowspan="2" class="goal time top" title="{{$g.Goal.Day}}">{{$g.Goal.Duration}}</td>
+            <td rowspan="2" class="top" title="{{$g.Goal.PWatts2}}">{{$g.Goal.Perf}}</td>
             <!-- Best Effort -->
             {{if not $g.BestEffort}}
               <td class="absent effort">-</td> <td class="absent effort">-</td>
@@ -184,9 +188,9 @@
               <td class="num effort">{{$g.NumEfforts}}</td>
             {{end}}
             <!-- Forecast -->
-            <td rowspan="2" class="color{{$g.Rank}}" title="{{$g.Title}}">{{$g.Score}}</td>
+            <td rowspan="2" class="color{{$g.Rank}} top" title="{{$g.Title}}">{{$g.Score}}</td>
           </tr>
-          <tr>
+          <tr class="attempt">
             <!-- Best Attempt -->
             {{if not $g.BestAttempt}}
               <td class="absent">-</td> <td class="absent">-</td>
