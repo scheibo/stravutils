@@ -61,7 +61,7 @@ func main() {
 		verify("t2", float64(dur2))
 		t2 = float64(dur2 / time.Second)
 
-		p2 = power(t2, cp) * scale
+		p2 = ((power(t2, cp) / MR) * scale) * mr
 		output(p2, t2, mr)
 	}
 }
