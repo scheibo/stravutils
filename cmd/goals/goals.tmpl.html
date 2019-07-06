@@ -50,7 +50,11 @@
       border-bottom: 1px solid black;
     }
 
-    td {
+    tr.effort, .top {
+      border-top: 1px solid black;
+    }
+
+    .attempt td {
       border-top: 1px solid #CDCDCD;
     }
 
@@ -73,12 +77,14 @@
       display: none;
     }
 
+
     /* Mobile - Small */
     /* Mobile - Medium */
     /* Mobile - Large */
     table { font-size: 8px; }
     h1 { font-size: 20px; }
     #attribution { font-size: 5px; }
+    .details { display: initial; }
 
     /* Tablet */
     @media(min-width: 768px) {
@@ -93,6 +99,7 @@
       h1 { font-size: 36px; }
       #attribution { font-size: 9px; }
       #container { max-width: 1000px; }
+      .details { display: none; }
     }
 
     /* Laptop - L: 1440px */
@@ -104,14 +111,18 @@
     }
 
     .best, .goal { font-weight: bold; }
-    .effort { background-color: #EEE; }
+    td.effort { background-color: #EEE; }
     th { background-color: #FFF; }
     colgroup { border-left: 1px solid black; }
+    colgroup.efforts-attempts { width: 13%; }
+    colgroup.num {
+      width: 7%;
+      border-left: none;
+    }
     colgroup.forecast {
       border-right: 1px solid black;
       width: 8%;
     }
-    colgroup.efforts-attempts { width: 12%; }
     .absent { text-align: center; background-color: #dedede; }
     .num {text-align: right;}
 
@@ -137,7 +148,8 @@
     <div id='container'>
       <table id='data' class="climb">
         <colgroup span="3" class="goal"></colgroup>
-        <colgroup span="5" class="efforts-attempts"></colgroup>
+        <colgroup span="4" class="efforts-attempts"></colgroup>
+        <colgroup span="1" class="num"></colgroup>
         <colgroup span="1" class="forecast"></colgroup>
         <thead>
           <tr class="table-header">
@@ -162,11 +174,11 @@
         </thead>
         <tbody>
           {{range $g := .Goals}}
-          <tr>
+          <tr class="effort">
             <!-- Goal -->
-            <td rowspan="2" class="name" title="{{$g.Goal.Direction}}"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
-            <td rowspan="2" class="goal time" title="{{$g.Goal.Day}}">{{$g.Goal.Duration}}</td>
-            <td rowspan="2" title="{{$g.Goal.PWatts2}}">{{$g.Goal.Perf}}</td>
+            <td rowspan="2" class="name top" title="{{$g.Goal.Direction}}"><a href="{{$g.Goal.SegmentURL}}">{{$g.Goal.Name}}</a></td>
+            <td rowspan="2" class="goal time top" title="{{$g.Goal.Day}}">{{$g.Goal.Duration}}</td>
+            <td rowspan="2" class="top" title="{{$g.Goal.PWatts2}}">{{$g.Goal.Perf}} <span class="details">({{$g.Goal.PWatts2}})</span></td>
             <!-- Best Effort -->
             {{if not $g.BestEffort}}
               <td class="absent effort">-</td> <td class="absent effort">-</td>
@@ -179,14 +191,14 @@
               {{else}}
                 <td class="effort">{{$g.BestEffort.Watts2}}</td>
               {{end}}
-              <td class="effort" title="{{$g.BestEffort.PWatts2}}">{{$g.BestEffort.Perf}}</td>
-              <td class="color{{$g.BestEffort.Rank}} effort" title="{{$g.BestEffort.Title}}">{{$g.BestEffort.Score}}</td>
+              <td class="effort" title="{{$g.BestEffort.PWatts2}}">{{$g.BestEffort.Perf}} <span class="details">({{$g.BestEffort.PWatts2}})</span></td>
+              <td class="color{{$g.BestEffort.Rank}} effort" title="{{$g.BestEffort.Title}}">{{$g.BestEffort.Score}}<span class="details">({{$g.BestEffort.WWatts2}})</span></td>
               <td class="num effort">{{$g.NumEfforts}}</td>
             {{end}}
             <!-- Forecast -->
-            <td rowspan="2" class="color{{$g.Rank}}" title="{{$g.Title}}">{{$g.Score}}</td>
+            <td rowspan="2" class="color{{$g.Rank}} top" title="{{$g.Title}}">{{$g.Score}} <span class="details">({{$g.WWatts2}})</span></td>
           </tr>
-          <tr>
+          <tr class="attempt">
             <!-- Best Attempt -->
             {{if not $g.BestAttempt}}
               <td class="absent">-</td> <td class="absent">-</td>
@@ -199,8 +211,8 @@
               {{else}}
                 <td>{{$g.BestAttempt.Watts2}}</td>
               {{end}}
-              <td title="{{$g.BestAttempt.PWatts2}}">{{$g.BestAttempt.Perf}}</td>
-              <td class="color{{$g.BestAttempt.Rank}}" title="{{$g.BestAttempt.Title}}">{{$g.BestAttempt.Score}}</td>
+              <td title="{{$g.BestAttempt.PWatts2}}">{{$g.BestAttempt.Perf}} <span class="details">({{$g.BestAttempt.PWatts2}})</span></td>
+              <td class="color{{$g.BestAttempt.Rank}}" title="{{$g.BestAttempt.Title}}">{{$g.BestAttempt.Score}} <span class="details">({{$g.BestAttempt.WWatts2}})</span></td>
               <td class="num">{{$g.NumAttempts}}</td>
             {{end}}
           </tr>
