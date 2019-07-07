@@ -421,8 +421,9 @@ func (c *C) updateProgress(p *GoalProgress) (*GoalProgress, error) {
 
 	// Update the goal if it has already been met.
 	if bestAttempt != nil && bestAttempt.Time < goal.Time {
-    p.Goal.Date = int(fromEpochMillis(bestAttempt.Date).AddDate(0, 0, 1).Unix() * 1000)
+		p.Goal.Date = int(fromEpochMillis(bestAttempt.Date).AddDate(0, 0, 1).Unix() * 1000)
 		p.Goal.Time = bestAttempt.Time - 1
+		c.reload = true
 		return c.updateProgress(p)
 	}
 
