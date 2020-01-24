@@ -1,20 +1,22 @@
 package stravutils
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
+	"sync"
+
+	"golang.org/x/oauth2"
 
 	"github.com/scheibo/geo"
 	"github.com/scheibo/perf"
 	"github.com/scheibo/strava"
 	"github.com/scheibo/weather"
 	"github.com/scheibo/wnf"
-
-	"golang.org/x/net/context"
 )
 
 const MAX_PER_PAGE = 200
@@ -151,17 +153,65 @@ func GetEfforts(segmentID int64, maxPages int, tokens ...string) ([]strava.Detai
 	return efforts, nil
 }
 
-func GetStravaContext(tokens ...string) (*context.Context, error) {
-	token := os.Getenv("STRAVA_ACCESS_TOKEN")
-	if len(tokens) > 0 && tokens[0] != "" {
-		token = tokens[0]
-	}
-	if token == "" {
-		return nil, fmt.Errorf("must provide a Strava access token")
+func GetStravaContext(codes ...string) (*context.Context, error) {
+	config := &oauth2.Config{
+		ClientID:     os.Getenv("STRAVA_CLIENT_ID"),
+		ClientSecret: os.Getenv("STRAVA_CLIENT_SECRET"),
+		RedirectURL:  os.Getenv("STRAVA_CLIENT_REDIRECT_URI"),
+		Scopes:       []string{"read_all"},
+		Endpoint: oauth2.Endpoint{
+			AuthURL:  "https://www.strava.com/oauth/authorize",
+			TokenURL: "https://www.strava.com/oauth/token",
+		},
 	}
 
-	ctx := context.WithValue(context.Background(), strava.ContextAccessToken, token)
+	var token *oauth2.Token
+	if len(codes) > 0 && codes[0] != "" {
+		token, err := config.Exchange(context.Background(), codes[0])
+		if err != nil {
+			return nil, err
+		}
+
+		err = storeNewToken(token)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		file := os.Getenv("STRAVA_ACCESS_TOKEN")
+		if file == "" {
+			return nil, fmt.Errorf("must provide a Strava access token file")
+		}
+
+		f, err := ioutil.ReadFile(file)
+		if err != nil {
+			return nil, err
+		}
+
+		err = json.Unmarshal(f, &token)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	source := &notifyRefreshTokenSource{
+		new: config.TokenSource(context.Background(), token),
+		t:   token,
+		f:   storeNewToken,
+	}
+	ctx := context.WithValue(context.Background(), strava.ContextOAuth2, source)
 	return &ctx, nil
+}
+
+func storeNewToken(tok *oauth2.Token) error {
+	file := os.Getenv("STRAVA_ACCESS_TOKEN")
+	if file == "" {
+		return fmt.Errorf("must provide a Strava access token file")
+	}
+	j, err := json.MarshalIndent(tok, "", "  ")
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(file, j, 0644)
 }
 
 func Resource(name string) string {
@@ -220,4 +270,25 @@ func PowerWNF(power float64, s *Segment, current, past *weather.Conditions) (bas
 	}
 
 	return
+}
+
+type notifyRefreshTokenSource struct {
+	new oauth2.TokenSource
+	mu  sync.Mutex
+	t   *oauth2.Token
+	f   func(*oauth2.Token) error
+}
+
+func (s *notifyRefreshTokenSource) Token() (*oauth2.Token, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.t.Valid() {
+		return s.t, nil
+	}
+	t, err := s.new.Token()
+	if err != nil {
+		return nil, err
+	}
+	s.t = t
+	return t, s.f(t)
 }
