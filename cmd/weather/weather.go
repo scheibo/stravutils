@@ -123,7 +123,7 @@ func main() {
 			past = avgs.Get(&s, t, loc)
 		}
 
-		baseline, historical, err := WNF(&s, c, past, loc)
+		baseline, historical, err := WNF(&s, c, past)
 		if err != nil {
 			exit(err)
 		}
