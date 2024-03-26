@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -115,10 +116,36 @@ func main() {
 }
 
 func getClimbForecast(c *Climb, w *weather.Client, h *HistoricalClimbAverages, min, max int, loc *time.Location) (*ClimbForecast, error) {
-	f, err := w.Forecast(c.Segment.AverageLocation)
+	const maxAttempts = 10                     // Maximum number of retry attempts
+	const baseBackoff = 100 * time.Millisecond // Initial backoff time
+	const maxBackoff = 5 * time.Second         // Maximum backoff time
+	const jitterFactor = 0.5                   // Jitter factor
+
+	var f *weather.Forecast
+	var err error
+
+	for attempt := 1; attempt <= maxAttempts; attempt++ {
+		// Exponential backoff with jitter
+    backoff := time.Duration(float64(baseBackoff) * float64(uint(1) << uint(attempt)) * (1 + (rand.Float64()-0.5)*jitterFactor))
+
+		if backoff > maxBackoff {
+			backoff = maxBackoff
+		}
+
+		// Wait for backoff duration
+		time.Sleep(backoff)
+
+		// Attempt to fetch forecast
+		f, err = w.Forecast(c.Segment.AverageLocation)
+		if err == nil {
+			break // Success, exit retry loop
+		}
+	}
+
 	if err != nil {
 		return nil, err
 	}
+
 	cf, err := trimAndScore(h, c, f, min, max, loc)
 	if err != nil {
 		return nil, err
